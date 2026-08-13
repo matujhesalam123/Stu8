@@ -808,7 +808,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 16: CLOUD & BACKUP -->
+            <!-- SECTION 16: CLOUD & BACKUP SETTINGS -->
             <section id="section-cloud-settings" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <h2 class="text-xs font-bold text-indigo-950 flex items-center space-x-1.5 border-b pb-2">
@@ -991,13 +991,6 @@
         let teachersData = {
             "T101": { id: "T101", name: "डॉ. राजेश शर्मा", designation: "संस्था प्रमुख / प्राचार्य", code: "EMP-2026-901", dob: "1978-08-15", subject: "उच्च माध्यमिक शिक्षक (गणित)", mobile: "9826001122", email: "rajesh@school.in", isClassTeacher: "YES", inchargeClass: "10th - A" },
             "T102": { id: "T102", name: "श्रीमती सुलोचना राय", designation: "उच्च माध्यमिक शिक्षक", code: "EMP-2026-902", dob: "1984-03-22", subject: "माध्यमिक शिक्षक (हिन्दी)", mobile: "9826002233", email: "sulochana@school.in", isClassTeacher: "YES", inchargeClass: "9th - B" }
-        };
-
-        let booksMasterData = {
-            "10th": [ { title: "NCERT हिन्दी (क्षितिज)", sub: "401" }, { title: "NCERT अंग्रेजी (First Flight)", sub: "411" }, { title: "NCERT गणित", sub: "100" }, { title: "NCERT विज्ञान", sub: "200" } ],
-            "9th": [ { title: "NCERT हिन्दी (कृतिका)", sub: "401" }, { title: "NCERT अंग्रेजी (Beehive)", sub: "411" }, { title: "NCERT गणित", sub: "100" } ],
-            "11th": [ { title: "NCERT भौतिकी भाग 1", sub: "PHYSICS" }, { title: "NCERT रसायन विज्ञान", sub: "CHEMISTRY" } ],
-            "12th": [ { title: "NCERT भौतिकी भाग 1 व 2", sub: "PHYSICS" }, { title: "NCERT रसायन विज्ञान", sub: "CHEMISTRY" } ]
         };
 
         window.onload = function() {
@@ -1246,6 +1239,7 @@
             else if (secId === 'consolidated-report') renderConsolidatedReport();
             else if (secId === 'class-exam-report') renderClassExamReport();
             else if (secId === 'book-master') renderBookMaster();
+            else if (secId === 'cloud-settings') loadCloudSettingsUI();
             else if (secId.startsWith('form-')) renderIndividualForm(secId.replace('form-', ''));
 
             if (window.lucide) lucide.createIcons();
