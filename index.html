@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>स्टूडेंट डाटा मैनेजमेंट सिस्टम (SDMS) - मास्टर्स पोर्टल</title>
     
-    <!-- Google Devanagari & Inter Font Support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -155,9 +154,9 @@
                     <span>हेडर सेटिंग्स</span>
                 </button>
 
-                <button onclick="downloadJsonBackup()" class="bg-yellow-500 hover:bg-yellow-600 text-indigo-950 font-black text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center space-x-1">
-                    <i data-lucide="download-cloud" class="w-3.5 h-3.5"></i>
-                    <span>बैकअप डाउनलोड</span>
+                <button onclick="syncPushToCloudAndExternal()" class="bg-yellow-500 hover:bg-yellow-600 text-indigo-950 font-black text-xs px-3 py-1.5 rounded-lg shadow transition flex items-center space-x-1">
+                    <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i>
+                    <span>डेटा सिंक व बैकअप</span>
                 </button>
             </div>
         </div>
@@ -306,7 +305,6 @@
                 </div>
             </div>
 
-            <!-- SECTION 7: CLOUD & EXTERNAL STORAGE SETTINGS (ENHANCED) -->
             <section id="section-cloud-settings" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
@@ -392,7 +390,6 @@
                 </div>
             </section>
 
-            <!-- REST OF SECTIONS -->
             <section id="section-header-setup" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
@@ -426,6 +423,14 @@
                                     <label class="text-slate-700 block mb-0.5">जिला व राज्य (District & State)</label>
                                     <input type="text" id="h_district" class="w-full border rounded px-2.5 py-1.5 font-bold">
                                 </div>
+                                <div>
+                                    <label class="text-slate-700 block mb-0.5">U-DISE Code</label>
+                                    <input type="text" id="h_udiseCode" class="w-full border rounded px-2.5 py-1.5 font-mono font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block mb-0.5">School Code</label>
+                                    <input type="text" id="h_schoolCode" class="w-full border rounded px-2.5 py-1.5 font-mono font-bold">
+                                </div>
                             </div>
                         </div>
 
@@ -452,6 +457,34 @@
                             </div>
                         </div>
 
+                        <div class="bg-sky-50/60 p-3 rounded-lg border border-sky-200 space-y-3">
+                            <h3 class="font-extrabold text-sky-950 text-xs uppercase tracking-wider">3. दस्तावेज वाटरमार्क प्रबंधन (Document Background Watermark):</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="text-slate-700 block mb-0.5">वाटरमार्क स्थिति:</label>
+                                    <select id="h_showWatermark" class="w-full border rounded px-2.5 py-1.5 font-bold bg-white">
+                                        <option value="YES">चालू (Show Watermark)</option>
+                                        <option value="NO">बंद (Disable Watermark)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block mb-0.5">वाटरमार्क प्रकार:</label>
+                                    <select id="h_watermarkType" onchange="toggleWatermarkTypeUI(this.value)" class="w-full border rounded px-2.5 py-1.5 font-bold bg-white">
+                                        <option value="TEXT">1. केवल टेक्स्ट वाटरमार्क (Text)</option>
+                                        <option value="IMAGE">2. लोगो / छवि वाटरमार्क (Image)</option>
+                                    </select>
+                                </div>
+                                <div id="h_watermarkTextBox">
+                                    <label class="text-slate-700 block mb-0.5">वाटरमार्क टेक्स्ट:</label>
+                                    <input type="text" id="h_watermarkText" class="w-full border rounded px-2.5 py-1.5 font-bold text-indigo-950">
+                                </div>
+                                <div id="h_watermarkImageBox" class="hidden col-span-2">
+                                    <label class="text-slate-700 block mb-0.5">वाटरमार्क इमेज URL:</label>
+                                    <input type="text" id="h_watermarkUrl" placeholder="ऑनलाइन वाटरमार्क इमेज का URL" class="w-full border rounded px-2.5 py-1.5 font-mono">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="flex justify-end space-x-2 pt-2 border-t">
                             <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-bold shadow flex items-center space-x-1">
                                 <i data-lucide="check-circle-2" class="w-4 h-4"></i>
@@ -462,49 +495,228 @@
                 </div>
             </section>
 
+            <section id="section-dashboard" class="content-section space-y-4">
+                <div class="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-slate-950 p-4 rounded-2xl shadow-xl border-2 border-yellow-300 gold-glow relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <img id="dashTopperPhoto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="w-24 h-28 object-cover rounded-xl border-4 border-white shadow-2xl bg-white">
+                            <span class="absolute -top-3 -right-3 bg-red-600 text-white font-black text-xs px-2 py-0.5 rounded-full shadow border-2 border-white flex items-center space-x-1">
+                                <span>👑 #1 ओवरऑल स्कूल टॉपर</span>
+                            </span>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="bg-slate-950 text-yellow-400 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-widest shadow">सर्वोच्च अंकधारक</span>
+                            <h2 class="text-xl font-black text-slate-950 tracking-wide" id="dashTopperName">तपस्या तिवारी</h2>
+                            <p class="text-xs font-bold text-slate-900" id="dashTopperDetails">पिता: श्री राजेश तिवारी | कक्षा: 9th - A | स्कॉलर क्र.: 16626</p>
+                            <p class="text-xs font-semibold text-slate-800" id="dashTopperSchool">पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज (रायसेन)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/90 text-white p-3.5 rounded-xl border border-yellow-400 text-center min-w-[160px] shadow-2xl">
+                        <span class="text-[10px] text-yellow-300 font-bold block uppercase">कुल प्राप्त प्राप्तांक:</span>
+                        <span class="text-2xl font-black text-yellow-400 block font-mono" id="dashTopperMarks">455 / 500</span>
+                        <div class="mt-1 pt-1 border-t border-slate-800 flex justify-between items-center text-xs">
+                            <span class="text-emerald-400 font-bold" id="dashTopperPercent">91.0%</span>
+                            <span class="bg-yellow-500 text-slate-950 font-black px-2 py-0.5 rounded text-[10px]" id="dashTopperGrade">A+ GRADE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                    <div class="flex flex-wrap items-center justify-between border-b border-slate-200 pb-2">
+                        <h3 class="text-xs font-bold text-slate-800 flex items-center space-x-1.5">
+                            <i data-lucide="trophy" class="w-4 h-4 text-amber-500"></i>
+                            <span>टॉप 10 मेधावी छात्र सूची (Top 10 Performers Grid)</span>
+                        </h3>
+
+                        <div class="flex flex-wrap items-center gap-2 text-xs">
+                            <div>
+                                <select id="dashClassFilter" onchange="renderDashboardTop10Cards()" class="border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                    <option value="ALL">समस्त कक्षाएं</option>
+                                    <option value="10th">कक्षा 10वीं</option>
+                                    <option value="9th">कक्षा 9वीं</option>
+                                    <option value="11th">कक्षा 11वीं</option>
+                                    <option value="12th">कक्षा 12वीं</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="dashSectionFilter" onchange="renderDashboardTop10Cards()" class="border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                    <option value="ALL">समस्त सेक्शन</option>
+                                    <option value="A">सेक्शन A</option>
+                                    <option value="B">सेक्शन B</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="dashExamFilter" onchange="renderDashboardTop10Cards()" class="border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                    <option value="annual">वार्षिक परीक्षा</option>
+                                    <option value="preboard">प्री-बोर्ड परीक्षा</option>
+                                    <option value="halfYearly">अर्द्धवार्षिक परीक्षा</option>
+                                    <option value="quarterly">त्रैमासिक परीक्षा</option>
+                                    <option value="monthly">मासिक टेस्ट</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="dashTop10CardsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-1">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-xs font-bold text-slate-800 flex items-center space-x-1">
+                                <i data-lucide="bar-chart-3" class="w-4 h-4 text-indigo-600"></i>
+                                <span>कक्षा 9वीं, 10वीं, 11वीं व 12वीं कक्षावार परिणाम</span>
+                            </h3>
+                            <span class="text-[10px] bg-indigo-100 text-indigo-900 font-bold px-2 py-0.5 rounded-full">लाइव प्रतिशत</span>
+                        </div>
+                        <div id="dashClassSummariesGrid" class="space-y-2 text-xs">
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 space-y-2">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-xs font-bold text-slate-800 flex items-center space-x-1">
+                                <i data-lucide="globe" class="w-4 h-4 text-emerald-600"></i>
+                                <span>पूरी शाला का एकजाई परीक्षा परिणाम</span>
+                            </h3>
+                            <span id="dashOverallExamLabel" class="text-[10px] bg-emerald-100 text-emerald-900 font-bold px-2 py-0.5 rounded-full">वार्षिक परीक्षा</span>
+                        </div>
+
+                        <div id="dashSchoolOverallCard" class="bg-emerald-50/70 p-3 rounded-xl border border-emerald-200 space-y-2 text-xs">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="section-student-entry" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
-                        <h2 class="text-base font-bold text-indigo-950 flex items-center space-x-1.5">
-                            <i data-lucide="user-plus" class="w-5 h-5 text-indigo-600"></i>
-                            <span>मास्टर्स ऑनलाइन छात्र प्रवेश व संपादन फ़ॉर्म</span>
-                        </h2>
+                        <div>
+                            <h2 class="text-base font-bold text-indigo-950 flex items-center space-x-1.5">
+                                <i data-lucide="user-plus" class="w-5 h-5 text-indigo-600"></i>
+                                <span>मास्टर्स ऑनलाइन छात्र प्रवेश व संपादन फ़ॉर्म</span>
+                            </h2>
+                            <p class="text-xs text-slate-500">म.प्र. बोर्ड, समग्र छात्रवृत्ति व पीएमश्री तीनों फ़ॉर्म्स हेतु 50+ एकीकृत कॉलम</p>
+                        </div>
                         <button type="button" onclick="resetMasterStudentForm()" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg font-bold shadow">नया फ़ॉर्म खाली करें</button>
                     </div>
 
                     <form id="masterStudentForm" onsubmit="handleMasterStudentSave(event)" class="space-y-4 text-xs font-semibold">
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <div>
-                                <label class="text-slate-700 block">SCHOLAR NO. (स्कॉलर क्र.) *</label>
-                                <input type="text" id="f_scholarNo" required class="w-full border rounded px-2 py-1 font-bold text-indigo-950">
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-3">
+                            <h3 class="font-extrabold text-indigo-900 text-xs uppercase tracking-wider">1. छात्र फोटो व बुनियादी विद्यालय विवरण:</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
+                                <div class="col-span-1 text-center">
+                                    <img id="formPhotoPreview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="w-24 h-28 object-cover rounded-lg border-2 border-indigo-900 mx-auto shadow-sm">
+                                    <div class="mt-1 space-y-1">
+                                        <input type="file" id="f_photoFile" onchange="previewStudentPhoto(this)" class="text-[10px] text-slate-500 w-full">
+                                        <input type="text" id="f_photoUrl" placeholder="या ऑनलाइन फ़ोटो URL" oninput="document.getElementById('formPhotoPreview').src=this.value" class="w-full border rounded px-1.5 py-0.5 text-[10px]">
+                                    </div>
+                                </div>
+                                <div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="text-slate-700 block">SCHOLAR NO. (स्कॉलर क्र.) *</label>
+                                        <input type="text" id="f_scholarNo" required class="w-full border rounded px-2 py-1 font-bold text-indigo-950">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">RollNumber (अनुक्रमांक)</label>
+                                        <input type="text" id="f_rollNo" class="w-full border rounded px-2 py-1 font-mono">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">enrollment (नामांकन क्रमांक)</label>
+                                        <input type="text" id="f_enrollmentNo" class="w-full border rounded px-2 py-1 font-mono">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेशित कक्षा *</label>
+                                        <select id="f_targetClass" onchange="renderFormClassBookCheckboxes(this.value)" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                            <option value="10th">10th Standard</option>
+                                            <option value="9th">9th Standard</option>
+                                            <option value="11th">11th Standard</option>
+                                            <option value="12th">12th Standard</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">सेक्शन (Section) *</label>
+                                        <select id="f_section" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                            <option value="A">Section A</option>
+                                            <option value="B">Section B</option>
+                                            <option value="C">Section C</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">Sr.No. (एस.आर. क्र.)</label>
+                                        <input type="text" id="f_srNo" class="w-full border rounded px-2 py-1">
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label class="text-slate-700 block">Candidate (FULL NAME IN ENGLISH) *</label>
-                                <input type="text" id="f_nameEng" required class="w-full border rounded px-2 py-1 font-bold uppercase">
+                        </div>
+
+                        <div class="bg-indigo-50/50 p-3 rounded-lg border border-indigo-200 space-y-2">
+                            <h3 class="font-extrabold text-indigo-900 text-xs uppercase tracking-wider">2. व्यक्तिगत जानकारी (Personal Details):</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                                <div>
+                                    <label class="text-slate-700 block">Candidate (नाम हिन्दी में)</label>
+                                    <input type="text" id="f_nameHindi" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">Candidate (FULL NAME IN ENGLISH) *</label>
+                                    <input type="text" id="f_nameEng" required class="w-full border rounded px-2 py-1 font-bold uppercase">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">father name (पिता का नाम) *</label>
+                                    <input type="text" id="f_fatherName" required class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">mother name (माता का नाम) *</label>
+                                    <input type="text" id="f_motherName" required class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">DOB (जन्म तिथि) *</label>
+                                    <input type="date" id="f_dob" required class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">SEX (लिंग)</label>
+                                    <select id="f_gender" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="FEMALE">FEMALE (बालिका)</option>
+                                        <option value="MALE">MALE (बालक)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">CATEGORY (संवर्ग / वर्ग)</label>
+                                    <select id="f_category" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="OBC">OBC</option>
+                                        <option value="SC">SC</option>
+                                        <option value="ST">ST</option>
+                                        <option value="GEN">GENERAL</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MOBILE (मोबाईल नं.)</label>
+                                    <input type="tel" id="f_mobile" class="w-full border rounded px-2 py-1 font-bold text-indigo-900">
+                                </div>
                             </div>
-                            <div>
-                                <label class="text-slate-700 block">father name (पिता का नाम) *</label>
-                                <input type="text" id="f_fatherName" required class="w-full border rounded px-2 py-1 font-bold">
-                            </div>
-                            <div>
-                                <label class="text-slate-700 block">mother name (माता का नाम) *</label>
-                                <input type="text" id="f_motherName" required class="w-full border rounded px-2 py-1 font-bold">
-                            </div>
-                            <div>
-                                <label class="text-slate-700 block">प्रवेशित कक्षा *</label>
-                                <select id="f_targetClass" class="w-full border rounded px-2 py-1 font-bold bg-white">
-                                    <option value="10th">10th Standard</option>
-                                    <option value="9th">9th Standard</option>
-                                    <option value="11th">11th Standard</option>
-                                    <option value="12th">12th Standard</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-slate-700 block">सेक्शन (Section) *</label>
-                                <select id="f_section" class="w-full border rounded px-2 py-1 font-bold bg-white">
-                                    <option value="A">Section A</option>
-                                    <option value="B">Section B</option>
-                                </select>
+                        </div>
+
+                        <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-200 space-y-2">
+                            <h3 class="font-extrabold text-amber-950 text-xs uppercase tracking-wider">3. शासकीय आईडी व बैंक खाता:</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                                <div>
+                                    <label class="text-slate-700 block">APAAR ID (अपार आईडी)</label>
+                                    <input type="text" id="f_apaarId" class="w-full border rounded px-2 py-1 font-mono font-bold text-indigo-900">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">CHILD ID (चाइल्ड समग्र ID)</label>
+                                    <input type="text" id="f_childId" class="w-full border rounded px-2 py-1 font-mono font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">A/C NO (बैंक खाता क्रमांक)</label>
+                                    <input type="text" id="f_bankAccount" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">IFSC (बैंक आईएफएससी कोड)</label>
+                                    <input type="text" id="f_bankIfsc" class="w-full border rounded px-2 py-1 font-mono uppercase">
+                                </div>
                             </div>
                         </div>
 
@@ -614,7 +826,7 @@
             showWatermark: localStorage.getItem('sdms_sc_wmEnable') || "YES"
         };
 
-        // ENHANCED CLOUD & EXTERNAL STORAGE CONFIG STATE
+        // CLOUD & EXTERNAL REDUNDANCY SYNC STATE
         let cloudConfig = {
             apiUrl: localStorage.getItem('sdms_cloud_url') || '',
             apiKey: localStorage.getItem('sdms_cloud_key') || '',
@@ -739,7 +951,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* CLOUD & EXTERNAL STORAGE LOGIC */
+        /* CLOUD & EXTERNAL STORAGE REDUNDANCY LOGIC */
         function loadCloudSettingsUI() {
             const urlInput = document.getElementById("cloudApiUrlInput");
             const keyInput = document.getElementById("cloudApiKeyInput");
@@ -828,7 +1040,7 @@
                     },
                     body: JSON.stringify(fullPayload)
                 })
-                .then(() => showToast("डेटा क्लाउड स्टोरेज एवं एक्सटर्नल ड्राइव दोनों पर सुरक्षित हो गया!"))
+                .then(() => showToast("डेटा दोनों जगह (क्लाउड व एक्सटर्नल ड्राइव) सुरक्षित हो गया!"))
                 .catch(() => showToast("एक्सटर्नल ड्राइव बैकअप फ़ाइल डाउनलोड हो गई!", "success"));
             } else {
                 showToast("एक्सटर्नल स्टोरेज (USB/Local) बैकअप फ़ाइल डाउनलोड हो गई!");
@@ -1070,7 +1282,6 @@
                     </td>
                 </tr>
             `).join('');
-            document.getElementById("gridFilteredCountBadge").innerText = `${Object.keys(studentsData).length} छात्र प्रदर्शित`;
         }
 
         function loadStudentData(id) {
@@ -1130,7 +1341,6 @@
                     </div>
                 </div>
             `).join('');
-            document.getElementById("pcardCountBadge").innerText = `प्रदर्शित: ${Object.keys(studentsData).length}`;
         }
 
         function renderAdmitCards() {
@@ -1140,7 +1350,6 @@
                     <p class="text-xs font-bold mt-2">Student: ${st.nameEng} | Roll: ${st.rollNo || '-'} | Scholar: ${st.scholarNo}</p>
                 </div>
             `).join('');
-            document.getElementById("admitCountBadge").innerText = Object.keys(studentsData).length;
         }
 
         function renderMarksheets() {
@@ -1150,7 +1359,6 @@
                     <p class="font-bold mt-2">Student: ${st.nameEng} | Class: ${st.targetClass}</p>
                 </div>
             `).join('');
-            document.getElementById("markCountBadge").innerText = Object.keys(studentsData).length;
         }
 
         function renderTeacherCard() {
