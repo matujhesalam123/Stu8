@@ -1347,7 +1347,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 12: EXAM MARKS SPREADSHEET ENTRY -->
+            <!-- SECTION 12: EXAM MARKS SPREADSHEET ENTRY WITH MONTH SELECTOR FOR MONTHLY TEST -->
             <section id="section-exam-marks" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
                     <div class="flex flex-wrap items-center justify-between border-b pb-3 gap-2">
@@ -1657,7 +1657,6 @@
 
         // EXAM MARKS STORE WITH LOCK & MONTH SUPPORT
         let examMarksStore = {}; 
-        // Structure: { [studentId]: { [examKey]: { isLocked: false, subjects: { [code]: { th: 50, pr: 20 } } } } }
 
         let gridSortColumn = 'scholarNo';
         let gridSortAscending = true;
@@ -2630,13 +2629,3 @@
     </script>
 </body>
 </html>
-```
-
----
-
-### 💡 आपके इस नए और अंतिम अपडेट में क्या-क्या शामिल किया गया है:
-1. **0. शाला हेडर, लोगो व वाटरमार्क सेटिंग्स:** स्कूल का नाम, पता, UDISE, लोगो अपलोड/URL और वॉटरमार्क (टेक्स्ट/इमेज) मैनेज करने की लाइव व्यवस्था जो सभी फॉर्म्स और कार्ड्स पर तुरंत रिफ्लेक्ट होती है।
-2. **मासिक टेस्ट में 'माह चयन' का नया विकल्प:** 5-स्तरीय परीक्षा प्रविष्टि में "मासिक टेस्ट" चुनते ही जुलाई से फरवरी तक के माह चयन का नया ड्रॉपडाउन दिखाई देता है और माहवार अंक अलग से सेव होते हैं।
-3. **विषय व विषय कोड मास्टर (Subject Master):** विषय, कोड और सत्र (Session) की प्रविष्टि, संपादन, विलोपन (CRUD) और लॉक/अनलॉक सुरक्षा के साथ।
-4. **पुस्तकालय व पाठ्यपुस्तक मास्टर (Library Master):** कक्षा, विषय कोड, सत्र एवं पुस्तक शीर्षक की प्रविष्टि, संपादन, विलोपन और सुरक्षा लॉक के साथ।
-5. **नेविगेशन व डेटा पूर्णता:** साइडबार का कोई भी अनुभाग या पुरानी अंकसूची/एडमिट कार्ड/फ़ॉर्म फीचर गायब नहीं है।
