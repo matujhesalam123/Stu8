@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>स्टूडेंट डाटा मैनेजमेंट सिस्टम (SDMS) - मास्टर्स पोर्टल</title>
     
+    <!-- Google Devanagari Font Support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- jsPDF & html2canvas for PDF & Image Export -->
+    <!-- jsPDF & html2canvas for PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- SheetJS for Excel Export -->
@@ -21,7 +22,7 @@
 
     <style>
         body {
-            font-family: 'Noto Sans Devanagari', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -29,7 +30,7 @@
         @media print {
             .no-print { display: none !important; }
             .print-only { display: block !important; }
-            body { background: white !important; color: black !important; padding: 0 !important; margin: 0 !important; }
+            body { background: white !important; color: black !important; padding: 0 !important; margin: 0 !important; font-family: 'Noto Sans Devanagari', sans-serif !important; }
             .content-section { border: none !important; box-shadow: none !important; display: block !important; }
             .page-break { page-break-after: always; break-after: page; }
             .letter-box { border-color: #000000 !important; }
@@ -124,6 +125,7 @@
             justify-content: center;
             pointer-events: none;
             z-index: 0;
+            opacity: 0.08;
             user-select: none;
         }
 
@@ -138,13 +140,13 @@
     <header class="bg-indigo-950 text-white shadow-lg border-b border-indigo-800 sticky top-0 z-40 no-print">
         <div class="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('dashboard')">
-                <div id="topHeaderLogoBox" class="bg-yellow-500 text-indigo-950 p-1.5 rounded-lg font-black text-xl flex items-center justify-center shadow w-10 h-10 overflow-hidden shrink-0">
+                <div id="topHeaderLogoBox" class="bg-yellow-500 text-indigo-950 p-1.5 rounded-lg font-black text-xl flex items-center justify-center shadow w-10 h-10 overflow-hidden">
                     <i data-lucide="graduation-cap" class="w-6 h-6" id="topHeaderFallbackIcon"></i>
                     <img id="topHeaderLogoImg" src="" class="w-full h-full object-contain hidden">
                 </div>
                 <div>
                     <h1 class="text-base font-extrabold tracking-wide text-yellow-400">SDMS - मास्टर्स स्टूडेंट डाटा मैनेजमेंट पोर्टल</h1>
-                    <p class="text-[10px] text-indigo-200 font-bold" id="headerSchoolLabel">पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज (रायसेन)</p>
+                    <p class="text-[10px] text-indigo-200 font-semibold" id="headerSchoolLabel">पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज (रायसेन)</p>
                 </div>
             </div>
             
@@ -271,6 +273,7 @@
 
         <main class="md:col-span-3 lg:col-span-4 space-y-4">
 
+            <!-- GLOBAL EXPORT TOOLBAR -->
             <div class="bg-white p-2.5 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-2 no-print">
                 <div class="flex items-center space-x-1.5 text-xs font-bold text-slate-700">
                     <i data-lucide="download" class="w-4 h-4 text-indigo-600"></i>
@@ -305,6 +308,7 @@
                 </div>
             </div>
 
+            <!-- SECTION 7: CLOUD & EXTERNAL STORAGE REDUNDANCY -->
             <section id="section-cloud-settings" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
@@ -319,7 +323,7 @@
                         यहाँ से आप किसी भी स्कूल के समस्त छात्र, शिक्षक और परीक्षा रिकॉर्ड्स को सीधे <strong>क्लाउड स्टोरेज (REST API / Webhook)</strong> तथा <strong>एक्सटर्नल स्टोरेज (USB / Local Backup File)</strong> पर एक साथ भेज सकते हैं। ऑटो-सिंक चालू रहने पर नया रिकॉर्ड सेव होते ही डेटा दोनों जगहों पर सुरक्षित हो जाता है जिससे एक जगह से हटने पर भी दूसरी जगह सुरक्षित बना रहता है।
                     </p>
 
-                    <!-- 1. Cloud Storage API Config -->
+                    <!-- A. Cloud Storage API Config -->
                     <div class="bg-sky-50/60 p-3.5 rounded-xl border border-sky-200 space-y-3 text-xs font-semibold">
                         <div class="flex justify-between items-center border-b border-sky-200 pb-2">
                             <h3 class="text-sky-950 font-extrabold uppercase flex items-center space-x-1.5">
@@ -336,7 +340,7 @@
                             </div>
                             <div>
                                 <label class="block text-slate-700 mb-1">Secret API Key / Auth Token (ऐच्छिक):</label>
-                                <input type="password" id="cloudApiKeyInput" placeholder="Secret Token Key" class="w-full border rounded px-2.5 py-1.5 font-mono text-xs bg-white outline-none">
+                                <input type="password" id="cloudApiKeyInput" placeholder="Secret Token Key" class="w-full border rounded px-2.5 py-1.5 font-mono text-xs outline-none">
                             </div>
                         </div>
 
@@ -353,7 +357,7 @@
                         </div>
                     </div>
 
-                    <!-- 2. External Storage & Redundancy Sync Actions -->
+                    <!-- B. External Storage & Redundancy Sync Actions -->
                     <div class="bg-indigo-50/60 p-3.5 rounded-xl border border-indigo-200 space-y-3 text-xs font-semibold">
                         <h3 class="text-indigo-950 font-extrabold uppercase flex items-center space-x-1.5 border-b border-indigo-200 pb-2">
                             <i data-lucide="hard-drive" class="w-4 h-4 text-indigo-700"></i>
@@ -390,6 +394,7 @@
                 </div>
             </section>
 
+            <!-- SECTION 0: HEADER & SCHOOL SETUP MASTER -->
             <section id="section-header-setup" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
@@ -495,6 +500,7 @@
                 </div>
             </section>
 
+            <!-- SECTION 1: DASHBOARD -->
             <section id="section-dashboard" class="content-section space-y-4">
                 <div class="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 text-slate-950 p-4 rounded-2xl shadow-xl border-2 border-yellow-300 gold-glow relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
                     <div class="flex items-center space-x-4">
@@ -590,6 +596,7 @@
                 </div>
             </section>
 
+            <!-- SECTION 2: STUDENT ENTRY FORM -->
             <section id="section-student-entry" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
@@ -727,6 +734,7 @@
                 </div>
             </section>
 
+            <!-- SECTION 3: MASTER SEARCH GRID -->
             <section id="section-master-grid" class="content-section space-y-3 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 space-y-3">
                     <div class="flex flex-wrap items-center justify-between border-b pb-2 gap-2">
@@ -745,6 +753,7 @@
                 </div>
             </section>
 
+            <!-- SECTION 4: COMBINED FORMS -->
             <section id="section-combined-forms" class="content-section space-y-6 hidden">
                 <div id="exportableCombinedForms" class="space-y-8 bg-white p-4 rounded-xl border border-slate-300 shadow-lg relative">
                     <div id="combinedForm1Container"></div>
@@ -755,50 +764,62 @@
                 </div>
             </section>
 
+            <!-- SECTION 5: PROFILE CARD -->
             <section id="section-profile-card" class="content-section space-y-4 hidden">
                 <div id="exportableProfileCard" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
+            <!-- SECTION 6: ADMIT CARD -->
             <section id="section-admit-card" class="content-section space-y-4 hidden">
                 <div id="exportableAdmitCard" class="space-y-8"></div>
             </section>
 
+            <!-- SECTION 7: MARKSHEET -->
             <section id="section-marksheet" class="content-section space-y-4 hidden">
                 <div id="exportableMarksheet" class="space-y-8"></div>
             </section>
 
+            <!-- SECTION 8: TEACHER CARD -->
             <section id="section-teacher-card" class="content-section space-y-4 hidden">
                 <div id="exportableTeacherCard" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
 
+            <!-- SECTION 9: MANAGEMENT PANEL -->
             <section id="section-management-panel" class="content-section space-y-4 hidden">
                 <div id="managementPanelContent"></div>
             </section>
 
+            <!-- SECTION 10: SUBJECT MASTER -->
             <section id="section-subject-master" class="content-section space-y-4 hidden">
                 <div id="subjectMasterContainer"></div>
             </section>
 
+            <!-- SECTION 11: MARKS CONFIG -->
             <section id="section-marks-config" class="content-section space-y-4 hidden">
                 <div id="marksConfigContainer"></div>
             </section>
 
+            <!-- SECTION 12: EXAM MARKS ENTRY -->
             <section id="section-exam-marks" class="content-section space-y-4 hidden">
                 <div id="examMarksEntryTableContainer"></div>
             </section>
 
+            <!-- SECTION 13: CONSOLIDATED REPORT -->
             <section id="section-consolidated-report" class="content-section space-y-4 hidden">
                 <div id="consolidatedReportContainer"></div>
             </section>
 
+            <!-- SECTION 14: CLASS EXAM REPORT -->
             <section id="section-class-exam-report" class="content-section space-y-4 hidden">
                 <div id="classExamReportContainer"></div>
             </section>
 
+            <!-- SECTION 15: BOOK MASTER -->
             <section id="section-book-master" class="content-section space-y-4 hidden">
                 <div id="bookMasterContainer"></div>
             </section>
 
+            <!-- OFFICIAL PRINTABLE FORMS -->
             <section id="section-form-mp-board" class="content-section space-y-4 hidden"><div id="formMpBoardContainer"></div></section>
             <section id="section-form-sssm" class="content-section space-y-4 hidden"><div id="formSssmContainer"></div></section>
             <section id="section-form-pm-shri" class="content-section space-y-4 hidden"><div id="formPmShriContainer"></div></section>
@@ -951,7 +972,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* CLOUD & EXTERNAL STORAGE REDUNDANCY LOGIC */
         function loadCloudSettingsUI() {
             const urlInput = document.getElementById("cloudApiUrlInput");
             const keyInput = document.getElementById("cloudApiKeyInput");
@@ -1020,7 +1040,6 @@
                 backupTimestamp: new Date().toISOString()
             };
 
-            // 1. External Storage (Download JSON backup file representing USB drive / External storage)
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullPayload, null, 2));
             const dlAnchor = document.createElement('a');
             dlAnchor.setAttribute("href", dataStr);
@@ -1029,7 +1048,6 @@
             dlAnchor.click();
             dlAnchor.remove();
 
-            // 2. Cloud Server Push (if API URL configured)
             if (cloudConfig.apiUrl) {
                 showToast("क्लाउड सर्वर पर डेटा सिंक किया जा रहा है...", "success");
                 fetch(cloudConfig.apiUrl, {
@@ -1095,7 +1113,6 @@
             });
         }
 
-        /* HEADER MASTER SETTINGS */
         function loadHeaderSetupForm() {
             document.getElementById("h_schoolNameHindi").value = schoolHeaderData.schoolNameHindi || '';
             document.getElementById("h_schoolNameEng").value = schoolHeaderData.schoolNameEng || '';
@@ -1314,7 +1331,6 @@
             populateSidebarSelectors();
             showToast("छात्र रिकॉर्ड सुरक्षित किया गया!");
 
-            // Auto-Sync to Cloud & External storage if enabled
             if (cloudConfig.autoSync) {
                 syncPushToCloudAndExternal();
             }
