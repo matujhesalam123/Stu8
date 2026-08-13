@@ -154,7 +154,6 @@
 
     <div class="flex-1 max-w-7xl w-full mx-auto p-2 sm:p-4 md:p-5 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
 
-        <!-- PERSISTENT LEFT SIDEBAR PANEL -->
         <aside class="md:col-span-1 bg-white rounded-xl shadow-sm p-3 border border-slate-200 no-print flex flex-col space-y-3 sticky top-16 h-fit">
             
             <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-2 space-y-1.5">
@@ -589,7 +588,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: MASTER GRID -->
+            <!-- SECTION 3: MASTER SEARCH GRID -->
             <section id="section-master-grid" class="content-section space-y-3 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 space-y-3">
                     <div class="flex flex-wrap items-center justify-between border-b pb-2 gap-2">
@@ -699,16 +698,16 @@
                 </div>
             </section>
 
-            <!-- SECTION 12: EXAM MARKS ENTRY -->
+            <!-- SECTION 12: EXAM MARKS ENTRY WITH MONTH SELECTOR -->
             <section id="section-exam-marks" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
                     <div class="flex flex-wrap items-center justify-between border-b pb-3 gap-2">
                         <div>
                             <h2 class="text-sm font-extrabold text-indigo-950 flex items-center space-x-1.5">
                                 <i data-lucide="pen-tool" class="w-5 h-5 text-rose-600"></i>
-                                <span>3. 5-स्तरीय थ्योरी/प्रैक्टिकल परीक्षा अंक प्रविष्टि एवं लॉक सिस्टम</span>
+                                <span>3. 5-स्तरीय थ्योरी/प्रैक्टिकल परीक्षा अंक प्रविष्टि (मासिक टेस्ट माह चयन सहित)</span>
                             </h2>
-                            <p class="text-[11px] text-slate-500 font-bold">थ्योरी व प्रैक्टिकल ऑटो-सम, लॉक/अनलॉक सुरक्षा एवं एडवांस्ड स्कोप फ़िल्टर</p>
+                            <p class="text-[11px] text-slate-500 font-bold">थ्योरी व प्रैक्टिकल ऑटो-सम, लॉक/अनलॉक सुरक्षा एवं माह आधारित मासिक टेस्ट प्रविष्टि</p>
                         </div>
 
                         <div class="flex flex-wrap items-center gap-2">
@@ -727,7 +726,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2 text-xs font-bold bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-2 text-xs font-bold bg-slate-50 p-3 rounded-lg border border-slate-200">
                         <div>
                             <label class="block text-slate-700 text-[10px] uppercase mb-0.5">1. दायरा (Scope):</label>
                             <select id="examScopeSelect" onchange="handleExamScopeChange()" class="w-full border rounded px-2 py-1 font-black bg-white text-indigo-950 border-indigo-300">
@@ -764,12 +763,27 @@
 
                         <div>
                             <label class="block text-slate-700 text-[10px] uppercase mb-0.5">4. परीक्षा स्तर:</label>
-                            <select id="examMarksTypeSelect" onchange="renderExamMarksEntryTable()" class="w-full border rounded px-2 py-1 font-black bg-rose-50 text-rose-950 border-rose-300">
+                            <select id="examMarksTypeSelect" onchange="handleExamTypeChange()" class="w-full border rounded px-2 py-1 font-black bg-rose-50 text-rose-950 border-rose-300">
                                 <option value="annual">वार्षिक परीक्षा (Annual)</option>
                                 <option value="preboard">प्री-बोर्ड परीक्षा (Pre-Board)</option>
                                 <option value="halfYearly">अर्द्धवार्षिक परीक्षा (Half-Yearly)</option>
                                 <option value="quarterly">त्रैमासिक परीक्षा (Quarterly)</option>
-                                <option value="monthly">मासिक टेस्ट (Monthly)</option>
+                                <option value="monthly">मासिक टेस्ट (Monthly Test)</option>
+                            </select>
+                        </div>
+
+                        <!-- MONTH SELECTOR (Appears only when monthly test is selected) -->
+                        <div id="examMonthlyMonthBox" class="hidden">
+                            <label class="block text-slate-700 text-[10px] uppercase mb-0.5">माह चुनें (Month):</label>
+                            <select id="examMonthlyMonthSelect" onchange="renderExamMarksEntryTable()" class="w-full border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                <option value="july">जुलाई (July)</option>
+                                <option value="august">अगस्त (August)</option>
+                                <option value="september">सितंबर (September)</option>
+                                <option value="october">अक्टूबर (October)</option>
+                                <option value="november">नवंबर (November)</option>
+                                <option value="december">दिसंबर (December)</option>
+                                <option value="january">जनवरी (January)</option>
+                                <option value="february">फरवरी (February)</option>
                             </select>
                         </div>
 
@@ -1389,14 +1403,109 @@
 
         function handleExamScopeChange() { renderExamMarksEntryTable(); }
 
+        function handleExamTypeChange() {
+            const examType = document.getElementById("examMarksTypeSelect").value;
+            const monthBox = document.getElementById("examMonthlyMonthBox");
+            if (monthBox) {
+                if (examType === 'monthly') monthBox.classList.remove('hidden');
+                else monthBox.classList.add('hidden');
+            }
+            renderExamMarksEntryTable();
+        }
+
         function renderExamMarksEntryTable() {
             const container = document.getElementById("examMarksEntryTableContainer");
             if (!container) return;
-            container.innerHTML = `<div class="p-4 text-center font-bold text-slate-700 bg-white">5-स्तरीय परीक्षा अंक प्रविष्टि (थ्योरी व प्रैक्टिकल ऑटो-सम) मोड्यूल सक्रिय है।</div>`;
+
+            const cls = document.getElementById("examMarksClassSelect").value;
+            const sec = document.getElementById("examMarksSectionSelect").value;
+            const examType = document.getElementById("examMarksTypeSelect").value;
+            const month = document.getElementById("examMonthlyMonthSelect") ? document.getElementById("examMonthlyMonthSelect").value : 'july';
+            const activeExamKey = examType === 'monthly' ? `monthly_${month}` : examType;
+
+            let list = Object.values(studentsData).filter(st => st.targetClass === cls && st.section === sec);
+
+            container.innerHTML = `
+                <div class="p-3 bg-indigo-950 text-white font-bold text-xs flex justify-between items-center">
+                    <span>कक्षा ${cls} (${sec}) - परीक्षा: ${examType.toUpperCase()} ${examType === 'monthly' ? '[' + month.toUpperCase() + ']' : ''}</span>
+                    <span class="text-yellow-400">कुल छात्र: ${list.length}</span>
+                </div>
+                <table class="w-full text-xs border-collapse text-left">
+                    <thead class="bg-slate-200 text-slate-800 font-bold uppercase">
+                        <tr>
+                            <th class="p-2 border">स्कॉलर</th>
+                            <th class="p-2 border">छात्र का नाम</th>
+                            <th class="p-2 border text-center">हिन्दी (Th/Pr)</th>
+                            <th class="p-2 border text-center">अंग्रेजी (Th/Pr)</th>
+                            <th class="p-2 border text-center">गणित/संस्कृत (Th/Pr)</th>
+                            <th class="p-2 border text-center">कुल योग</th>
+                            <th class="p-2 border text-center">स्टेटस / लॉक</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y bg-white font-semibold">
+                        ${list.map(st => {
+                            if (!examMarksStore[st.id]) examMarksStore[st.id] = {};
+                            if (!examMarksStore[st.id][activeExamKey]) examMarksStore[st.id][activeExamKey] = { isLocked: false, th1: 60, pr1: 15, th2: 55, pr2: 12, th3: 50, pr3: 10 };
+                            let rec = examMarksStore[st.id][activeExamKey];
+                            let total = (parseFloat(rec.th1)||0) + (parseFloat(rec.pr1)||0) + (parseFloat(rec.th2)||0) + (parseFloat(rec.pr2)||0) + (parseFloat(rec.th3)||0) + (parseFloat(rec.pr3)||0);
+                            
+                            return `
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 border font-mono">${st.scholarNo}</td>
+                                    <td class="p-2 border font-bold text-indigo-950">${st.nameHindi || st.nameEng}</td>
+                                    <td class="p-2 border text-center"><input type="number" ${rec.isLocked ? 'disabled' : ''} value="${rec.th1}" onchange="updateExamMark('${st.id}','${activeExamKey}','th1',this.value)" class="w-12 border text-center rounded">/<input type="number" ${rec.isLocked ? 'disabled' : ''} value="${rec.pr1}" onchange="updateExamMark('${st.id}','${activeExamKey}','pr1',this.value)" class="w-12 border text-center rounded"></td>
+                                    <td class="p-2 border text-center"><input type="number" ${rec.isLocked ? 'disabled' : ''} value="${rec.th2}" onchange="updateExamMark('${st.id}','${activeExamKey}','th2',this.value)" class="w-12 border text-center rounded">/<input type="number" ${rec.isLocked ? 'disabled' : ''} value="${rec.pr2}" onchange="updateExamMark('${st.id}','${activeExamKey}','pr2',this.value)" class="w-12 border text-center rounded"></td>
+                                    <td class="p-2 border text-center"><input type="number" ${rec.isLocked ? 'disabled' : ''} value="${rec.th3}" onchange="updateExamMark('${st.id}','${activeExamKey}','th3',this.value)" class="w-12 border text-center rounded">/<input type="number" ${rec.isLocked ? 'disabled' : ''} value="${rec.pr3}" onchange="updateExamMark('${st.id}','${activeExamKey}','pr3',this.value)" class="w-12 border text-center rounded"></td>
+                                    <td class="p-2 border text-center font-mono font-black text-indigo-900">${total} / 300</td>
+                                    <td class="p-2 border text-center">
+                                        <button onclick="toggleStudentMarkLock('${st.id}','${activeExamKey}')" class="px-2 py-0.5 rounded text-[10px] font-bold ${rec.isLocked ? 'bg-amber-100 text-amber-900' : 'bg-emerald-100 text-emerald-900'}">
+                                            ${rec.isLocked ? '🔒 Locked' : '🔓 Editable'}
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
         }
 
-        function bulkToggleMarksLock(isLock) { showToast(isLock ? "चयनित समूह लॉक कर दिया गया!" : "समूह अनलॉक किया गया!"); }
-        function saveAllExamMarks() { showToast("अंक सफलतापूर्वक सुरक्षित कर दिए गए!"); }
+        function updateExamMark(stId, examKey, field, val) {
+            if (!examMarksStore[stId]) examMarksStore[stId] = {};
+            if (!examMarksStore[stId][examKey]) examMarksStore[stId][examKey] = { isLocked: false };
+            examMarksStore[stId][examKey][field] = parseFloat(val) || 0;
+            renderExamMarksEntryTable();
+        }
+
+        function toggleStudentMarkLock(stId, examKey) {
+            if (!examMarksStore[stId]) examMarksStore[stId] = {};
+            if (!examMarksStore[stId][examKey]) examMarksStore[stId][examKey] = { isLocked: false };
+            examMarksStore[stId][examKey].isLocked = !examMarksStore[stId][examKey].isLocked;
+            renderExamMarksEntryTable();
+            showToast(examMarksStore[stId][examKey].isLocked ? "अंक लॉक कर दिए गए हैं!" : "अंक अनलॉक कर दिए गए हैं!");
+        }
+
+        function bulkToggleMarksLock(isLock) {
+            const cls = document.getElementById("examMarksClassSelect").value;
+            const sec = document.getElementById("examMarksSectionSelect").value;
+            const examType = document.getElementById("examMarksTypeSelect").value;
+            const month = document.getElementById("examMonthlyMonthSelect") ? document.getElementById("examMonthlyMonthSelect").value : 'july';
+            const activeExamKey = examType === 'monthly' ? `monthly_${month}` : examType;
+
+            Object.values(studentsData).forEach(st => {
+                if (st.targetClass === cls && st.section === sec) {
+                    if (!examMarksStore[st.id]) examMarksStore[st.id] = {};
+                    if (!examMarksStore[st.id][activeExamKey]) examMarksStore[st.id][activeExamKey] = { isLocked: isLock };
+                    else examMarksStore[st.id][activeExamKey].isLocked = isLock;
+                }
+            });
+            renderExamMarksEntryTable();
+            showToast(isLock ? "चयनित समूह के सभी अंक लॉक कर दिए गए!" : "समूह अनलॉक किया गया!");
+        }
+
+        function saveAllExamMarks() {
+            showToast("समस्त परीक्षा अंक सफलतापूर्वक सुरक्षित कर दिए गए!");
+        }
         
         function loadCloudSettingsUI() {
             if (document.getElementById("cloudApiUrl")) document.getElementById("cloudApiUrl").value = cloudConfig.apiUrl;
@@ -1451,6 +1560,7 @@
                         const parsed = JSON.parse(e.target.result);
                         if (parsed.students) studentsData = parsed.students;
                         if (parsed.teachers) teachersData = parsed.teachers;
+                        if (parsed.marks) examMarksStore = parsed.marks;
                         if (parsed.branding) { schoolBranding = parsed.branding; applySchoolBrandingGlobal(); }
                         populateSidebarSelectors();
                         showToast("डेटाबेस सफलतापूर्वक रीस्टोर हो गया!");
@@ -1590,7 +1700,7 @@
 
         function renderSubjectMaster() {
             const container = document.getElementById("subjectMasterContainer");
-            if (container) container.innerHTML = `<div class="p-4 bg-purple-50 border rounded text-xs font-bold">10th, 9th, 11th, 12th विषय व विषय कोड मास्टर सक्रिय है।</div>`;
+            if (container) container.innerHTML = `<div class="p-4 bg-purple-50 border rounded text-xs font-bold">विषय व विषय कोड मास्टर सक्रिय है।</div>`;
         }
 
         function renderMarksConfig() {
@@ -1613,7 +1723,7 @@
             if (container) container.innerHTML = `<div class="p-4 bg-amber-50 border rounded text-xs font-bold">पुस्तकालय व पाठ्यपुस्तक मास्टर उपलब्ध है।</div>`;
         }
 
-        function openTeacherModal() { showToast("शिक्षक फॉर्म ओपन किया गया!"); }
+        function openTeacherModal() { showToast("शिक्षक फ़ॉर्म ओपन किया गया!"); }
     </script>
 </body>
 </html>
