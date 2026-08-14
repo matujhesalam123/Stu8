@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>स्टूडेंट डाटा मैनेजमेंट सिस्टम (SDMS) - मास्टर्स पोर्टल</title>
     
-    <!-- Google Devanagari Font Support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -484,7 +483,7 @@
                     </div>
 
                     <form id="masterStudentForm" onsubmit="handleMasterStudentSave(event)" class="space-y-4 text-xs font-semibold">
-                        <!-- Basic & School Info -->
+                        <!-- Part 1: Basic & School Info -->
                         <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-3">
                             <h3 class="font-extrabold text-indigo-900 text-xs uppercase tracking-wider">1. छात्र फोटो व बुनियादी विद्यालय विवरण:</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
@@ -529,11 +528,76 @@
                                         <label class="text-slate-700 block">Sr.No. (एस.आर. क्र.)</label>
                                         <input type="text" id="f_srNo" class="w-full border rounded px-2 py-1">
                                     </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश प्रकार (संस्थागत/नवीन)</label>
+                                        <select id="f_applicantType" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="1">1. नियमित / संस्थागत</option>
+                                            <option value="2">2. नवीन प्रवेशी</option>
+                                            <option value="3">3. पुनः प्रवेशी</option>
+                                            <option value="4">4. स्वाध्यायी</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश प्रकार 2 (पुनः/रुकजाना)</label>
+                                        <select id="f_applicantType2" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="सामान्य">सामान्य प्रवेश</option>
+                                            <option value="पुनः प्रवेशी">पुनः प्रवेशी</option>
+                                            <option value="रुक जाना नहीं">रुक जाना नहीं योजना</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश प्रकार 3 (अस्थाई)</label>
+                                        <select id="f_applicantType3" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="स्थाई">स्थाई प्रवेश</option>
+                                            <option value="अस्थाई">अस्थाई प्रवेश</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">अस्थाई रिजल्ट स्थिति</label>
+                                        <select id="f_provisionalResult" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="Pass">Pass (उत्तीर्ण)</option>
+                                            <option value="Fail">Fail (अनुत्तीर्ण)</option>
+                                            <option value="Supp">Supplementary (पूरक)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">T.C. (स्थानांतरण पत्र जमा?)</label>
+                                        <select id="f_tcStatus" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                            <option value="YES">YES (हाँ)</option>
+                                            <option value="NO">NO (नहीं)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">गैप प्रमाण पत्र जमा?</label>
+                                        <select id="f_gapCertificate" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="NO">NO (आवश्यकता नहीं)</option>
+                                            <option value="YES">YES (जमा है)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">गत वर्ष छात्र प्रकार</label>
+                                        <select id="f_lastYearPassType" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="Regular">Regular (नियमित)</option>
+                                            <option value="Private">Private (स्वाध्यायी)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">MEDIUM (अध्ययन माध्यम)</label>
+                                        <select id="f_medium" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                            <option value="HINDI">HINDI (हिन्दी)</option>
+                                            <option value="ENGLISH">ENGLISH (अंग्रेजी)</option>
+                                            <option value="URDU">URDU (उर्दू)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश दिनांक</label>
+                                        <input type="date" id="f_admissionDate" class="w-full border rounded px-2 py-1">
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Personal Details -->
+                        <!-- Part 2: Personal Details -->
                         <div class="bg-indigo-50/50 p-3 rounded-lg border border-indigo-200 space-y-2">
                             <h3 class="font-extrabold text-indigo-900 text-xs uppercase tracking-wider">2. व्यक्तिगत जानकारी (Personal Details):</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
@@ -574,15 +638,37 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="text-slate-700 block">MOBILE (मोबाईल नं.)</label>
+                                    <label class="text-slate-700 block">CAST (उपजाति)</label>
+                                    <input type="text" id="f_caste" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MOBILE (मोबाईल नं. / WhatsApp)</label>
                                     <input type="tel" id="f_mobile" class="w-full border rounded px-2 py-1 font-bold text-indigo-900">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">EMAIL ID (ई-मेल आईडी)</label>
+                                    <input type="email" id="f_email" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">BLOOD GROUP (रक्त समूह)</label>
+                                    <select id="f_bloodGroup" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="O+">O+</option>
+                                        <option value="A+">A+</option>
+                                        <option value="B+">B+</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">ADDRESS (पत्र व्यवहार का पता)</label>
+                                    <input type="text" id="f_address" placeholder="ग्राम / वार्ड / मोहल्ला" class="w-full border rounded px-2 py-1">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Govt Codes & Accounts -->
+                        <!-- Part 3: Government ID Codes & Bank Details -->
                         <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-200 space-y-2">
-                            <h3 class="font-extrabold text-amber-950 text-xs uppercase tracking-wider">3. शासकीय आईडी व बैंक खाते की जानकारी:</h3>
+                            <h3 class="font-extrabold text-amber-950 text-xs uppercase tracking-wider">3. शासकीय आईडी, अपार आईडी, योजनाएं व बैंक खाते की जानकारी:</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
                                 <div>
                                     <label class="text-slate-700 block">APAAR ID (अपार आईडी) *</label>
@@ -593,13 +679,153 @@
                                     <input type="text" id="f_childId" class="w-full border rounded px-2 py-1 font-mono font-bold">
                                 </div>
                                 <div>
+                                    <label class="text-slate-700 block">समग्र ID (परिवार SSSM ID)</label>
+                                    <input type="text" id="f_familyId" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
                                     <label class="text-slate-700 block">AADHAAR (आधार नंबर)</label>
                                     <input type="text" id="f_aadhaar" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">बैंक का नाम व शाखा</label>
+                                    <input type="text" id="f_bankName" class="w-full border rounded px-2 py-1">
                                 </div>
                                 <div>
                                     <label class="text-slate-700 block">A/C NO (बैंक खाता क्रमांक)</label>
                                     <input type="text" id="f_bankAccount" class="w-full border rounded px-2 py-1 font-mono">
                                 </div>
+                                <div>
+                                    <label class="text-slate-700 block">IFSC (बैंक आईएफएससी कोड)</label>
+                                    <input type="text" id="f_bankIfsc" class="w-full border rounded px-2 py-1 font-mono uppercase">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">INCOME (वार्षिक आय ₹ में)</label>
+                                    <input type="number" id="f_annualIncome" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">BPL (बी.पी.एल. कार्डधारी?)</label>
+                                    <select id="f_bplStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (हाँ)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">L LAXMI (लाड़ली लक्ष्मी पात्रता?)</label>
+                                    <select id="f_ladliLaxmi" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (हाँ)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">L लक्ष्मी क्रमांक</label>
+                                    <input type="text" id="f_ladliLaxmiNo" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">विकलांग (CWSN / दिव्यांग?)</label>
+                                    <select id="f_cwsnStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (सामान्य)</option>
+                                        <option value="YES">YES (दिव्यांग)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">छात्राबासी (Hostel Resident?)</label>
+                                    <select id="f_hostelStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (डे स्कॉलर)</option>
+                                        <option value="YES">YES (छात्रावासी)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">COVID 19 (अनाथ/प्रभावित?)</label>
+                                    <select id="f_covidStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (प्रभावित)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MP TASS (पंजीयन?)</label>
+                                    <select id="f_mpTassStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (पंजीकृत)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MP TASS NO.</label>
+                                    <input type="text" id="f_mpTassNo" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">छात्रवृत्ति (Scholarship Eligible?)</label>
+                                    <select id="f_scholarshipStatus" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="YES">YES (हाँ)</option>
+                                        <option value="NO">NO (नहीं)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">SAMBAL (संबल कार्ड है?)</label>
+                                    <select id="f_sambalStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (हाँ)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">संबल क्रमांक</label>
+                                    <input type="text" id="f_sambalNo" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">एरिया (ग्रामीण / शहरी)</label>
+                                    <select id="f_area" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="ग्रामीण">ग्रामीण (Rural)</option>
+                                        <option value="शहरी">शहरी (Urban)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">फीस (प्रवेश शुल्क राशि ₹)</label>
+                                    <input type="number" id="f_feesPaid" value="100" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">रिमार्क / REMARK</label>
+                                    <input type="text" id="f_remarks" class="w-full border rounded px-2 py-1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Part 4: Customizable Subjects -->
+                        <div class="bg-purple-50/50 p-3 rounded-lg border border-purple-200 space-y-2">
+                            <h3 class="font-extrabold text-purple-950 text-xs uppercase tracking-wider">4. विषय व विषय कोड चयन (Subject & Code Setup):</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <div>
+                                    <label class="text-slate-700 block">1sub (प्रथम विषय + कोड)</label>
+                                    <input type="text" id="f_sub1" value="401 - हिन्दी" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">2sub (द्वितीय विषय + कोड)</label>
+                                    <input type="text" id="f_sub2" value="411 - अंग्रेजी" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">3sub (तृतीय विषय + कोड)</label>
+                                    <input type="text" id="f_sub3" value="100 - गणित / संस्कृत" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">4sub (चतुर्थ विषय + कोड)</label>
+                                    <input type="text" id="f_sub4" value="200 - विज्ञान / भौतिकी" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">5sub (पंचम विषय + कोड)</label>
+                                    <input type="text" id="f_sub5" value="300 - सामाजिक विज्ञान / रसायन" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">6sub (षष्ठ विषय / वोकेशनल + कोड)</label>
+                                    <input type="text" id="f_sub6" value="501 - संस्कृत / ब्यूटी & वेलनेस" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Part 5: Library Textbooks Received Checkboxes -->
+                        <div class="bg-emerald-50/50 p-3 rounded-lg border border-emerald-200 space-y-2">
+                            <h3 class="font-extrabold text-emerald-950 text-xs uppercase tracking-wider flex justify-between items-center">
+                                <span>5. पुस्तकालय/पाठ्यपुस्तक वितरण स्थिति (Textbooks Received Checkboxes):</span>
+                                <span class="text-[10px] text-emerald-800 font-semibold">मास्टर सेटिंग्स से ऑटो-लोडेड</span>
+                            </h3>
+                            <div id="formTextbooksCheckboxesArea" class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-slate-800">
                             </div>
                         </div>
 
