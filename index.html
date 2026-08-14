@@ -1282,28 +1282,238 @@
             </section>
 
             <!-- SECTION 10: SUBJECT MASTER -->
+                        <!-- SECTION 10: ENHANCED SUBJECT & CODE MASTER -->
             <section id="section-subject-master" class="content-section space-y-4 hidden">
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <h2 class="text-xs font-bold text-indigo-950 flex items-center space-x-1.5">
-                            <i data-lucide="book-open" class="w-4 h-4 text-purple-600"></i>
-                            <span>1. विषय व विषय कोड मास्टर (Subject & Code Master)</span>
-                        </h2>
-                        <div class="flex items-center space-x-2">
-                            <select id="subjectMasterClassSelect" onchange="renderSubjectMaster()" class="text-xs font-bold border rounded px-2 py-1 bg-purple-50 text-purple-950 border-purple-300">
-                                <option value="10th">10th Standard</option>
-                                <option value="9th">9th Standard</option>
-                                <option value="11th">11th Standard</option>
-                                <option value="12th">12th Standard</option>
-                            </select>
-                            <button onclick="addNewSubjectRow()" class="bg-purple-700 text-white font-bold text-xs px-2.5 py-1 rounded shadow">+ नया विषय</button>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
+                    <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
+                        <div>
+                            <h2 class="text-sm font-extrabold text-purple-950 flex items-center space-x-1.5">
+                                <i data-lucide="book-open" class="w-5 h-5 text-purple-600"></i>
+                                <span>1. विषय व विषय कोड मास्टर (Subject & Code Master)</span>
+                            </h2>
+                            <p class="text-xs text-slate-500 font-semibold">कक्षावार विषय नाम, विषय कोड व सत्र प्रबंधित करें। बदलाव एडमिट कार्ड, अंकसूची व परीक्षा प्रविष्टि में स्वतः अपडेट होंगे।</p>
+                        </div>
+                        <button onclick="openSubjectModal()" class="bg-purple-700 hover:bg-purple-800 text-white font-extrabold text-xs px-3.5 py-1.5 rounded-lg shadow flex items-center space-x-1 transition">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>+ नया विषय जोड़ें</span>
+                        </button>
+                    </div>
+
+                    <!-- EXPORT & BULK LOCK TOOLBAR FOR SUBJECT MASTER -->
+                    <div class="bg-purple-50/60 p-2.5 rounded-xl border border-purple-200 flex flex-wrap items-center justify-between gap-2 no-print text-xs font-bold">
+                        <div class="flex items-center space-x-1.5 text-purple-950">
+                            <i data-lucide="file-spreadsheet" class="w-4 h-4 text-purple-700"></i>
+                            <span>विषय मास्टर एक्सपोर्ट टूलबार:</span>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <button onclick="exportSubjectMasterPrint()" class="bg-slate-800 text-white px-2.5 py-1.5 rounded hover:bg-slate-900 shadow flex items-center space-x-1">
+                                <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                                <span>प्रिंट</span>
+                            </button>
+                            <button onclick="exportSubjectMasterPDF()" class="bg-rose-600 text-white px-2.5 py-1.5 rounded hover:bg-rose-700 shadow flex items-center space-x-1">
+                                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                                <span>PDF</span>
+                            </button>
+                            <button onclick="exportSubjectMasterExcel()" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded hover:bg-emerald-700 shadow flex items-center space-x-1">
+                                <i data-lucide="sheet" class="w-3.5 h-3.5"></i>
+                                <span>Excel</span>
+                            </button>
+                            <button onclick="exportSubjectMasterDoc()" class="bg-blue-600 text-white px-2.5 py-1.5 rounded hover:bg-blue-700 shadow flex items-center space-x-1">
+                                <i data-lucide="file-code" class="w-3.5 h-3.5"></i>
+                                <span>Doc</span>
+                            </button>
+                            <button onclick="exportSubjectMasterImage()" class="bg-amber-600 text-white px-2.5 py-1.5 rounded hover:bg-amber-700 shadow flex items-center space-x-1">
+                                <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                                <span>Image</span>
+                            </button>
+                            <button onclick="bulkToggleSubjectsLock(true)" class="bg-purple-800 text-white px-2.5 py-1.5 rounded hover:bg-purple-900 shadow flex items-center space-x-1">
+                                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                                <span>समूह लॉक</span>
+                            </button>
+                            <button onclick="bulkToggleSubjectsLock(false)" class="bg-slate-700 text-white px-2.5 py-1.5 rounded hover:bg-slate-800 shadow flex items-center space-x-1">
+                                <i data-lucide="unlock" class="w-3.5 h-3.5"></i>
+                                <span>समूह अनलॉक</span>
+                            </button>
                         </div>
                     </div>
 
-                    <div id="subjectMasterContainer" class="overflow-x-auto">
+                    <!-- ADVANCED CLASS-WISE FILTER & SEARCH BAR -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 text-xs font-semibold bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-slate-700 text-[10px] font-bold mb-0.5">1. कक्षा फ़िल्टर (Class Filter):</label>
+                            <select id="subjectMasterClassSelect" onchange="renderSubjectMaster()" class="w-full border rounded px-2 py-1 font-bold bg-white text-purple-950 border-purple-300">
+                                <option value="ALL">🏢 समस्त कक्षाएं (All Classes)</option>
+                                <option value="10th">कक्षा 10वीं (10th Standard)</option>
+                                <option value="9th">कक्षा 9वीं (9th Standard)</option>
+                                <option value="11th">कक्षा 11वीं (11th Standard)</option>
+                                <option value="12th">कक्षा 12वीं (12th Standard)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] font-bold mb-0.5">2. शैक्षणिक सत्र (Session):</label>
+                            <select id="subjectMasterSessionSelect" onchange="renderSubjectMaster()" class="w-full border rounded px-2 py-1 font-bold bg-white text-slate-900 border-purple-300">
+                                <option value="ALL">समस्त सत्र (All Sessions)</option>
+                                <option value="2025-26">सत्र 2025-26</option>
+                                <option value="2026-27">सत्र 2026-27</option>
+                                <option value="2027-28">सत्र 2027-28</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] font-bold mb-0.5">3. लॉक स्थिति (Lock Status):</label>
+                            <select id="subjectMasterLockSelect" onchange="renderSubjectMaster()" class="w-full border rounded px-2 py-1 font-bold bg-white text-slate-900 border-purple-300">
+                                <option value="ALL">समस्त विषय (All Status)</option>
+                                <option value="LOCKED">🔒 केवल लॉक (Locked Only)</option>
+                                <option value="UNLOCKED">🔓 केवल अनलॉक (Editable)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] font-bold mb-0.5">4. एडवांस खोजें (Search):</label>
+                            <input type="text" id="subjectMasterSearchInput" oninput="renderSubjectMaster()" placeholder="🔍 विषय नाम, कोड, सत्र, कक्षा..." class="w-full border rounded px-2 py-1 border-slate-300 outline-none bg-white font-semibold">
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] font-bold mb-0.5">5. सॉर्टिंग क्रम (Sort):</label>
+                            <select id="subjectMasterSortSelect" onchange="renderSubjectMaster()" class="w-full border rounded px-2 py-1 font-bold bg-white text-slate-900 border-purple-300">
+                                <option value="codeAsc">विषय कोड (Code 1-9)</option>
+                                <option value="nameAsc">विषय नाम (A-Z)</option>
+                                <option value="classAsc">कक्षा अनुसार</option>
+                                <option value="sessionDesc">नवीनतम सत्र पहले</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SUBJECT MASTER TABLE CONTAINER -->
+                    <div id="subjectMasterContainer" class="overflow-x-auto border rounded-xl shadow-sm">
                     </div>
                 </div>
             </section>
+
+            <!-- SUBJECT ADD/EDIT MODAL -->
+            <div id="subjectModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 no-print">
+                <div class="bg-white rounded-xl shadow-2xl border border-slate-300 w-full max-w-lg p-4 space-y-3 font-semibold text-xs">
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <h3 class="text-sm font-black text-purple-950 flex items-center space-x-1.5" id="subjectModalTitle">
+                            <i data-lucide="book-plus" class="w-4 h-4 text-purple-600"></i>
+                            <span>नया विषय व विषय कोड मास्टर रिकॉर्ड जोड़ें</span>
+                        </h3>
+                        <button type="button" onclick="closeSubjectModal()" class="text-slate-400 hover:text-slate-700 font-bold text-lg">&times;</button>
+                    </div>
+
+                    <form id="subjectForm" onsubmit="saveSubjectForm(event)" class="space-y-3">
+                        <input type="hidden" id="s_editId" value="">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">1. विषय कोड (Subject Code) *</label>
+                                <input type="text" id="s_code" required placeholder="उदा. 401 या 100" class="w-full border rounded px-2.5 py-1.5 font-mono font-bold text-purple-950">
+                            </div>
+
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">2. विषय का नाम (Subject Name) *</label>
+                                <input type="text" id="s_name" required placeholder="उदा. 401 - हिन्दी" class="w-full border rounded px-2.5 py-1.5 font-bold text-slate-900">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">3. कक्षा (Target Class) *</label>
+                                <select id="s_targetClass" required class="w-full border rounded px-2.5 py-1.5 font-bold bg-white text-purple-950">
+                                    <option value="10th">कक्षा 10वीं (10th)</option>
+                                    <option value="9th">कक्षा 9वीं (9th)</option>
+                                    <option value="11th">कक्षा 11वीं (11th)</option>
+                                    <option value="12th">कक्षा 12वीं (12th)</option>
+                                    <option value="All_Classes">समस्त कक्षाएं (6th to 12th)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">4. शैक्षणिक सत्र (Academic Session) *</label>
+                                <select id="s_session" required class="w-full border rounded px-2.5 py-1.5 font-mono font-bold bg-white">
+                                    <option value="2025-26">2025-26</option>
+                                    <option value="2026-27">2026-27</option>
+                                    <option value="2027-28">2027-28</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-slate-700 block mb-0.5">5. श्रेणी / प्रकार (Category)</label>
+                            <select id="s_category" class="w-full border rounded px-2.5 py-1.5 font-bold bg-white">
+                                <option value="प्रथम भाषा">प्रथम भाषा (First Language)</option>
+                                <option value="द्वितीय भाषा">द्वितीय भाषा (Second Language)</option>
+                                <option value="तृतीय भाषा">तृतीय भाषा (Third Language)</option>
+                                <option value="मुख्य विषय">मुख्य विषय (Core Subject)</option>
+                                <option value="ऐच्छिक विषय">ऐच्छिक विषय (Elective Subject)</option>
+                                <option value="व्यावसायिक / वोकेशनल">वोकेशनल (Vocational / NSQF)</option>
+                            </select>
+                        </div>
+
+                        <div class="flex justify-end space-x-2 pt-2 border-t">
+                            <button type="button" onclick="closeSubjectModal()" class="bg-slate-200 text-slate-700 px-4 py-1.5 rounded font-bold">रद्द करें</button>
+                            <button type="submit" class="bg-purple-700 hover:bg-purple-800 text-white px-5 py-1.5 rounded font-bold shadow">सुरक्षित करें (Save Subject)</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SECTION 11: MARKS CONFIG -->
+            <section id="section-marks-config" class="content-section space-y-4 hidden">
+<!-- ... existing code ... -->
+            <!-- SECTION 15: ENHANCED LIBRARY & BOOK MASTER -->
+            <section id="section-book-master" class="content-section space-y-4 hidden">
+<!-- ... existing code ... -->
+            <script>
+                // ... existing code ...
+                let teachersData = {
+                    "T101": { id: "T101", name: "डॉ. राजेश शर्मा", designation: "संस्था प्रमुख / प्राचार्य", code: "EMP-2026-901", dob: "1978-08-15", subject: "उच्च माध्यमिक शिक्षक (गणित)", mobile: "9826001122", email: "rajesh@school.in", isClassTeacher: "YES", inchargeClass: "10th - A" },
+                    "T102": { id: "T102", name: "श्रीमती सुलोचना राय", designation: "उच्च माध्यमिक शिक्षक", code: "EMP-2026-902", dob: "1984-03-22", subject: "माध्यमिक शिक्षक (हिन्दी)", mobile: "9826002233", email: "sulochana@school.in", isClassTeacher: "YES", inchargeClass: "9th - B" }
+                };
+
+                // ENHANCED SUBJECT & CODE MASTER DATASET WITH CRUD & LOCK SUPPORT
+                let subjectMasterData = [
+                    { id: "SUB101", code: "401", name: "401 - हिन्दी", targetClass: "10th", session: "2025-26", category: "प्रथम भाषा", isLocked: false },
+                    { id: "SUB102", code: "411", name: "411 - अंग्रेजी", targetClass: "10th", session: "2025-26", category: "द्वितीय भाषा", isLocked: false },
+                    { id: "SUB103", code: "100", name: "100 - गणित (Standard)", targetClass: "10th", session: "2025-26", category: "मुख्य विषय", isLocked: false },
+                    { id: "SUB104", code: "200", name: "200 - विज्ञान", targetClass: "10th", session: "2025-26", category: "मुख्य विषय", isLocked: false },
+                    { id: "SUB105", code: "300", name: "300 - सामाजिक विज्ञान", targetClass: "10th", session: "2025-26", category: "मुख्य विषय", isLocked: false },
+                    { id: "SUB106", code: "501", name: "501 - संस्कृत", targetClass: "10th", session: "2025-26", category: "तृतीय भाषा", isLocked: false },
+                    
+                    { id: "SUB107", code: "401", name: "401 - हिन्दी", targetClass: "9th", session: "2025-26", category: "प्रथम भाषा", isLocked: false },
+                    { id: "SUB108", code: "411", name: "411 - अंग्रेजी", targetClass: "9th", session: "2025-26", category: "द्वितीय भाषा", isLocked: false },
+                    { id: "SUB109", code: "512", name: "512 - संस्कृत", targetClass: "9th", session: "2025-26", category: "तृतीय भाषा", isLocked: false },
+                    { id: "SUB110", code: "100", name: "100 - गणित", targetClass: "9th", session: "2025-26", category: "मुख्य विषय", isLocked: false },
+                    { id: "SUB111", code: "200", name: "200 - विज्ञान", targetClass: "9th", session: "2025-26", category: "मुख्य विषय", isLocked: false },
+                    { id: "SUB112", code: "300", name: "300 - सामाजिक विज्ञान", targetClass: "9th", session: "2025-26", category: "मुख्य विषय", isLocked: false },
+
+                    { id: "SUB113", code: "051", name: "051 - Hindi", targetClass: "11th", session: "2025-26", category: "अनिवार्य भाषा", isLocked: false },
+                    { id: "SUB114", code: "052", name: "052 - English", targetClass: "11th", session: "2025-26", category: "अनिवार्य भाषा", isLocked: false },
+                    { id: "SUB115", code: "130", name: "130 - Political science", targetClass: "11th", session: "2025-26", category: "ऐच्छिक विषय", isLocked: false },
+                    { id: "SUB116", code: "140", name: "140 - Economics", targetClass: "11th", session: "2025-26", category: "ऐच्छिक विषय", isLocked: false },
+                    { id: "SUB117", code: "166", name: "166 - Sociology", targetClass: "11th", session: "2025-26", category: "ऐच्छिक विषय", isLocked: false },
+
+                    { id: "SUB118", code: "051", name: "051 - Hindi", targetClass: "12th", session: "2025-26", category: "अनिवार्य भाषा", isLocked: false },
+                    { id: "SUB119", code: "052", name: "052 - English", targetClass: "12th", session: "2025-26", category: "अनिवार्य भाषा", isLocked: false },
+                    { id: "SUB120", code: "130", name: "130 - Political science", targetClass: "12th", session: "2025-26", category: "ऐच्छिक विषय", isLocked: false },
+                    { id: "SUB121", code: "140", name: "140 - Economics", targetClass: "12th", session: "2025-26", category: "ऐच्छिक विषय", isLocked: false }
+                ];
+
+                /* ==========================================================================
+                   SECTION 10: ENHANCED SUBJECT & CODE MASTER WITH DYNAMIC AUTO-SYNC
+                   ========================================================================== */
+                function getSubjectsForClass(targetClass) {
+                    return subjectMasterData.filter(s => s.targetClass === targetClass || s.targetClass === "All_Classes");
+                }
+
+                function renderSubjectMaster() {
+                    const container = document.getElementById("subjectMasterContainer");
+                    if (!container) return;
+
+                    const targetClass = document.getElementById("subjectMasterClassSelect") ? document.getElementById("subjectMasterClassSelect").value : "ALL";
+                    const session = document.getElementB
 
             <!-- SECTION 11: MARKS CONFIG -->
             <section id="section-marks-config" class="content-section space-y-4 hidden">
