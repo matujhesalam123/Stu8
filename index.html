@@ -266,6 +266,234 @@
             </div>
 
             <!-- MODULE 1: MAIN DASHBOARD -->
+            <!-- SECTION 1: DASHBOARD -->
+            <section id="section-dashboard" class="content-section space-y-4">
+                
+                <!-- OVERALL SCHOOL TOPPER SPOTLIGHT BANNER -->
+                <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white p-5 rounded-2xl shadow-xl border border-indigo-700 flex flex-col md:flex-row items-center justify-between gap-5 relative overflow-hidden">
+                    <div class="flex items-center space-x-4 z-10">
+                        <div class="relative">
+                            <img id="dashTopperPhoto" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="w-22 h-28 object-cover rounded-xl border-2 border-amber-400 shadow-xl bg-white">
+                            <span class="absolute -bottom-2 -right-2 bg-amber-500 text-slate-950 text-[10px] font-black px-1.5 py-0.5 rounded-md shadow">👑 #1</span>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">👑 ओवरऑल स्कूल टॉपर (वार्षिक परीक्षा परिणाम)</span>
+                            <h2 class="text-xl font-black text-amber-300" id="dashTopperName">तपस्या तिवारी</h2>
+                            <p class="text-xs font-semibold text-slate-200" id="dashTopperDetails">पिता: श्री राजेश तिवारी | कक्षा: 9th - A | स्कॉलर क्र.: 16626 | रोल नंबर: 9266510060201</p>
+                            <p class="text-[11px] text-indigo-200 font-medium" id="dashTopperSchool">पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज (रायसेन)</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-amber-400/50 text-center min-w-[170px] shadow-2xl z-10">
+                        <span class="text-[10px] text-amber-300 font-bold block uppercase tracking-wider">कुल प्राप्तांक एवं श्रेणी</span>
+                        <span class="text-2xl font-black text-amber-400 font-mono" id="dashTopperMarks">455 / 500</span>
+                        <span class="text-xs text-emerald-400 font-extrabold block mt-1" id="dashTopperPercent">91.0% (A+ प्रथम श्रेणी)</span>
+                    </div>
+                </div>
+
+                <!-- KEY METRICS KPI CARDS -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 font-extrabold block uppercase">कुल नामांकित छात्र</span>
+                            <span class="text-base font-black text-indigo-950 font-mono" id="kpiTotalStudents">52 छात्र</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
+                            <i data-lucide="trending-up" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 font-extrabold block uppercase">कुल उत्तीर्ण प्रतिशत</span>
+                            <span class="text-base font-black text-emerald-600 font-mono">94.2%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 font-extrabold block uppercase">A+ ग्रेड (85%+ से अधिक)</span>
+                            <span class="text-base font-black text-amber-600 font-mono">18 छात्र</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center font-bold">
+                            <i data-lucide="user-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 font-extrabold block uppercase">सक्रिय फैकल्टी शिक्षक</span>
+                            <span class="text-base font-black text-sky-700 font-mono" id="kpiTotalTeachers">18 पद</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYTICS CHARTS SECTION (Chart.js CANVAS) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    
+                    <!-- Classwise Performance Bar Chart -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-xs font-black text-indigo-950 flex items-center space-x-1.5">
+                                <i data-lucide="bar-chart-2" class="w-4 h-4 text-indigo-600"></i>
+                                <span>कक्षावार उत्तीर्ण प्रतिशत एवं प्रदर्शन (9th - 12th)</span>
+                            </h3>
+                            <span class="text-[10px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded">वार्षिक परिणाम</span>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 260px;">
+                            <canvas id="dashPerformanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Grade Distribution Doughnut Chart -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h3 class="text-xs font-black text-indigo-950 flex items-center space-x-1.5">
+                                <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-600"></i>
+                                <span>श्रेणीवार उत्तीर्ण छात्र विभाजन (Grade Breakdown)</span>
+                            </h3>
+                            <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded">ओवरऑल स्कूल</span>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 260px;">
+                            <canvas id="dashGradeDistributionChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TOP 10 MERIT LIST CARDS GRID -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex flex-wrap items-center justify-between border-b pb-2 gap-2">
+                        <h3 class="text-xs font-bold text-indigo-950 flex items-center space-x-1.5">
+                            <i data-lucide="trophy" class="w-4 h-4 text-amber-500"></i>
+                            <span>टॉप 10 मेधावी छात्र मेरिट ग्रिड (सेंट्रल लाइव डेटा सिंक)</span>
+                        </h3>
+                        <div class="flex flex-wrap items-center gap-2 text-xs">
+                            <select id="dashClassFilter" onchange="renderDashboardTop10Cards()" class="border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                <option value="ALL">समस्त कक्षाएं</option>
+                                <option value="10th">कक्षा 10वीं</option>
+                                <option value="9th">कक्षा 9वीं</option>
+                                <option value="11th">कक्षा 11वीं</option>
+                                <option value="12th">कक्षा 12वीं</option>
+                            </select>
+                            <select id="dashSectionFilter" onchange="renderDashboardTop10Cards()" class="border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                <option value="ALL">समस्त सेक्शन</option>
+                                <option value="A">सेक्शन A</option>
+                                <option value="B">सेक्शन B</option>
+                            </select>
+                            <select id="dashExamFilter" onchange="renderDashboardTop10Cards()" class="border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                <option value="annual">वार्षिक परीक्षा</option>
+                                <option value="preboard">प्री-बोर्ड परीक्षा</option>
+                                <option value="halfYearly">अर्द्धवार्षिक परीक्षा</option>
+                                <option value="quarterly">त्रैमासिक परीक्षा</option>
+                                <option value="monthly">मासिक टेस्ट</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="dashTop10CardsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 pt-1">
+                    </div>
+                </div>
+
+                <!-- QUICK NAVIGATION SHORTCUTS -->
+                <div class="bg-indigo-950 text-white p-4 rounded-xl shadow border border-indigo-800 space-y-3">
+                    <h3 class="text-xs font-bold text-amber-400 flex items-center space-x-1.5">
+                        <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+                        <span>त्वरित ऑपरेशन शॉर्टकट्स (Quick Shortcuts)</span>
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold">
+                        <button onclick="showSection('student-entry')" class="p-2.5 bg-indigo-900/80 hover:bg-indigo-800 border border-indigo-700 rounded-lg flex items-center space-x-2 text-left transition">
+                            <i data-lucide="user-plus" class="w-4 h-4 text-amber-400"></i>
+                            <span>+ नया छात्र जोड़ें</span>
+                        </button>
+                        <button onclick="showSection('exam-marks')" class="p-2.5 bg-indigo-900/80 hover:bg-indigo-800 border border-indigo-700 rounded-lg flex items-center space-x-2 text-left transition">
+                            <i data-lucide="pen-tool" class="w-4 h-4 text-emerald-400"></i>
+                            <span>अंक प्रविष्टि दर्ज करें</span>
+                        </button>
+                        <button onclick="showSection('marksheet')" class="p-2.5 bg-indigo-900/80 hover:bg-indigo-800 border border-indigo-700 rounded-lg flex items-center space-x-2 text-left transition">
+                            <i data-lucide="award" class="w-4 h-4 text-yellow-400"></i>
+                            <span>अंकसूची जनरेट करें</span>
+                        </button>
+                        <button onclick="downloadJsonBackup()" class="p-2.5 bg-indigo-900/80 hover:bg-indigo-800 border border-indigo-700 rounded-lg flex items-center space-x-2 text-left transition">
+                            <i data-lucide="cloud-download" class="w-4 h-4 text-sky-400"></i>
+                            <span>JSON बैकअप लें</span>
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION 2: STUDENT ENTRY FORM -->
+<!-- ... existing code ... -->
+    <script>
+        let activeSection = "dashboard";
+        let currentStudentId = "101";
+        let dashPerfChartInstance = null;
+        let dashGradeChartInstance = null;
+
+        let schoolHeaderData = {
+<!-- ... existing code ... -->
+        function renderDashboard() {
+            renderTopperSpotlight();
+            renderDashboardTop10Cards();
+            renderDashboardClassSummaries();
+            setTimeout(() => {
+                initDashboardCharts();
+            }, 100);
+        }
+
+        function initDashboardCharts() {
+            // Performance Bar Chart
+            const ctx1 = document.getElementById('dashPerformanceChart');
+            if (ctx1) {
+                if (dashPerfChartInstance) dashPerfChartInstance.destroy();
+                dashPerfChartInstance = new Chart(ctx1.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['कक्षा 9वीं', 'कक्षा 10वीं', 'कक्षा 11वीं', 'कक्षा 12वीं'],
+                        datasets: [{
+                            label: 'उत्तीर्ण प्रतिशत (%)',
+                            data: [92.5, 96.0, 91.8, 95.4],
+                            backgroundColor: '#4f46e5',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { min: 50, max: 100 } }
+                    }
+                });
+            }
+
+            // Grade Distribution Doughnut Chart
+            const ctx2 = document.getElementById('dashGradeDistributionChart');
+            if (ctx2) {
+                if (dashGradeChartInstance) dashGradeChartInstance.destroy();
+                dashGradeChartInstance = new Chart(ctx2.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['प्रथम श्रेणी (A+ / A)', 'द्वितीय श्रेणी (B)', 'तृतीय श्रेणी (C)', 'पूरक / अनुत्तीर्ण'],
+                        datasets: [{
+                            data: [65, 22, 8, 5],
+                            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } }
+                    }
+                });
+            }
+        }
+
+        function renderTopperSpotlight() {
             <section id="section-dashboard" class="content-section space-y-4">
                 <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 text-white p-4 rounded-2xl shadow-xl border border-indigo-700 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div class="flex items-center space-x-4">
