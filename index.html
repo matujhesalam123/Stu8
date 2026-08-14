@@ -157,6 +157,7 @@
 
         <aside class="md:col-span-1 bg-white rounded-xl shadow-sm p-3 border border-slate-200 no-print flex flex-col space-y-3 sticky top-16 h-fit">
             
+            <!-- Quick Live Student Search & Selector -->
             <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-2 space-y-1.5">
                 <label class="text-[10px] font-bold uppercase tracking-wider text-indigo-900 flex items-center justify-between">
                     <span>🔍 त्वरित छात्र खोजें:</span>
@@ -168,6 +169,7 @@
                 </select>
             </div>
 
+            <!-- Quick Teacher Search & Selector -->
             <div class="bg-teal-50 border border-teal-200 rounded-lg p-2 space-y-1.5">
                 <label class="text-[10px] font-bold uppercase tracking-wider text-teal-900 flex items-center justify-between">
                     <span>👨‍🏫 त्वरित शिक्षक खोजें:</span>
@@ -561,7 +563,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 9: ENHANCED FACULTY & SCHOOL MANAGEMENT & AUTO TIMETABLE -->
+            <!-- SECTION 9: FACULTY MANAGEMENT & AUTO TIMETABLE WITH SHIFT & TIME EDIT/LOCK -->
             <section id="section-management-panel" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
@@ -570,7 +572,7 @@
                                 <i data-lucide="building" class="w-5 h-5 text-cyan-600"></i>
                                 <span>संस्था प्रमुख (प्राचार्य) एवं संकाय शिक्षक प्रबंधन व ऑटो टाइम-टेबल</span>
                             </h2>
-                            <p class="text-[11px] text-slate-500 font-bold">शिक्षकों के फोटो, पद, विषय, एम्प्लॉई कोड, कक्षा अध्यापक स्थिति, अध्यापन कक्षाएं व सेक्शन</p>
+                            <p class="text-[11px] text-slate-500 font-bold">शिक्षकों के फोटो, पद, विषय, एम्प्लॉई कोड, कक्षा अध्यापक स्थिति, अध्यापन कक्षाएं/सेक्शन व टाइम-टेबल</p>
                         </div>
                         <div class="flex items-center space-x-2">
                             <button onclick="openAddTeacherModal()" class="bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow flex items-center space-x-1">
@@ -684,7 +686,7 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block mb-0.5">पदनाम (Designation)</label>
-                        <select id="t_designation" class="w-full border rounded px-2 py-1.5 bg-white font-bold">
+                        <select id="t_designation" class="w-full border rounded px-2.5 py-1.5 bg-white font-bold">
                             <option value="प्राचार्य / संस्था प्रमुख">प्राचार्य / संस्था प्रमुख</option>
                             <option value="उच्च माध्यमिक शिक्षक">उच्च माध्यमिक शिक्षक</option>
                             <option value="माध्यमिक शिक्षक">माध्यमिक शिक्षक</option>
@@ -699,7 +701,7 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block mb-0.5">कक्षा अध्यापक हैं?</label>
-                        <select id="t_isClassTeacher" class="w-full border rounded px-2 py-1.5 bg-white font-bold">
+                        <select id="t_isClassTeacher" class="w-full border rounded px-2.5 py-1.5 bg-white font-bold">
                             <option value="NO">नहीं (No)</option>
                             <option value="YES">हाँ (Yes)</option>
                         </select>
@@ -716,7 +718,7 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block mb-0.5">किस-किस कक्षा के सेक्शन में (Classes & Sections):</label>
-                        <input type="text" id="t_teachingClasses" placeholder="जैसे: 9th A, 10th A, 10th B" class="w-full border rounded px-2.5 py-1.5 font-bold">
+                        <input type="text" id="t_teachingClasses" placeholder="जैसे: 9th A, 10th A, 11th A" class="w-full border rounded px-2.5 py-1.5 font-bold">
                     </div>
                     <div>
                         <label class="block mb-0.5">शिक्षक फोटो URL:</label>
@@ -760,6 +762,22 @@
             watermarkText: "पीएमश्री बेगमगंज",
             watermarkUrl: "",
             showWatermark: "YES"
+        };
+
+        // Timetable Shift & Timing Configuration with Lock state
+        let timetableConfig = {
+            shiftName: "प्रथम पाली (Morning Shift)",
+            schoolTiming: "08:00 AM - 01:30 PM",
+            isLocked: false,
+            periods: [
+                "काल 1 (08:00 - 08:45)",
+                "काल 2 (08:45 - 09:30)",
+                "काल 3 (09:30 - 10:15)",
+                "लंच (10:15 - 10:45)",
+                "काल 4 (10:45 - 11:30)",
+                "काल 5 (11:30 - 12:15)",
+                "काल 6 (12:15 - 01:00)"
+            ]
         };
 
         const masterGridColumns = [
@@ -1221,29 +1239,48 @@
         }
 
         /* ---------------------------------------------------- */
-        /* AUTOMATIC TIMETABLE GENERATOR                        */
+        /* AUTOMATIC TIMETABLE GENERATOR WITH SHIFT & TIME EDIT/LOCK */
         /* ---------------------------------------------------- */
         function generateAutomaticTimetable() {
             const container = document.getElementById("automaticTimetableContainer");
             if (!container) return;
 
             const days = ["सोमवार (Monday)", "मंगलवार (Tuesday)", "बुधवार (Wednesday)", "गुरुवार (Thursday)", "शुक्रवार (Friday)", "शनिवार (Saturday)"];
-            const periods = ["काल 1 (09:00 - 09:45)", "काल 2 (09:45 - 10:30)", "काल 3 (10:30 - 11:15)", "लंच (11:15 - 11:45)", "काल 4 (11:45 - 12:30)", "काल 5 (12:30 - 01:15)", "काल 6 (01:15 - 02:00)"];
-            
             const teacherList = Object.values(teachersData);
             if (teacherList.length === 0) {
                 container.innerHTML = `<div class="p-4 bg-rose-50 text-rose-800 rounded font-bold text-center">पहले शिक्षक रिकॉर्ड दर्ज करें!</div>`;
                 return;
             }
 
-            let html = `
+            const periods = timetableConfig.periods;
+
+            container.innerHTML = `
                 <div class="bg-white p-4 rounded-xl border border-indigo-200 shadow-md space-y-3">
-                    <div class="flex justify-between items-center border-b pb-2">
+                    <div class="flex flex-wrap justify-between items-center border-b pb-2 gap-2">
                         <h3 class="text-xs font-black text-indigo-950 uppercase tracking-wide flex items-center space-x-1.5">
                             <i data-lucide="calendar" class="w-4 h-4 text-indigo-600"></i>
                             <span>ऑटोमैटिक शाला मास्टर टाइम-टेबल (Automatic Master School Timetable)</span>
                         </h3>
-                        <span class="text-[10px] bg-emerald-100 text-emerald-900 font-bold px-2 py-0.5 rounded">AI जनरेटेड</span>
+                        
+                        <!-- Shift & Time Settings Toolbar with Lock -->
+                        <div class="flex flex-wrap items-center gap-2 text-xs">
+                            <div class="flex items-center space-x-1 bg-indigo-50 p-1.5 rounded border border-indigo-200">
+                                <span class="font-bold text-indigo-900">शिफ्ट:</span>
+                                <input type="text" id="ttShiftNameInput" value="${timetableConfig.shiftName}" ${timetableConfig.isLocked ? 'disabled' : ''} class="border rounded px-1.5 py-0.5 font-bold text-indigo-950 w-36 bg-white">
+                            </div>
+                            <div class="flex items-center space-x-1 bg-indigo-50 p-1.5 rounded border border-indigo-200">
+                                <span class="font-bold text-indigo-900">समय:</span>
+                                <input type="text" id="ttSchoolTimingInput" value="${timetableConfig.schoolTiming}" ${timetableConfig.isLocked ? 'disabled' : ''} class="border rounded px-1.5 py-0.5 font-bold text-indigo-950 w-32 bg-white">
+                            </div>
+                            <button onclick="saveTimetableShiftConfig()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold px-2.5 py-1 rounded shadow">सेव</button>
+                            <button onclick="toggleTimetableLock()" class="px-2.5 py-1 rounded font-bold shadow text-white ${timetableConfig.isLocked ? 'bg-amber-600' : 'bg-emerald-600'}">
+                                ${timetableConfig.isLocked ? '🔒 Locked' : '🔓 Unlocked'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center font-extrabold text-indigo-900 text-xs py-1 bg-indigo-50/50 rounded border border-indigo-100">
+                        शाला शिफ्ट: <span class="text-rose-700">${timetableConfig.shiftName}</span> | कुल संचालन समय: <span class="text-emerald-700">${timetableConfig.schoolTiming}</span>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -1260,7 +1297,7 @@
                                         <td class="p-2.5 border font-extrabold bg-indigo-50 text-indigo-950">${day}</td>
                                         ${periods.map((per, pIdx) => {
                                             if (per.includes("लंच")) {
-                                                return `<td class="p-2.5 border bg-slate-100 font-bold text-slate-500 uppercase rotate-0">MID-DAY LUNCH BREAK</td>`;
+                                                return `<td class="p-2.5 border bg-slate-100 font-bold text-slate-500 uppercase">MID-DAY LUNCH BREAK</td>`;
                                             }
                                             const assignedTeacher = teacherList[(dIdx + pIdx) % teacherList.length];
                                             const sub = (assignedTeacher.teachingSubjects || 'गणित').split(',')[0] || 'हिन्दी';
@@ -1278,14 +1315,30 @@
                     </div>
                 </div>
             `;
-            container.innerHTML = html;
             if (window.lucide) lucide.createIcons();
-            showToast("ऑटोमैटिक टाइम-टेबल सफलतापूर्वक जनरेट हो गया!");
+            showToast("ऑटोमैटिक टाइम-टेबल जनरेट हुआ!");
         }
 
-        /* ---------------------------------------------------- */
+        function saveTimetableShiftConfig() {
+            if (timetableConfig.isLocked) {
+                showToast("टाइम-टेबल सेटिंग्स लॉक (Locked) हैं! पहले अनलॉक करें।", "error");
+                return;
+            }
+            const sName = document.getElementById("ttShiftNameInput").value;
+            const sTime = document.getElementById("ttSchoolTimingInput").value;
+            if (sName) timetableConfig.shiftName = sName;
+            if (sTime) timetableConfig.schoolTiming = sTime;
+            generateAutomaticTimetable();
+            showToast("स्कूल शिफ्ट व समय सफलतापूर्वक अपडेट हो गए!");
+        }
+
+        function toggleTimetableLock() {
+            timetableConfig.isLocked = !timetableConfig.isLocked;
+            generateAutomaticTimetable();
+            showToast(timetableConfig.isLocked ? "टाइम-टेबल सेटिंग्स लॉक कर दी गईं!" : "टाइम-टेबल सेटिंग्स अनलॉक हो गईं!");
+        }
+
         /* OTHER SECTIONS (Profile, Admit Card, Marksheets, etc.)*/
-        /* ---------------------------------------------------- */
         function renderProfileCards() {
             const container = document.getElementById("exportableProfileCard");
             if (!container) return;
@@ -1306,11 +1359,11 @@
             if (!container) return;
             container.innerHTML = Object.values(studentsData).map(st => `
                 <div class="bg-white p-4 rounded-xl border-2 border-slate-900 shadow max-w-2xl mx-auto space-y-2">
-                    <h3 class="font-black text-center text-sm uppercase">${schoolHeaderData.schoolNameEng}</h3>
+                    <h3 class="font-black text-center text-sm uppercase">PMSHRI-GHSS GIRLS BEGAMGANJ(6 TO 12)</h3>
                     <p class="text-xs font-bold text-center">ADMIT CARD - ANNUAL EXAM</p>
                     <div class="flex justify-between items-center text-xs font-bold">
                         <div>
-                            <p>Roll No: ${st.rollNo}</p>
+                            <p>Roll No: ${st.rollNo || '9266510060201'}</p>
                             <p>Name: ${st.nameEng}</p>
                             <p>Class: ${st.targetClass}-${st.section}</p>
                         </div>
@@ -1346,6 +1399,10 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        function loadTeacherCardData(id) {
+            if (activeSection === 'teacher-card') renderTeacherCard();
         }
 
         function renderSubjectMaster() {
