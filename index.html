@@ -875,9 +875,10 @@
                         <div class="bg-emerald-50/50 p-3 rounded-lg border border-emerald-200 space-y-2">
                             <h3 class="font-extrabold text-emerald-950 text-xs uppercase tracking-wider flex justify-between items-center">
                                 <span>5. पुस्तकालय/पाठ्यपुस्तक वितरण स्थिति (Textbooks Received Checkboxes):</span>
-                                <span class="text-[10px] text-emerald-800 font-semibold">मास्टर सेटिंग्स से ऑटो-लोडेड</span>
+                                <span class="text-[10px] bg-emerald-100 text-emerald-900 border border-emerald-300 px-2 py-0.5 rounded font-black">कक्षा अनुसार ऑटो-लोडेड पाठ्यपुस्तकें</span>
                             </h3>
-                            <div id="formTextbooksCheckboxesArea" class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-slate-800">
+                            <div id="formTextbooksCheckboxesArea" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 pt-1 text-slate-800">
+                                <!-- Dynamic checkboxes rendered based on selected class from Book Master -->
                             </div>
                         </div>
 
@@ -2141,27 +2142,79 @@
             document.getElementById("f_nameEng").value = st.nameEng || '';
             document.getElementById("f_fatherName").value = st.fatherName || '';
             document.getElementById("f_motherName").value = st.motherName || '';
+            if (document.getElementById("f_targetClass")) {
+                document.getElementById("f_targetClass").value = st.targetClass || '10th';
+            }
+            if (document.getElementById("f_section")) {
+                document.getElementById("f_section").value = st.section || 'A';
+            }
+
+            // Render class-specific book checkboxes & tick those already received by this student
+            renderFormClassBookCheckboxes(st.targetClass || '10th', st.receivedBooks || []);
+        }
+
+        function renderFormClassBookCheckboxes(selectedClass, studentReceivedBooks = null) {
+            const container = document.getElementById("formTextbooksCheckboxesArea");
+            if (!container) return;
+
+            // If studentReceivedBooks is null, attempt to fetch current student's existing books or keep selected
+            if (studentReceivedBooks === null && studentsData[currentStudentId]) {
+                studentReceivedBooks = studentsData[currentStudentId].receivedBooks || [];
+            } else if (studentReceivedBooks === null) {
+                studentReceivedBooks = [];
+            }
+
+            // Filter books from Book Master dataset matching class or all classes
+            const classBooks = booksMasterData.filter(bk => bk.targetClass === selectedClass || bk.targetClass === "All_Classes");
+
+            if (classBooks.length === 0) {
+                container.innerHTML = `<div class="col-span-4 p-3 bg-amber-50 text-amber-900 border border-amber-200 rounded text-center text-xs font-bold">
+                    कक्षा ${selectedClass} हेतु पाठ्यपुस्तक मास्टर में कोई पुस्तक दर्ज नहीं है। '6. पुस्तकालय मास्टर' में जाकर नई पुस्तक जोड़ें।
+                </div>`;
+                return;
+            }
+
+            container.innerHTML = classBooks.map(bk => {
+                const isChecked = studentReceivedBooks.includes(bk.title);
+                return `
+                    <label class="flex items-center space-x-2 bg-white p-2 rounded-lg border border-emerald-300 shadow-sm cursor-pointer hover:bg-emerald-100/50 transition">
+                        <input type="checkbox" name="f_book_item" value="${bk.title}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500">
+                        <span class="font-bold text-slate-900 text-xs">${bk.title}</span>
+                    </label>
+                `;
+            }).join('');
         }
 
         function editStudentRecord(id) { loadStudentData(id); showSection('student-entry'); }
-        function resetMasterStudentForm() { document.getElementById("masterStudentForm").reset(); }
+        function resetMasterStudentForm() { 
+            document.getElementById("masterStudentForm").reset();
+            const currentCls = document.getElementById("f_targetClass") ? document.getElementById("f_targetClass").value : "10th";
+            renderFormClassBookCheckboxes(currentCls, []);
+        }
 
         function handleMasterStudentSave(e) {
             e.preventDefault();
             const scholar = document.getElementById("f_scholarNo").value;
+            const selectedClass = document.getElementById("f_targetClass").value;
+
+            // Collect all checked textbook titles
+            const checkedBooks = Array.from(document.querySelectorAll('input[name="f_book_item"]:checked')).map(cb => cb.value);
+
             studentsData[scholar] = {
                 id: scholar,
                 scholarNo: scholar,
-                targetClass: document.getElementById("f_targetClass").value,
+                targetClass: selectedClass,
                 section: document.getElementById("f_section").value,
                 nameHindi: document.getElementById("f_nameEng").value,
                 nameEng: document.getElementById("f_nameEng").value,
                 fatherName: document.getElementById("f_fatherName").value,
                 motherName: document.getElementById("f_motherName").value,
-                photoUrl: document.getElementById("formPhotoPreview").src
+                photoUrl: document.getElementById("formPhotoPreview").src,
+                receivedBooks: checkedBooks
             };
+
             populateSidebarSelectors();
-            showToast("छात्र रिकॉर्ड सुरक्षित किया गया!");
+            showToast("छात्र रिकॉर्ड व प्राप्त पाठ्यपुस्तक सूची सुरक्षित की गई!");
             showSection('master-grid');
         }
 
@@ -2388,6 +2441,10 @@
 
             closeBookModal();
             renderBookMaster();
+
+            // Refresh student entry form checkboxes if active
+            const currentCls = document.getElementById("f_targetClass") ? document.getElementById("f_targetClass").value : "10th";
+            renderFormClassBookCheckboxes(currentCls);
         }
 
         function toggleBookLock(id) {
