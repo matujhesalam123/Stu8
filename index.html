@@ -1,1 +1,144 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SMDC छात्र पोर्टल</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header id="site-header">
+    <h1 contenteditable="true" id="header-title">SMDC स्टूडेंट पोर्टल</h1>
+    <p class="subtitle">छात्र, विषय, पुस्तकें, अंक और रिपोर्ट प्रबंधन</p>
+    <div class="header-actions">
+      <button id="save-header">हेडर सेव करें</button>
+    </div>
+  </header>
 
+  <main class="container">
+    <nav class="sidebar">
+      <button data-section="student">छात्र फॉर्म</button>
+      <button data-section="subjects">विषय</button>
+      <button data-section="books">पुस्तकें</button>
+      <button data-section="marks">परीक्षा अंक</button>
+      <button data-section="teachers">शिक्षक</button>
+      <button data-section="admit">Admit कार्ड</button>
+      <button data-section="profile">प्रोफ़ाइल कार्ड</button>
+      <button data-section="marksheet">अंकसूची</button>
+      <button data-section="reports">रिपोर्ट्स</button>
+    </nav>
+
+    <section class="content">
+      <!-- Sections will be injected here -->
+      <div id="student" class="section hidden">
+        <h2>ऑनलाइन छात्र फॉर्म</h2>
+        <form id="student-form">
+          <input type="hidden" id="student-id" />
+          <label>नाम: <input id="student-name" required /></label>
+          <label>रोल नंबर: <input id="student-roll" required /></label>
+          <label>कक्षा: <input id="student-class" /></label>
+          <label>ईमेल: <input id="student-email" type="email" /></label>
+          <div class="form-actions">
+            <button type="submit">सेव करें</button>
+            <button type="button" id="student-clear">क्लियर</button>
+          </div>
+        </form>
+        <h3>छात्र सूची</h3>
+        <ul id="students-list" class="list"></ul>
+      </div>
+
+      <div id="subjects" class="section hidden">
+        <h2>विषय प्रबंधन</h2>
+        <form id="subject-form">
+          <input type="hidden" id="subject-id" />
+          <label>कोड: <input id="subject-code" required /></label>
+          <label>नाम: <input id="subject-name" required /></label>
+          <div class="form-actions">
+            <button type="submit">सेव</button>
+            <button type="button" id="subject-clear">क्लियर</button>
+          </div>
+        </form>
+        <ul id="subjects-list" class="list"></ul>
+      </div>
+
+      <div id="books" class="section hidden">
+        <h2>पुस्तकें</h2>
+        <form id="book-form">
+          <input type="hidden" id="book-id" />
+          <label>ISBN/कोड: <input id="book-code" required /></label>
+          <label>शीर्षक: <input id="book-title" required /></label>
+          <div class="form-actions">
+            <button type="submit">सेव</button>
+            <button type="button" id="book-clear">क्लियर</button>
+          </div>
+        </form>
+        <ul id="books-list" class="list"></ul>
+      </div>
+
+      <div id="marks" class="section hidden">
+        <h2>परीक्षा अंक प्रबंधन</h2>
+        <form id="marks-form">
+          <input type="hidden" id="marks-id" />
+          <label>परीक्षा का नाम: <input id="exam-name" required /></label>
+          <label>छात्र रोल: <input id="marks-roll" required /></label>
+          <label>विषय कोड: <input id="marks-subject" required /></label>
+          <label>अंक: <input id="marks-obtained" type="number" required /></label>
+          <div class="form-actions">
+            <button type="submit">सेव</button>
+            <button type="button" id="marks-clear">क्लियर</button>
+          </div>
+        </form>
+        <ul id="marks-list" class="list"></ul>
+      </div>
+
+      <div id="teachers" class="section hidden">
+        <h2>शिक्षक प्रबंधन</h2>
+        <form id="teacher-form">
+          <input type="hidden" id="teacher-id" />
+          <label>नाम: <input id="teacher-name" required /></label>
+          <label>विषय: <input id="teacher-subject" /></label>
+          <div class="form-actions">
+            <button type="submit">सेव</button>
+            <button type="button" id="teacher-clear">क्लियर</button>
+          </div>
+        </form>
+        <ul id="teachers-list" class="list"></ul>
+      </div>
+
+      <div id="admit" class="section hidden">
+        <h2>Admit कार्ड जनरेट करें</h2>
+        <label>छात्र रोल: <input id="admit-roll" /></label>
+        <button id="gen-admit">जनरेट</button>
+        <div id="admit-card" class="card"></div>
+      </div>
+
+      <div id="profile" class="section hidden">
+        <h2>प्रोफ़ाइल कार्ड</h2>
+        <label>छात्र रोल: <input id="profile-roll" /></label>
+        <button id="gen-profile">दिखाएँ</button>
+        <div id="profile-card" class="card"></div>
+      </div>
+
+      <div id="marksheet" class="section hidden">
+        <h2>अंकसूची</h2>
+        <label>छात्र रोल: <input id="marksheet-roll" /></label>
+        <button id="gen-marksheet">जनरेट अंकसूची</button>
+        <div id="marksheet-view" class="card"></div>
+      </div>
+
+      <div id="reports" class="section hidden">
+        <h2>रिपोर्ट्स</h2>
+        <button id="export-data">सभी डेटा एक्सपोर्ट (.json)</button>
+        <pre id="report-output"></pre>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>SMDC पोर्टल — स्थानीय ब्राउज़र में डेटा सेव होता है (localStorage)</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
