@@ -125,6 +125,7 @@
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
+    <!-- HEADER -->
     <header class="bg-indigo-950 text-white shadow-lg border-b border-indigo-800 sticky top-0 z-40 no-print">
         <div class="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('dashboard')">
@@ -155,9 +156,9 @@
 
     <div class="flex-1 max-w-7xl w-full mx-auto p-2 sm:p-4 md:p-5 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
 
+        <!-- SIDEBAR NAVIGATION -->
         <aside class="md:col-span-1 bg-white rounded-xl shadow-sm p-3 border border-slate-200 no-print flex flex-col space-y-3 sticky top-16 h-fit">
             
-            <!-- Quick Live Student Search & Selector -->
             <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-2 space-y-1.5">
                 <label class="text-[10px] font-bold uppercase tracking-wider text-indigo-900 flex items-center justify-between">
                     <span>🔍 त्वरित छात्र खोजें:</span>
@@ -169,7 +170,6 @@
                 </select>
             </div>
 
-            <!-- Quick Teacher Search & Selector -->
             <div class="bg-teal-50 border border-teal-200 rounded-lg p-2 space-y-1.5">
                 <label class="text-[10px] font-bold uppercase tracking-wider text-teal-900 flex items-center justify-between">
                     <span>👨‍🏫 त्वरित शिक्षक खोजें:</span>
@@ -216,7 +216,7 @@
                 </button>
                 <button onclick="showSection('management-panel')" id="btn-management-panel" class="tab-btn w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-left transition text-slate-700 hover:bg-slate-100">
                     <i data-lucide="building" class="w-4 h-4 text-cyan-600"></i>
-                    <span>संस्था प्रमुख व शिक्षक प्रबंधन</span>
+                    <span>संस्था प्रमुख व शिक्षक प्रबंधन & टाइम-टेबल</span>
                 </button>
                 <button onclick="showSection('subject-master')" id="btn-subject-master" class="tab-btn w-full flex items-center space-x-2 px-2.5 py-2 rounded-lg text-left transition text-slate-700 hover:bg-slate-100">
                     <i data-lucide="book-open" class="w-4 h-4 text-purple-600"></i>
@@ -256,6 +256,7 @@
             </div>
         </aside>
 
+        <!-- MAIN CONTENT AREA -->
         <main class="md:col-span-3 lg:col-span-4 space-y-4">
 
             <!-- GLOBAL EXPORT TOOLBAR -->
@@ -377,7 +378,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 2: STUDENT ENTRY FORM -->
+            <!-- SECTION 2: STUDENT ENTRY -->
             <section id="section-student-entry" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
@@ -499,7 +500,7 @@
                         <div>
                             <h2 class="text-xs font-black text-indigo-950 flex items-center space-x-1.5">
                                 <i data-lucide="search-code" class="w-4 h-4 text-blue-600"></i>
-                                <span>मास्टर्स छात्र विस्तृत सर्च ग्रिड (Complete 57-Column Excel Grid)</span>
+                                <span>मास्टर्स छात्र विस्तृत सर्च ग्रिड (Complete Excel Grid)</span>
                             </h2>
                             <p class="text-[10px] text-slate-500 font-bold" id="gridFilteredCountBadge">0 छात्र प्रदर्शित</p>
                         </div>
@@ -563,16 +564,16 @@
                 </div>
             </section>
 
-            <!-- SECTION 9: FACULTY MANAGEMENT & AUTO TIMETABLE WITH SHIFT & TIME EDIT/LOCK -->
+            <!-- SECTION 9: FACULTY MANAGEMENT & FULLY EDITABLE TIMETABLE -->
             <section id="section-management-panel" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
                         <div>
                             <h2 class="text-sm font-extrabold text-indigo-950 flex items-center space-x-1.5">
                                 <i data-lucide="building" class="w-5 h-5 text-cyan-600"></i>
-                                <span>संस्था प्रमुख (प्राचार्य) एवं संकाय शिक्षक प्रबंधन व ऑटो टाइम-टेबल</span>
+                                <span>संस्था प्रमुख (प्राचार्य) एवं संकाय शिक्षक प्रबंधन व फुली एडिटेबल टाइम-टेबल</span>
                             </h2>
-                            <p class="text-[11px] text-slate-500 font-bold">शिक्षकों के फोटो, पद, विषय, एम्प्लॉई कोड, कक्षा अध्यापक स्थिति, अध्यापन कक्षाएं/सेक्शन व टाइम-टेबल</p>
+                            <p class="text-[11px] text-slate-500 font-bold">शिक्षकों के फोटो, पद, विषय, एम्प्लॉई कोड, कक्षा अध्यापक स्थिति व कक्षाओं/सेक्शन के अनुसार टाइम-टेबल</p>
                         </div>
                         <div class="flex items-center space-x-2">
                             <button onclick="openAddTeacherModal()" class="bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow flex items-center space-x-1">
@@ -581,7 +582,7 @@
                             </button>
                             <button onclick="generateAutomaticTimetable()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow flex items-center space-x-1">
                                 <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                                <span>⚡ ऑटो टाइम-टेबल बनाएं</span>
+                                <span>⚡ टाइम-टेबल लोड/रीफ्रेश करें</span>
                             </button>
                         </div>
                     </div>
@@ -616,7 +617,7 @@
                     <div id="managementPanelContent" class="overflow-x-auto border rounded-xl">
                     </div>
 
-                    <!-- AUTOMATIC TIMETABLE DISPLAY CONTAINER -->
+                    <!-- FULLY EDITABLE TIMETABLE DISPLAY CONTAINER -->
                     <div id="automaticTimetableContainer" class="mt-6 space-y-3 pt-4 border-t-2 border-dashed border-slate-300">
                     </div>
                 </div>
@@ -743,7 +744,7 @@
         </div>
     </div>
 
-    <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
+    <!-- CUSTOM TOAST CONTAINER -->
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 no-print"></div>
 
     <script>
@@ -758,13 +759,11 @@
             udiseCode: "23340222855",
             schoolCode: "651006",
             logoUrl: "",
-            watermarkType: "TEXT",
             watermarkText: "पीएमश्री बेगमगंज",
-            watermarkUrl: "",
             showWatermark: "YES"
         };
 
-        // Timetable Shift & Timing Configuration with Lock state
+        // Timetable Shift & Timing Configuration with Lock state & fully editable cell matrix
         let timetableConfig = {
             shiftName: "प्रथम पाली (Morning Shift)",
             schoolTiming: "08:00 AM - 01:30 PM",
@@ -779,6 +778,9 @@
                 "काल 6 (12:15 - 01:00)"
             ]
         };
+
+        // Stores custom edits made in timetable: timetableSchedule[dayIdx][periodIdx] = { sub, teacherId }
+        let timetableSchedule = {};
 
         const masterGridColumns = [
             { key: 'photoUrl', label: 'फ़ोटो', isImage: true },
@@ -900,7 +902,7 @@
             else if (secId === 'admit-card') renderAdmitCards();
             else if (secId === 'marksheet') renderMarksheets();
             else if (secId === 'teacher-card') renderTeacherCard();
-            else if (secId === 'management-panel') renderManagementPanel();
+            else if (secId === 'management-panel') { renderManagementPanel(); generateAutomaticTimetable(); }
             else if (secId === 'subject-master') renderSubjectMaster();
             else if (secId === 'marks-config') renderMarksConfig();
             else if (secId === 'exam-marks') renderExamMarksEntryTable();
@@ -1072,7 +1074,7 @@
         }
 
         /* ---------------------------------------------------- */
-        /* SECTION 9: ENHANCED FACULTY MANAGEMENT & TIMETABLE  */
+        /* FACULTY MANAGEMENT & FULLY EDITABLE TIMETABLE       */
         /* ---------------------------------------------------- */
         function renderManagementPanel() {
             const container = document.getElementById("managementPanelContent");
@@ -1110,7 +1112,7 @@
                             <th class="p-2.5 border border-indigo-800 text-center">फोटो</th>
                             <th class="p-2.5 border border-indigo-800">एम्प्लॉई कोड</th>
                             <th class="p-2.5 border border-indigo-800">शिक्षक का नाम</th>
-                            <th class="p-2.5 border border-indigo-800">पदनाम (Designation)</th>
+                            <th class="p-2.5 border border-indigo-800">पदनाम</th>
                             <th class="p-2.5 border border-indigo-800">मूल विषय</th>
                             <th class="p-2.5 border border-indigo-800 text-center">कक्षा अध्यापक?</th>
                             <th class="p-2.5 border border-indigo-800">अध्यापन विषय</th>
@@ -1209,6 +1211,7 @@
             closeTeacherModal();
             populateSidebarSelectors();
             renderManagementPanel();
+            generateAutomaticTimetable();
             showToast("शिक्षक रिकॉर्ड सफलतापूर्वक सुरक्षित किया गया!");
         }
 
@@ -1226,6 +1229,7 @@
                 delete teachersData[id];
                 populateSidebarSelectors();
                 renderManagementPanel();
+                generateAutomaticTimetable();
                 showToast("शिक्षक रिकॉर्ड हटा दिया गया!", "error");
             }
         }
@@ -1238,9 +1242,7 @@
             showToast("शिक्षक फ़िल्टर रीसेट कर दिए गए!");
         }
 
-        /* ---------------------------------------------------- */
-        /* AUTOMATIC TIMETABLE GENERATOR WITH SHIFT & TIME EDIT/LOCK */
-        /* ---------------------------------------------------- */
+        /* FULLY EDITABLE TIMETABLE GENERATOR */
         function generateAutomaticTimetable() {
             const container = document.getElementById("automaticTimetableContainer");
             if (!container) return;
@@ -1259,10 +1261,9 @@
                     <div class="flex flex-wrap justify-between items-center border-b pb-2 gap-2">
                         <h3 class="text-xs font-black text-indigo-950 uppercase tracking-wide flex items-center space-x-1.5">
                             <i data-lucide="calendar" class="w-4 h-4 text-indigo-600"></i>
-                            <span>ऑटोमैटिक शाला मास्टर टाइम-टेबल (Automatic Master School Timetable)</span>
+                            <span>फुली एडिटेबल शाला मास्टर टाइम-टेबल (Fully Editable School Timetable)</span>
                         </h3>
                         
-                        <!-- Shift & Time Settings Toolbar with Lock -->
                         <div class="flex flex-wrap items-center gap-2 text-xs">
                             <div class="flex items-center space-x-1 bg-indigo-50 p-1.5 rounded border border-indigo-200">
                                 <span class="font-bold text-indigo-900">शिफ्ट:</span>
@@ -1279,8 +1280,9 @@
                         </div>
                     </div>
 
-                    <div class="text-center font-extrabold text-indigo-900 text-xs py-1 bg-indigo-50/50 rounded border border-indigo-100">
-                        शाला शिफ्ट: <span class="text-rose-700">${timetableConfig.shiftName}</span> | कुल संचालन समय: <span class="text-emerald-700">${timetableConfig.schoolTiming}</span>
+                    <div class="text-center font-extrabold text-indigo-900 text-xs py-1 bg-indigo-50/50 rounded border border-indigo-100 flex justify-between px-4 items-center">
+                        <span>शाला शिफ्ट: <span class="text-rose-700">${timetableConfig.shiftName}</span> | संचालन समय: <span class="text-emerald-700">${timetableConfig.schoolTiming}</span></span>
+                        <span class="text-[10px] text-slate-600 italic">प्रत्येक सेल में विषय और शिक्षक को सीधे बदला जा सकता है।</span>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -1299,14 +1301,38 @@
                                             if (per.includes("लंच")) {
                                                 return `<td class="p-2.5 border bg-slate-100 font-bold text-slate-500 uppercase">MID-DAY LUNCH BREAK</td>`;
                                             }
-                                            const assignedTeacher = teacherList[(dIdx + pIdx) % teacherList.length];
-                                            const sub = (assignedTeacher.teachingSubjects || 'गणित').split(',')[0] || 'हिन्दी';
-                                            return `
-                                                <td class="p-2 border">
-                                                    <div class="font-bold text-indigo-950">${sub}</div>
-                                                    <div class="text-[10px] text-slate-600 font-semibold">${assignedTeacher.name}</div>
-                                                </td>
-                                            `;
+
+                                            // Load existing edit or fallback to generated assignment
+                                            const cellKey = `${dIdx}_${pIdx}`;
+                                            let currentAssignment = timetableSchedule[cellKey];
+                                            if (!currentAssignment) {
+                                                const assignedTeacher = teacherList[(dIdx + pIdx) % teacherList.length];
+                                                const sub = (assignedTeacher.teachingSubjects || 'गणित').split(',')[0].trim() || 'हिन्दी';
+                                                currentAssignment = { sub: sub, teacherId: assignedTeacher.id };
+                                                timetableSchedule[cellKey] = currentAssignment;
+                                            }
+
+                                            const currentTeacherObj = teachersData[currentAssignment.teacherId] || teacherList[0];
+
+                                            if (timetableConfig.isLocked) {
+                                                return `
+                                                    <td class="p-2 border bg-slate-50">
+                                                        <div class="font-bold text-indigo-950">${currentAssignment.sub}</div>
+                                                        <div class="text-[10px] text-slate-700 font-semibold">${currentTeacherObj ? currentTeacherObj.name : '-'}</div>
+                                                    </td>
+                                                `;
+                                            } else {
+                                                return `
+                                                    <td class="p-1.5 border">
+                                                        <div class="space-y-1">
+                                                            <input type="text" value="${currentAssignment.sub}" oninput="updateTimetableCellSub(${dIdx}, ${pIdx}, this.value)" class="w-full text-[11px] font-bold text-center border rounded px-1 py-0.5 bg-amber-50/50 text-indigo-950 outline-none focus:ring-1 focus:ring-indigo-600" placeholder="विषय">
+                                                            <select onchange="updateTimetableCellTeacher(${dIdx}, ${pIdx}, this.value)" class="w-full text-[10px] font-bold text-center border rounded px-1 py-0.5 bg-white text-slate-800 outline-none">
+                                                                ${teacherList.map(t => `<option value="${t.id}" ${t.id === currentAssignment.teacherId ? 'selected' : ''}>${t.name}</option>`).join('')}
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                `;
+                                            }
                                         }).join('')}
                                     </tr>
                                 `).join('')}
@@ -1316,7 +1342,18 @@
                 </div>
             `;
             if (window.lucide) lucide.createIcons();
-            showToast("ऑटोमैटिक टाइम-टेबल जनरेट हुआ!");
+        }
+
+        function updateTimetableCellSub(dIdx, pIdx, val) {
+            const cellKey = `${dIdx}_${pIdx}`;
+            if (!timetableSchedule[cellKey]) timetableSchedule[cellKey] = {};
+            timetableSchedule[cellKey].sub = val;
+        }
+
+        function updateTimetableCellTeacher(dIdx, pIdx, tId) {
+            const cellKey = `${dIdx}_${pIdx}`;
+            if (!timetableSchedule[cellKey]) timetableSchedule[cellKey] = {};
+            timetableSchedule[cellKey].teacherId = tId;
         }
 
         function saveTimetableShiftConfig() {
@@ -1335,10 +1372,10 @@
         function toggleTimetableLock() {
             timetableConfig.isLocked = !timetableConfig.isLocked;
             generateAutomaticTimetable();
-            showToast(timetableConfig.isLocked ? "टाइम-टेबल सेटिंग्स लॉक कर दी गईं!" : "टाइम-टेबल सेटिंग्स अनलॉक हो गईं!");
+            showToast(timetableConfig.isLocked ? "टाइम-टेबल लॉक कर दिया गया! अब बदलाव नहीं हो सकेगा।" : "टाइम-टेबल अनलॉक हो गया है, अब आप कोई भी पीरियड बदल सकते हैं!");
         }
 
-        /* OTHER SECTIONS (Profile, Admit Card, Marksheets, etc.)*/
+        /* OTHER SECTIONS STUBS */
         function renderProfileCards() {
             const container = document.getElementById("exportableProfileCard");
             if (!container) return;
