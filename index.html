@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDMS - 8-मॉड्यूल मास्टर्स पोर्टल (परीक्षा व सत्र आधारित)</title>
+    <title>SDMS - सर्व-सुविधायुक्त मास्टर्स क्लाउड पोर्टल</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,7 +88,7 @@
                 </div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <h1 class="text-base font-extrabold tracking-wide text-yellow-400">SDMS - परीक्षा व सत्र आधारित मास्टर्स पोर्टल</h1>
+                        <h1 class="text-base font-extrabold tracking-wide text-yellow-400">SDMS - 8-मॉड्यूल मास्टर्स क्लाउड पोर्टल</h1>
                         <span id="headerCloudSyncBadge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span id="headerCloudSyncText">🟢 ऑटो-सिंक सक्रिय</span>
@@ -118,6 +118,7 @@
         <!-- SIDEBAR NAVIGATION PANEL -->
         <aside class="md:col-span-1 bg-white rounded-xl shadow-sm p-3 border border-slate-200 no-print flex flex-col space-y-3 sticky top-16 h-fit">
             
+            <!-- Quick Live Student Search & Selector -->
             <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-2 space-y-1.5">
                 <label class="text-[10px] font-bold uppercase tracking-wider text-indigo-900 flex items-center justify-between">
                     <span>🔍 त्वरित छात्र खोजें:</span>
@@ -694,7 +695,32 @@
 
         let schoolHeaderData = { schoolNameHindi: "पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज", session: "SESSION - 2025-26", schoolCode: "651006" };
         let studentsData = {
-            "101": { id: "101", scholarNo: "16626", rollNo: "9266510060201", targetClass: "9th", section: "A", session: "SESSION - 2025-26", nameHindi: "तपस्या तिवारी", nameEng: "TAPASYA TIWARI", fatherName: "श्री राजेश तिवारी", motherName: "श्रीमती रचना तिवारी", dob: "2012-08-28", gender: "FEMALE", category: "GEN", mobile: "9826012345", photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", receivedBooks: ["NCERT हिन्दी (क्षितिज भाग-1)"] }
+            "101": {
+                id: "101", scholarNo: "16626", rollNo: "9266510060201", enrollmentNo: "A25/651006/197", srNo: "SR-501",
+                targetClass: "9th", section: "A", session: "SESSION - 2025-26", admissionDate: "2025-07-01", medium: "HINDI",
+                applicantType: "1", applicantType2: "सामान्य", tcStatus: "YES",
+                nameHindi: "तपस्या तिवारी", nameEng: "TAPASYA TIWARI", fatherName: "श्री राजेश तिवारी", motherName: "श्रीमती रचना तिवारी",
+                dob: "2012-08-28", gender: "FEMALE", category: "GEN", caste: "ब्राह्मण", religion: "हिन्दू", mobile: "9826012345", altMobile: "9425000000", email: "tapasya@gmail.com", bloodGroup: "O+",
+                address: "बेगमगंज वार्ड 4 (रायसेन)",
+                apaarId: "APAAR-9012-3456", childId: "155076454", familyId: "987654321", aadhaar: "1234-5678-9012",
+                bankName: "भारतीय स्टेट बैंक बेगमगंज", bankAccount: "30123456789", bankIfsc: "SBIN0001234", annualIncome: "60000",
+                bplStatus: "NO", ladliLaxmi: "NO", ladliLaxmiNo: "", cwsnStatus: "NO",
+                photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+                receivedBooks: ["NCERT हिन्दी (क्षितिज भाग-1)", "NCERT गणित (Mathematics)"]
+            },
+            "102": {
+                id: "102", scholarNo: "16627", rollNo: "9266510060202", enrollmentNo: "A25/651006/198", srNo: "SR-502",
+                targetClass: "10th", section: "A", session: "SESSION - 2025-26", admissionDate: "2025-07-02", medium: "HINDI",
+                applicantType: "1", applicantType2: "सामान्य", tcStatus: "YES",
+                nameHindi: "अनामिका साहू", nameEng: "ANAMIKA SAHU", fatherName: "श्री रमेश साहू", motherName: "श्रीमती सुनीता साहू",
+                dob: "2011-05-14", gender: "FEMALE", category: "OBC", caste: "साहू", religion: "हिन्दू", mobile: "9826099999", altMobile: "9425111111", email: "anamika@gmail.com", bloodGroup: "B+",
+                address: "बेगमगंज वार्ड 2",
+                apaarId: "APAAR-9012-3457", childId: "155076455", familyId: "987654322", aadhaar: "1234-5678-9013",
+                bankName: "सेंट्रल बैंक ऑफ इंडिया", bankAccount: "30123456790", bankIfsc: "CBIN0280001", annualIncome: "45000",
+                bplStatus: "YES", ladliLaxmi: "YES", ladliLaxmiNo: "LL-2020-891", cwsnStatus: "NO",
+                photoUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150",
+                receivedBooks: ["NCERT गणित (10th Standard)"]
+            }
         };
         let subjectMasterData = [
             { id: "SUB901", title: "प्रथम भाषा (हिन्दी)", code: "401", targetClass: "9th", session: "SESSION - 2025-26", isLocked: false },
