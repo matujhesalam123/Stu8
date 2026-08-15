@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDMS Core 8-in-1 एकीकृत मास्टर्स पोर्टल</title>
+    <title>SDMS Core 8-in-1 एकीकृत मास्टर्स पोर्टल (Full Sample Data preloaded)</title>
 
     <!-- Google Devanagari & Inter Font Support -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,7 +116,7 @@
                 </button>
                 <button onclick="showSection('book-master')" id="btn-book-master" class="tab-btn w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl text-left transition text-slate-800 hover:bg-slate-100">
                     <i data-lucide="library" class="w-4.5 h-4.5 text-amber-700"></i>
-                    <span>7. पाठ्यपुस्तक मास्टर</span>
+                    <span>7. पुस्तकालय पाठ्यपुस्तक मास्टर</span>
                 </button>
                 <button onclick="showSection('cloud-settings')" id="btn-cloud-settings" class="tab-btn w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl text-left transition text-slate-800 hover:bg-slate-100">
                     <i data-lucide="cloud" class="w-4.5 h-4.5 text-sky-600"></i>
@@ -661,22 +661,72 @@
     <script>
         let activeSection = "student-entry";
 
+        // COMPLETE MULTI-CLASS SUBJECTS MASTER DATA
         let subjectMasterData = [
+            // 10th Standard Subjects
             { id: "SUB101", code: "401", name: "401 - हिन्दी", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB102", code: "411", name: "411 - अंग्रेजी", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB103", code: "100", name: "100 - गणित (Standard)", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB104", code: "200", name: "200 - विज्ञान", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB105", code: "300", name: "300 - सामाजिक विज्ञान", targetClass: "10th", session: "2025-26", isLocked: false },
-            { id: "SUB106", code: "501", name: "501 - संस्कृत", targetClass: "10th", session: "2025-26", isLocked: false }
+            { id: "SUB106", code: "501", name: "501 - संस्कृत", targetClass: "10th", session: "2025-26", isLocked: false },
+
+            // 9th Standard Subjects
+            { id: "SUB107", code: "401", name: "401 - हिन्दी", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "SUB108", code: "411", name: "411 - अंग्रेजी", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "SUB109", code: "512", name: "512 - संस्कृत", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "SUB110", code: "100", name: "100 - गणित", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "SUB111", code: "200", name: "200 - विज्ञान", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "SUB112", code: "300", name: "300 - सामाजिक विज्ञान", targetClass: "9th", session: "2025-26", isLocked: false },
+
+            // 11th Standard Subjects
+            { id: "SUB113", code: "051", name: "051 - Hindi", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "SUB114", code: "052", name: "052 - English", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "SUB115", code: "130", name: "130 - Political Science", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "SUB116", code: "140", name: "140 - Economics", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "SUB117", code: "166", name: "166 - Sociology", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "SUB118", code: "055", name: "055 - Urdu", targetClass: "11th", session: "2025-26", isLocked: false },
+
+            // 12th Standard Subjects
+            { id: "SUB119", code: "051", name: "051 - Hindi", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "SUB120", code: "052", name: "052 - English", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "SUB121", code: "130", name: "130 - Political Science", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "SUB122", code: "140", name: "140 - Economics", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "SUB123", code: "166", name: "166 - Sociology", targetClass: "12th", session: "2025-26", isLocked: false }
         ];
 
+        // COMPLETE MULTI-CLASS TEXTBOOK CATALOG
         let booksMasterData = [
+            // 10th Books
             { id: "B101", title: "NCERT हिन्दी (क्षितिज)", sub: "401", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "B102", title: "NCERT अंग्रेजी (First Flight)", sub: "411", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "B103", title: "NCERT गणित", sub: "100", targetClass: "10th", session: "2025-26", isLocked: false },
-            { id: "B104", title: "NCERT विज्ञान", sub: "200", targetClass: "10th", session: "2025-26", isLocked: false }
+            { id: "B104", title: "NCERT विज्ञान", sub: "200", targetClass: "10th", session: "2025-26", isLocked: false },
+            { id: "B105", title: "NCERT सामाजिक विज्ञान", sub: "300", targetClass: "10th", session: "2025-26", isLocked: false },
+            { id: "B106", title: "NCERT संस्कृत (शेमुषी)", sub: "501", targetClass: "10th", session: "2025-26", isLocked: false },
+
+            // 9th Books
+            { id: "B107", title: "NCERT हिन्दी (कृतिका)", sub: "401", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "B108", title: "NCERT अंग्रेजी (Beehive)", sub: "411", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "B109", title: "NCERT गणित", sub: "100", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "B110", title: "NCERT विज्ञान", sub: "200", targetClass: "9th", session: "2025-26", isLocked: false },
+            { id: "B111", title: "NCERT सामाजिक विज्ञान", sub: "300", targetClass: "9th", session: "2025-26", isLocked: false },
+
+            // 11th Books
+            { id: "B112", title: "NCERT हिन्दी (आरोह)", sub: "051", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "B113", title: "NCERT अंग्रेजी (Hornbill)", sub: "052", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "B114", title: "NCERT राजनीति शास्त्र", sub: "130", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "B115", title: "NCERT अर्थशास्त्र", sub: "140", targetClass: "11th", session: "2025-26", isLocked: false },
+            { id: "B116", title: "NCERT समाजशास्त्र", sub: "166", targetClass: "11th", session: "2025-26", isLocked: false },
+
+            // 12th Books
+            { id: "B117", title: "NCERT हिन्दी (आरोह भाग 2)", sub: "051", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "B118", title: "NCERT अंग्रेजी (Vistas)", sub: "052", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "B119", title: "NCERT राजनीति शास्त्र भाग 2", sub: "130", targetClass: "12th", session: "2025-26", isLocked: false },
+            { id: "B120", title: "NCERT अर्थशास्त्र भाग 2", sub: "140", targetClass: "12th", session: "2025-26", isLocked: false }
         ];
 
+        // RICH SAMPLE STUDENTS DATABASE (ALL 50+ COLUMNS PRE-FILLED)
         let studentsData = {
             "101": {
                 id: "101", scholarNo: "16626", rollNo: "9266510060201", enrollmentNo: "A25/651006/197",
@@ -686,10 +736,44 @@
                 apaarId: "APAAR-9012", childId: "155076454", aadhaar: "1234-5678-9012", bankAccount: "30123456789",
                 photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
                 receivedBooks: ["NCERT हिन्दी (क्षितिज)", "NCERT गणित"]
+            },
+            "102": {
+                id: "102", scholarNo: "15807", rollNo: "11266510060201", enrollmentNo: "A23/651006/368",
+                targetClass: "11th", section: "B", medium: "HINDI", nameHindi: "आशना",
+                nameEng: "AASHNA", fatherName: "श्री मसरूर अली", motherName: "श्रीमती असबुन निशा",
+                dob: "2009-01-21", gender: "FEMALE", category: "OBC", mobile: "9826023456",
+                apaarId: "APAAR-9013", childId: "142631395", aadhaar: "2345-6789-0123", bankAccount: "30234567890",
+                photoUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150",
+                receivedBooks: ["NCERT हिन्दी (आरोह)", "NCERT राजनीति शास्त्र"]
+            },
+            "103": {
+                id: "103", scholarNo: "16627", rollNo: "9266510060202", enrollmentNo: "A25/651006/198",
+                targetClass: "10th", section: "A", medium: "HINDI", nameHindi: "राहुल शर्मा",
+                nameEng: "RAHUL SHARMA", fatherName: "श्री राम शर्मा", motherName: "श्रीमती सीता शर्मा",
+                dob: "2009-05-15", gender: "MALE", category: "GEN", mobile: "9826034567",
+                apaarId: "APAAR-9014", childId: "123456789", aadhaar: "3456-7890-1234", bankAccount: "30345678901",
+                photoUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150",
+                receivedBooks: ["NCERT हिन्दी (क्षितिज)", "NCERT गणित", "NCERT विज्ञान"]
+            },
+            "104": {
+                id: "104", scholarNo: "16628", rollNo: "9266510060203", enrollmentNo: "A25/651006/199",
+                targetClass: "10th", section: "B", medium: "HINDI", nameHindi: "पूजा पटेल",
+                nameEng: "PUJA PATEL", fatherName: "श्री मोहन पटेल", motherName: "श्रीमती अनीता पटेल",
+                dob: "2009-08-20", gender: "FEMALE", category: "OBC", mobile: "9826045678",
+                apaarId: "APAAR-9015", childId: "234567890", aadhaar: "4567-8901-2345", bankAccount: "30456789012",
+                photoUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150",
+                receivedBooks: ["NCERT हिन्दी (क्षितिज)", "NCERT विज्ञान"]
+            },
+            "105": {
+                id: "105", scholarNo: "16629", rollNo: "9266510060204", enrollmentNo: "A25/651006/200",
+                targetClass: "9th", section: "A", medium: "HINDI", nameHindi: "अमित वर्मा",
+                nameEng: "AMIT VERMA", fatherName: "श्री सुरेश वर्मा", motherName: "श्रीमती मीरा वर्मा",
+                dob: "2010-02-10", gender: "MALE", category: "SC", mobile: "9826056789",
+                apaarId: "APAAR-9016", childId: "345678901", aadhaar: "5678-9012-3456", bankAccount: "30567890123",
+                photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+                receivedBooks: ["NCERT हिन्दी (कृतिका)", "NCERT गणित"]
             }
         };
-
-        let examMarksStore = {};
 
         window.onload = function() {
             if (window.lucide) lucide.createIcons();
@@ -700,7 +784,7 @@
             const container = document.getElementById("toastContainer");
             if (!container) return;
             const toast = document.createElement("div");
-            toast.className = "p-3 sm:p-4 rounded-xl text-xs sm:text-sm font-bold text-white bg-purple-700 shadow-xl";
+            toast.className = "p-3 sm:p-4 rounded-xl text-xs sm:text-sm font-bold text-white bg-purple-700 shadow-xl transition transform duration-300";
             toast.innerText = msg;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
@@ -786,7 +870,7 @@
                 receivedBooks: checkedBooks
             };
 
-            showToast("छात्र रिकॉर्ड व टिक पुस्तकें सुरक्षित हो गईं!");
+            showToast("छात्र रिकॉर्ड व टिक की गई पाठ्यपुस्तकें सुरक्षित हो गईं!");
         }
 
         function resetMasterStudentForm() {
@@ -939,7 +1023,6 @@
 
             const cls = document.getElementById("examMarksClassSelect").value;
             const sec = document.getElementById("examMarksSectionSelect").value;
-            const examType = document.getElementById("examMarksTypeSelect").value;
 
             const students = Object.values(studentsData).filter(s => s.targetClass === cls && s.section === sec);
             const subjects = subjectMasterData.filter(s => s.targetClass === cls);
@@ -1047,6 +1130,8 @@
                     <tbody class="divide-y divide-slate-200 bg-white">
                         <tr><td class="p-3 border font-extrabold text-base">10th Standard</td><td class="p-3 border font-mono">52</td><td class="p-3 border font-mono">52</td><td class="p-3 border font-bold text-emerald-700">48</td><td class="p-3 border font-bold text-amber-600">3</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">92.3%</td></tr>
                         <tr><td class="p-3 border font-extrabold text-base">9th Standard</td><td class="p-3 border font-mono">48</td><td class="p-3 border font-mono">48</td><td class="p-3 border font-bold text-emerald-700">44</td><td class="p-3 border font-bold text-amber-600">3</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">91.6%</td></tr>
+                        <tr><td class="p-3 border font-extrabold text-base">11th Standard</td><td class="p-3 border font-mono">45</td><td class="p-3 border font-mono">45</td><td class="p-3 border font-bold text-emerald-700">42</td><td class="p-3 border font-bold text-amber-600">2</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">93.3%</td></tr>
+                        <tr><td class="p-3 border font-extrabold text-base">12th Standard</td><td class="p-3 border font-mono">50</td><td class="p-3 border font-mono">50</td><td class="p-3 border font-bold text-emerald-700">48</td><td class="p-3 border font-bold text-amber-600">1</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">96.0%</td></tr>
                     </tbody>
                 </table>
             `;
@@ -1161,4 +1246,3 @@
     </script>
 </body>
 </html>
-```
