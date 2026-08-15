@@ -69,13 +69,17 @@
             </div>
 
             <div class="flex items-center space-x-2">
+                <button onclick="openClassSectionManageModal()" class="bg-purple-800 hover:bg-purple-900 text-amber-300 font-extrabold text-xs sm:text-sm px-3.5 py-2 rounded-xl shadow border border-purple-700 flex items-center space-x-1.5 transition">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                    <span>🏫 कक्षा व सेक्शन मास्टर</span>
+                </button>
                 <button onclick="openRollNoSeriesModal()" class="bg-indigo-800 hover:bg-indigo-900 text-amber-300 font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl shadow border border-indigo-700 flex items-center space-x-1.5 transition">
                     <i data-lucide="list-ordered" class="w-4 h-4"></i>
-                    <span>रोल नंबर सीरीज़ सेटिंग्स</span>
+                    <span>रोल नंबर सीरीज़</span>
                 </button>
                 <button onclick="downloadJsonBackup()" class="bg-amber-400 hover:bg-amber-500 text-indigo-950 font-black text-xs sm:text-sm px-4 py-2 rounded-xl shadow transition flex items-center space-x-1.5">
                     <i data-lucide="download-cloud" class="w-4 h-4"></i>
-                    <span>बैकअप डाउनलोड (JSON)</span>
+                    <span>बैकअप (JSON)</span>
                 </button>
             </div>
         </div>
@@ -115,7 +119,7 @@
                     <span>5. कक्षा-सेक्शन विस्तृत रिपोर्ट</span>
                 </button>
                 <button onclick="showSection('consolidated-report')" id="btn-consolidated-report" class="tab-btn w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl text-left transition text-slate-800 hover:bg-slate-100">
-                    <i data-lucide="pie-chart" class="w-4.5 h-4.5 text-cyan-600"></i>
+                    <i data-lucide="pie-chart" class="w-4 h-4.5 text-cyan-600"></i>
                     <span>6. एकजाई परिणाम रिपोर्ट</span>
                 </button>
                 <button onclick="showSection('book-master')" id="btn-book-master" class="tab-btn w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl text-left transition text-slate-800 hover:bg-slate-100">
@@ -127,6 +131,13 @@
                     <span>8. क्लाउड व बैकअप केंद्र</span>
                 </button>
             </nav>
+
+            <div class="pt-3 border-t no-print">
+                <button onclick="openClassSectionManageModal()" class="w-full bg-slate-900 hover:bg-black text-amber-300 font-extrabold text-xs py-2 px-3 rounded-xl shadow flex items-center justify-center space-x-1">
+                    <i data-lucide="settings-2" class="w-4 h-4"></i>
+                    <span>कक्षा व सेक्शन प्रबंधित करें</span>
+                </button>
+            </div>
         </aside>
 
         <!-- Main Content Display Area -->
@@ -146,9 +157,13 @@
                             <p class="text-xs sm:text-sm text-slate-500 font-bold">रोल नंबर ऑटो-सीरीज़, कक्षा-सेक्शन खोजें/फ़िल्टर/सॉर्ट एवं 5-इन-1 एक्सपोर्ट टूलबार</p>
                         </div>
                         <div class="flex items-center space-x-2">
+                            <button type="button" onclick="openClassSectionManageModal()" class="bg-purple-900 hover:bg-purple-950 text-amber-300 text-xs sm:text-sm px-3 py-2 rounded-xl font-bold shadow transition flex items-center space-x-1">
+                                <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                                <span>कक्षा/सेक्शन बदलें</span>
+                            </button>
                             <button type="button" onclick="openRollNoSeriesModal()" class="bg-indigo-900 hover:bg-indigo-950 text-amber-300 text-xs sm:text-sm px-3.5 py-2 rounded-xl font-bold shadow transition flex items-center space-x-1">
                                 <i data-lucide="sliders" class="w-4 h-4"></i>
-                                <span>सीरीज़ कॉन्फ़िगर करें</span>
+                                <span>सीरीज़ सेटिंग्स</span>
                             </button>
                             <button type="button" onclick="resetMasterStudentForm()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm px-4 py-2 rounded-xl font-bold shadow transition">↺ नया फ़ॉर्म खाली करें</button>
                         </div>
@@ -174,20 +189,11 @@
                         <div>
                             <label class="block text-slate-700 text-xs mb-1">1. कक्षा फ़िल्टर (Class):</label>
                             <select id="formFilterClass" onchange="filterStudentListUI()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-indigo-950 border-indigo-300">
-                                <option value="ALL">🏢 समस्त कक्षाएं</option>
-                                <option value="10th">कक्षा 10वीं</option>
-                                <option value="9th">कक्षा 9वीं</option>
-                                <option value="11th">कक्षा 11वीं</option>
-                                <option value="12th">कक्षा 12वीं</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-slate-700 text-xs mb-1">2. सेक्शन (Section):</label>
                             <select id="formFilterSection" onchange="filterStudentListUI()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-indigo-950 border-indigo-300">
-                                <option value="ALL">समस्त सेक्शन</option>
-                                <option value="A">Section A</option>
-                                <option value="B">Section B</option>
-                                <option value="C">Section C</option>
                             </select>
                         </div>
                         <div>
@@ -262,18 +268,11 @@
                                     <div>
                                         <label class="text-slate-700 block mb-1">प्रवेशित कक्षा *</label>
                                         <select id="f_targetClass" onchange="handleClassAndSectionChange()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-base text-indigo-950 border-indigo-300">
-                                            <option value="10th">10th Standard</option>
-                                            <option value="9th">9th Standard</option>
-                                            <option value="11th">11th Standard</option>
-                                            <option value="12th">12th Standard</option>
                                         </select>
                                     </div>
                                     <div>
                                         <label class="text-slate-700 block mb-1">सेक्शन (Section) *</label>
                                         <select id="f_section" onchange="handleClassAndSectionChange()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-base border-indigo-300 text-indigo-950">
-                                            <option value="A">Section A</option>
-                                            <option value="B">Section B</option>
-                                            <option value="C">Section C</option>
                                         </select>
                                     </div>
                                     <div>
@@ -641,11 +640,6 @@
                         <div>
                             <label class="block text-slate-700 font-bold mb-1">कक्षा फ़िल्टर (Class):</label>
                             <select id="subjectClassSelect" onchange="renderSubjectMaster()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-purple-950 border-purple-300">
-                                <option value="ALL">🏢 समस्त कक्षाएं (All Classes)</option>
-                                <option value="10th">कक्षा 10वीं</option>
-                                <option value="9th">कक्षा 9वीं</option>
-                                <option value="11th">कक्षा 11वीं</option>
-                                <option value="12th">कक्षा 12वीं</option>
                             </select>
                         </div>
                         <div>
@@ -678,10 +672,6 @@
                             <p class="text-xs sm:text-sm text-slate-500 font-bold">प्रत्येक विषय के लिए थ्योरी एवं प्रैक्टिकल के अधिकतम (Max) एवं पासिंग (Pass) अंक सेट करें।</p>
                         </div>
                         <select id="marksConfigClassSelect" onchange="renderMarksConfig()" class="text-xs sm:text-sm font-extrabold border border-emerald-300 rounded-xl px-3 py-1.5 bg-emerald-50 text-emerald-950">
-                            <option value="10th">कक्षा 10वीं</option>
-                            <option value="9th">कक्षा 9वीं</option>
-                            <option value="11th">कक्षा 11वीं</option>
-                            <option value="12th">कक्षा 12वीं</option>
                         </select>
                     </div>
 
@@ -722,18 +712,12 @@
                         <div>
                             <label class="block text-slate-700 text-xs mb-1">1. कक्षा चुनें:</label>
                             <select id="examMarksClassSelect" onchange="renderExamMarksEntryTable()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-slate-900 border-slate-300">
-                                <option value="10th">कक्षा 10वीं</option>
-                                <option value="9th">कक्षा 9वीं</option>
-                                <option value="11th">कक्षा 11वीं</option>
-                                <option value="12th">कक्षा 12वीं</option>
                             </select>
                         </div>
 
                         <div>
                             <label class="block text-slate-700 text-xs mb-1">2. सेक्शन चुनें:</label>
                             <select id="examMarksSectionSelect" onchange="renderExamMarksEntryTable()" class="w-full border rounded-lg px-2.5 py-1.5 font-bold bg-white text-slate-900 border-slate-300">
-                                <option value="A">Section A</option>
-                                <option value="B">Section B</option>
                             </select>
                         </div>
 
@@ -773,10 +757,6 @@
 
                         <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
                             <select id="classReportClassSelect" onchange="renderClassExamReport()" class="border rounded-lg px-3 py-1.5 font-bold bg-amber-50 text-amber-950 border-amber-300">
-                                <option value="10th">कक्षा 10वीं</option>
-                                <option value="9th">कक्षा 9वीं</option>
-                                <option value="11th">कक्षा 11वीं</option>
-                                <option value="12th">कक्षा 12वीं</option>
                             </select>
                             <button onclick="window.print()" class="bg-slate-800 text-white font-bold px-4 py-1.5 rounded-lg shadow">प्रिंट रिपोर्ट</button>
                         </div>
@@ -887,6 +867,39 @@
         </main>
     </div>
 
+    <!-- DYNAMIC CLASS & SECTION MANAGEMENT MODAL -->
+    <div id="classSectionManageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 no-print">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-300 w-full max-w-2xl p-5 space-y-4 font-semibold text-xs sm:text-sm max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h3 class="text-base font-black text-purple-950 flex items-center space-x-1.5">
+                    <i data-lucide="layout-grid" class="w-5 h-5 text-purple-600"></i>
+                    <span>शाला कक्षा एवं सेक्शन मास्टर (Class & Section Manager)</span>
+                </h3>
+                <button type="button" onclick="closeClassSectionManageModal()" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+            </div>
+
+            <p class="text-slate-600 text-xs">यहाँ आप विद्यालय की नई कक्षाएं जोड़ सकते हैं, पुरानी कक्षाएं बदल/हटा सकते हैं तथा प्रत्येक कक्षा में मनचाहे सेक्शन (उदा. A, B, C, D) बढ़ा या घटा सकते हैं।</p>
+
+            <!-- Add New Class Control -->
+            <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl flex flex-wrap items-center justify-between gap-2">
+                <span class="font-extrabold text-purple-950 text-xs sm:text-sm">+ नई कक्षा जोड़ें:</span>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="newClassNameInput" placeholder="उदा. 6th या 11th-Bio" class="border rounded-xl px-3 py-1.5 font-bold text-xs sm:text-sm outline-none bg-white">
+                    <button onclick="addNewClassToSchool()" class="bg-purple-700 hover:bg-purple-800 text-white font-extrabold px-4 py-1.5 rounded-xl shadow text-xs sm:text-sm">जोड़ें</button>
+                </div>
+            </div>
+
+            <!-- Existing Classes List & Section Controllers -->
+            <div class="space-y-3" id="classStructureManageArea">
+                <!-- Dynamically populated per class in JS -->
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3 border-t">
+                <button type="button" onclick="closeClassSectionManageModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl font-black shadow">सुरक्षित करें व लागू करें</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ROLL NO SERIES CONFIGURATION MODAL -->
     <div id="rollNoSeriesModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 no-print">
         <div class="bg-white rounded-2xl shadow-2xl border border-slate-300 w-full max-w-lg p-5 space-y-4 font-semibold text-xs sm:text-sm">
@@ -898,10 +911,9 @@
                 <button type="button" onclick="closeRollNoSeriesModal()" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
             </div>
 
-            <p class="text-slate-600 text-xs">यहाँ प्रत्येक कक्षा और सेक्शन के लिए प्रारम्भिक और अंतिम अनुक्रमांक (Roll Series Range) सेट करें। नए छात्र का फॉर्म भरते समय कक्षा चुनते ही इस रेंज से अगला रोल नंबर ऑटो-असाइन हो जाएगा।</p>
+            <p class="text-slate-600 text-xs">यहाँ प्रत्येक कक्षा और सेक्शन के लिए प्रारम्भिक और अंतिम अनुक्रमांक (Roll Series Range) सेट करें।</p>
 
             <div class="space-y-3 max-h-80 overflow-y-auto pr-1" id="rollNoSeriesListArea">
-                <!-- Dynamically populated per class & section -->
             </div>
 
             <div class="flex justify-end space-x-2 pt-3 border-t">
@@ -935,10 +947,6 @@
                     <div>
                         <label class="text-slate-700 block mb-1">कक्षा *</label>
                         <select id="s_targetClass" required class="w-full border rounded-lg px-3 py-1.5 font-bold bg-white text-base">
-                            <option value="10th">10th</option>
-                            <option value="9th">9th</option>
-                            <option value="11th">11th</option>
-                            <option value="12th">12th</option>
                         </select>
                     </div>
                     <div>
@@ -981,10 +989,6 @@
                     <div>
                         <label class="text-slate-700 block mb-1">कक्षा *</label>
                         <select id="b_class" required class="w-full border rounded-lg px-3 py-1.5 font-bold bg-white text-base">
-                            <option value="10th">10th</option>
-                            <option value="9th">9th</option>
-                            <option value="11th">11th</option>
-                            <option value="12th">12th</option>
                         </select>
                     </div>
                 </div>
@@ -1021,10 +1025,21 @@
         let currentStudentEditId = null;
         let pendingDeleteStudentId = null;
 
+        /* ==========================================================================
+           DYNAMIC CLASS & SECTION MASTER STRUCTURE STATE
+           ========================================================================== */
+        let schoolClassStructure = {
+            "9th": ["A", "B"],
+            "10th": ["A", "B", "C"],
+            "11th": ["A", "B"],
+            "12th": ["A", "B"]
+        };
+
         // CLASS & SECTION ROLL NUMBER SERIES CONFIGURATION STATE
         let rollNoSeriesConfig = {
             "10th_A": { start: 1001, end: 1050 },
             "10th_B": { start: 1051, end: 1100 },
+            "10th_C": { start: 1101, end: 1150 },
             "9th_A":  { start: 9001, end: 9050 },
             "9th_B":  { start: 9051, end: 9100 },
             "11th_A": { start: 1101, end: 1150 },
@@ -1035,7 +1050,6 @@
 
         // COMPLETE MULTI-CLASS SUBJECTS MASTER DATA
         let subjectMasterData = [
-            // 10th Standard Subjects
             { id: "SUB101", code: "401", name: "401 - हिन्दी", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB102", code: "411", name: "411 - अंग्रेजी", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB103", code: "100", name: "100 - गणित (Standard)", targetClass: "10th", session: "2025-26", isLocked: false },
@@ -1043,62 +1057,33 @@
             { id: "SUB105", code: "300", name: "300 - सामाजिक विज्ञान", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "SUB106", code: "501", name: "501 - संस्कृत", targetClass: "10th", session: "2025-26", isLocked: false },
 
-            // 9th Standard Subjects
             { id: "SUB107", code: "401", name: "401 - हिन्दी", targetClass: "9th", session: "2025-26", isLocked: false },
             { id: "SUB108", code: "411", name: "411 - अंग्रेजी", targetClass: "9th", session: "2025-26", isLocked: false },
             { id: "SUB109", code: "512", name: "512 - संस्कृत", targetClass: "9th", session: "2025-26", isLocked: false },
             { id: "SUB110", code: "100", name: "100 - गणित", targetClass: "9th", session: "2025-26", isLocked: false },
-            { id: "SUB111", code: "200", name: "200 - विज्ञान", targetClass: "9th", session: "2025-26", isLocked: false },
-            { id: "SUB112", code: "300", name: "300 - सामाजिक विज्ञान", targetClass: "9th", session: "2025-26", isLocked: false },
 
-            // 11th Standard Subjects
             { id: "SUB113", code: "051", name: "051 - Hindi", targetClass: "11th", session: "2025-26", isLocked: false },
             { id: "SUB114", code: "052", name: "052 - English", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "SUB115", code: "130", name: "130 - Political Science", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "SUB116", code: "140", name: "140 - Economics", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "SUB117", code: "166", name: "166 - Sociology", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "SUB118", code: "055", name: "055 - Urdu", targetClass: "11th", session: "2025-26", isLocked: false },
 
-            // 12th Standard Subjects
             { id: "SUB119", code: "051", name: "051 - Hindi", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "SUB120", code: "052", name: "052 - English", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "SUB121", code: "130", name: "130 - Political Science", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "SUB122", code: "140", name: "140 - Economics", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "SUB123", code: "166", name: "166 - Sociology", targetClass: "12th", session: "2025-26", isLocked: false }
+            { id: "SUB120", code: "052", name: "052 - English", targetClass: "12th", session: "2025-26", isLocked: false }
         ];
 
         // COMPLETE MULTI-CLASS TEXTBOOK CATALOG
         let booksMasterData = [
-            // 10th Books
             { id: "B101", title: "NCERT हिन्दी (क्षितिज)", sub: "401", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "B102", title: "NCERT अंग्रेजी (First Flight)", sub: "411", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "B103", title: "NCERT गणित", sub: "100", targetClass: "10th", session: "2025-26", isLocked: false },
             { id: "B104", title: "NCERT विज्ञान", sub: "200", targetClass: "10th", session: "2025-26", isLocked: false },
-            { id: "B105", title: "NCERT सामाजिक विज्ञान", sub: "300", targetClass: "10th", session: "2025-26", isLocked: false },
-            { id: "B106", title: "NCERT संस्कृत (शेमुषी)", sub: "501", targetClass: "10th", session: "2025-26", isLocked: false },
 
-            // 9th Books
             { id: "B107", title: "NCERT हिन्दी (कृतिका)", sub: "401", targetClass: "9th", session: "2025-26", isLocked: false },
             { id: "B108", title: "NCERT अंग्रेजी (Beehive)", sub: "411", targetClass: "9th", session: "2025-26", isLocked: false },
-            { id: "B109", title: "NCERT गणित", sub: "100", targetClass: "9th", session: "2025-26", isLocked: false },
-            { id: "B110", title: "NCERT विज्ञान", sub: "200", targetClass: "9th", session: "2025-26", isLocked: false },
-            { id: "B111", title: "NCERT सामाजिक विज्ञान", sub: "300", targetClass: "9th", session: "2025-26", isLocked: false },
 
-            // 11th Books
             { id: "B112", title: "NCERT हिन्दी (आरोह)", sub: "051", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "B113", title: "NCERT अंग्रेजी (Hornbill)", sub: "052", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "B114", title: "NCERT राजनीति शास्त्र", sub: "130", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "B115", title: "NCERT अर्थशास्त्र", sub: "140", targetClass: "11th", session: "2025-26", isLocked: false },
-            { id: "B116", title: "NCERT समाजशास्त्र", sub: "166", targetClass: "11th", session: "2025-26", isLocked: false },
-
-            // 12th Books
-            { id: "B117", title: "NCERT हिन्दी (आरोह भाग 2)", sub: "051", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "B118", title: "NCERT अंग्रेजी (Vistas)", sub: "052", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "B119", title: "NCERT राजनीति शास्त्र भाग 2", sub: "130", targetClass: "12th", session: "2025-26", isLocked: false },
-            { id: "B120", title: "NCERT अर्थशास्त्र भाग 2", sub: "140", targetClass: "12th", session: "2025-26", isLocked: false }
+            { id: "B117", title: "NCERT हिन्दी (आरोह भाग 2)", sub: "051", targetClass: "12th", session: "2025-26", isLocked: false }
         ];
 
-        // RICH SAMPLE STUDENTS DATABASE (ALL 50+ COLUMNS PRE-FILLED & LOCKED FLAG)
+        // SAMPLE STUDENTS DATABASE
         let studentsData = {
             "101": {
                 id: "101", scholarNo: "16626", rollNo: "1001", enrollmentNo: "A25/651006/197",
@@ -1116,39 +1101,13 @@
                 dob: "2009-01-21", gender: "FEMALE", category: "OBC", mobile: "9826023456",
                 apaarId: "APAAR-9013", childId: "142631395", aadhaar: "2345-6789-0123", bankAccount: "30234567890",
                 photoUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150",
-                receivedBooks: ["NCERT हिन्दी (आरोह)", "NCERT राजनीति शास्त्र"], isFormLocked: false
-            },
-            "103": {
-                id: "103", scholarNo: "16627", rollNo: "1002", enrollmentNo: "A25/651006/198",
-                targetClass: "10th", section: "A", medium: "HINDI", nameHindi: "राहुल शर्मा",
-                nameEng: "RAHUL SHARMA", fatherName: "श्री राम शर्मा", motherName: "श्रीमती सीता शर्मा",
-                dob: "2009-05-15", gender: "MALE", category: "GEN", mobile: "9826034567",
-                apaarId: "APAAR-9014", childId: "123456789", aadhaar: "3456-7890-1234", bankAccount: "30345678901",
-                photoUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150",
-                receivedBooks: ["NCERT हिन्दी (क्षितिज)", "NCERT गणित", "NCERT विज्ञान"], isFormLocked: false
-            },
-            "104": {
-                id: "104", scholarNo: "16628", rollNo: "1051", enrollmentNo: "A25/651006/199",
-                targetClass: "10th", section: "B", medium: "HINDI", nameHindi: "पूजा पटेल",
-                nameEng: "PUJA PATEL", fatherName: "श्री मोहन पटेल", motherName: "श्रीमती अनीता पटेल",
-                dob: "2009-08-20", gender: "FEMALE", category: "OBC", mobile: "9826045678",
-                apaarId: "APAAR-9015", childId: "234567890", aadhaar: "4567-8901-2345", bankAccount: "30456789012",
-                photoUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150",
-                receivedBooks: ["NCERT हिन्दी (क्षितिज)", "NCERT विज्ञान"], isFormLocked: false
-            },
-            "105": {
-                id: "105", scholarNo: "16629", rollNo: "9001", enrollmentNo: "A25/651006/200",
-                targetClass: "9th", section: "A", medium: "HINDI", nameHindi: "अमित वर्मा",
-                nameEng: "AMIT VERMA", fatherName: "श्री सुरेश वर्मा", motherName: "श्रीमती मीरा वर्मा",
-                dob: "2010-02-10", gender: "MALE", category: "SC", mobile: "9826056789",
-                apaarId: "APAAR-9016", childId: "345678901", aadhaar: "5678-9012-3456", bankAccount: "30567890123",
-                photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-                receivedBooks: ["NCERT हिन्दी (कृतिका)", "NCERT गणित"], isFormLocked: false
+                receivedBooks: ["NCERT हिन्दी (आरोह)"], isFormLocked: false
             }
         };
 
         window.onload = function() {
             if (window.lucide) lucide.createIcons();
+            updateAllClassDropdownsUI();
             populateStudentSelectorDropdown();
             showSection('student-entry');
         };
@@ -1161,6 +1120,167 @@
             toast.innerText = msg;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
+        }
+
+        /* ==========================================================================
+           DYNAMIC CLASS & SECTION MASTER LOGIC (ADD, RENAME, DELETE & SYNC)
+           ========================================================================== */
+        function updateAllClassDropdownsUI() {
+            const classes = Object.keys(schoolClassStructure);
+
+            // Populate Class Filters
+            const classSelects = [
+                { id: "formFilterClass", allowAll: true, allLabel: "🏢 समस्त कक्षाएं" },
+                { id: "f_targetClass", allowAll: false },
+                { id: "subjectClassSelect", allowAll: true, allLabel: "🏢 समस्त कक्षाएं (All Classes)" },
+                { id: "marksConfigClassSelect", allowAll: false },
+                { id: "examMarksClassSelect", allowAll: false },
+                { id: "classReportClassSelect", allowAll: false },
+                { id: "bookClassSelect", allowAll: true, allLabel: "🏢 समस्त कक्षाएं (All Classes)" },
+                { id: "s_targetClass", allowAll: false },
+                { id: "b_class", allowAll: false }
+            ];
+
+            classSelects.forEach(cfg => {
+                const elem = document.getElementById(cfg.id);
+                if (!elem) return;
+                const prevVal = elem.value;
+                let html = cfg.allowAll ? `<option value="ALL">${cfg.allLabel}</option>` : "";
+                html += classes.map(c => `<option value="${c}">कक्षा ${c}</option>`).join('');
+                elem.innerHTML = html;
+                if (classes.includes(prevVal) || prevVal === "ALL") elem.value = prevVal;
+                else if (classes.length > 0 && !cfg.allowAll) elem.value = classes[0];
+            });
+
+            // Update Sections dropdown based on selected Class
+            updateSectionDropdownsUI();
+        }
+
+        function updateSectionDropdownsUI() {
+            const currentCls = document.getElementById("f_targetClass") ? document.getElementById("f_targetClass").value : "10th";
+            const sections = schoolClassStructure[currentCls] || ["A"];
+
+            const secSelects = [
+                { id: "formFilterSection", allowAll: true, allLabel: "समस्त सेक्शन" },
+                { id: "f_section", allowAll: false },
+                { id: "examMarksSectionSelect", allowAll: false }
+            ];
+
+            secSelects.forEach(cfg => {
+                const elem = document.getElementById(cfg.id);
+                if (!elem) return;
+                const prevVal = elem.value;
+                let html = cfg.allowAll ? `<option value="ALL">${cfg.allLabel}</option>` : "";
+                html += sections.map(s => `<option value="${s}">Section ${s}</option>`).join('');
+                elem.innerHTML = html;
+                if (sections.includes(prevVal) || prevVal === "ALL") elem.value = prevVal;
+                else if (sections.length > 0 && !cfg.allowAll) elem.value = sections[0];
+            });
+        }
+
+        function openClassSectionManageModal() {
+            renderClassSectionManageUI();
+            document.getElementById("classSectionManageModal").classList.remove("hidden");
+        }
+
+        function closeClassSectionManageModal() {
+            document.getElementById("classSectionManageModal").classList.add("hidden");
+            updateAllClassDropdownsUI();
+            handleClassAndSectionChange();
+            showToast("कक्षा व सेक्शन संरचना पूरे पोर्टल में लागू कर दी गई है!");
+        }
+
+        function renderClassSectionManageUI() {
+            const container = document.getElementById("classStructureManageArea");
+            if (!container) return;
+
+            container.innerHTML = Object.keys(schoolClassStructure).map(cls => {
+                const secs = schoolClassStructure[cls];
+                return `
+                    <div class="p-3 bg-slate-50 border border-slate-300 rounded-xl space-y-2">
+                        <div class="flex justify-between items-center border-b pb-1.5">
+                            <span class="font-extrabold text-indigo-950 text-sm">कक्षा ${cls}:</span>
+                            <button onclick="deleteSchoolClass('${cls}')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs px-2.5 py-1 rounded-lg border border-rose-300 font-bold">
+                                🗑️ कक्षा हटाएं
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-xs text-slate-600 font-bold">सेक्शन सूची:</span>
+                            ${secs.map(sec => `
+                                <span class="bg-indigo-100 text-indigo-950 px-2.5 py-1 rounded-lg text-xs font-black border border-indigo-300 flex items-center space-x-1">
+                                    <span>Section ${sec}</span>
+                                    <button onclick="deleteSchoolSection('${cls}', '${sec}')" class="text-rose-600 font-bold text-sm ml-1 hover:text-rose-900">&times;</button>
+                                </span>
+                            `).join('')}
+                            
+                            <div class="flex items-center space-x-1 ml-2">
+                                <input type="text" id="addSecInput_${cls}" placeholder="+ नया सेक्शन (उदा. C)" class="w-28 border rounded-lg px-2 py-1 text-xs outline-none bg-white font-bold">
+                                <button onclick="addNewSectionToClass('${cls}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-2 py-1 rounded-lg">+ जोड़ें</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addNewClassToSchool() {
+            const nameInput = document.getElementById("newClassNameInput");
+            if (!nameInput) return;
+            const clsName = nameInput.value.trim();
+            if (!clsName) {
+                showToast("कृपया कक्षा का नाम दर्ज करें!");
+                return;
+            }
+            if (schoolClassStructure[clsName]) {
+                showToast("यह कक्षा पहले से मौजूद है!");
+                return;
+            }
+
+            schoolClassStructure[clsName] = ["A", "B"];
+            nameInput.value = "";
+            renderClassSectionManageUI();
+            showToast(`नई कक्षा ${clsName} जोड़ी गई!`);
+        }
+
+        function deleteSchoolClass(cls) {
+            if (Object.keys(schoolClassStructure).length <= 1) {
+                showToast("पोर्टल में कम से कम एक कक्षा होना आवश्यक है!");
+                return;
+            }
+            if (confirm(`क्या आप कक्षा ${cls} और इसके समस्त सेक्शन हटाना चाहते हैं?`)) {
+                delete schoolClassStructure[cls];
+                renderClassSectionManageUI();
+                showToast(`कक्षा ${cls} हटाई गई!`);
+            }
+        }
+
+        function addNewSectionToClass(cls) {
+            const input = document.getElementById(`addSecInput_${cls}`);
+            if (!input) return;
+            const secName = input.value.trim().toUpperCase();
+            if (!secName) return;
+
+            if (!schoolClassStructure[cls].includes(secName)) {
+                schoolClassStructure[cls].push(secName);
+                input.value = "";
+                renderClassSectionManageUI();
+                showToast(`कक्षा ${cls} में नया Section ${secName} जोड़ा गया!`);
+            } else {
+                showToast("यह सेक्शन पहले से मौजूद है!");
+            }
+        }
+
+        function deleteSchoolSection(cls, sec) {
+            if (schoolClassStructure[cls].length <= 1) {
+                showToast("कम से कम एक सेक्शन होना आवश्यक है!");
+                return;
+            }
+            const idx = schoolClassStructure[cls].indexOf(sec);
+            if (idx !== -1) {
+                schoolClassStructure[cls].splice(idx, 1);
+                renderClassSectionManageUI();
+                showToast(`Section ${sec} हटाया गया!`);
+            }
         }
 
         function showSection(secId) {
@@ -1196,7 +1316,6 @@
             const key = `${targetClass}_${section}`;
             const series = rollNoSeriesConfig[key] || { start: 1001, end: 1050 };
 
-            // Find existing roll numbers in this class & section
             const existingRolls = Object.values(studentsData)
                 .filter(st => st.targetClass === targetClass && st.section === section && st.rollNo)
                 .map(st => parseInt(st.rollNo, 10))
@@ -1211,13 +1330,12 @@
         }
 
         function handleClassAndSectionChange() {
+            updateSectionDropdownsUI();
             const cls = document.getElementById("f_targetClass").value;
             const sec = document.getElementById("f_section").value;
 
-            // Load Class Textbooks Checkboxes
             renderFormClassBookCheckboxes(cls);
 
-            // If creating a NEW student form, auto-assign next available Roll Number
             if (!currentStudentEditId) {
                 const nextRoll = computeNextAvailableRollNumber(cls, sec);
                 document.getElementById("f_rollNo").value = nextRoll;
@@ -1231,7 +1349,12 @@
             const listArea = document.getElementById("rollNoSeriesListArea");
             if (!modal || !listArea) return;
 
-            const pairs = ["10th_A", "10th_B", "9th_A", "9th_B", "11th_A", "11th_B", "12th_A", "12th_B"];
+            let pairs = [];
+            Object.keys(schoolClassStructure).forEach(cls => {
+                schoolClassStructure[cls].forEach(sec => {
+                    pairs.push(`${cls}_${sec}`);
+                });
+            });
 
             listArea.innerHTML = pairs.map(key => {
                 const cfg = rollNoSeriesConfig[key] || { start: 1001, end: 1050 };
@@ -1256,12 +1379,22 @@
         }
 
         function saveRollNoSeriesConfig() {
-            const pairs = ["10th_A", "10th_B", "9th_A", "9th_B", "11th_A", "11th_B", "12th_A", "12th_B"];
+            let pairs = [];
+            Object.keys(schoolClassStructure).forEach(cls => {
+                schoolClassStructure[cls].forEach(sec => {
+                    pairs.push(`${cls}_${sec}`);
+                });
+            });
+
             pairs.forEach(key => {
-                const startVal = parseInt(document.getElementById(`series_start_${key}`).value, 10);
-                const endVal = parseInt(document.getElementById(`series_end_${key}`).value, 10);
-                if (!isNaN(startVal) && !isNaN(endVal)) {
-                    rollNoSeriesConfig[key] = { start: startVal, end: endVal };
+                const startElem = document.getElementById(`series_start_${key}`);
+                const endElem = document.getElementById(`series_end_${key}`);
+                if (startElem && endElem) {
+                    const startVal = parseInt(startElem.value, 10);
+                    const endVal = parseInt(endElem.value, 10);
+                    if (!isNaN(startVal) && !isNaN(endVal)) {
+                        rollNoSeriesConfig[key] = { start: startVal, end: endVal };
+                    }
                 }
             });
 
@@ -1271,7 +1404,7 @@
         }
 
         /* ==========================================================================
-           ADVANCED STUDENT SELECTOR, SEARCH, FILTER, SORT & LOCK MANAGEMENT
+           STUDENT SELECTOR, FILTER & SEARCH
            ========================================================================== */
         function filterStudentListUI() {
             populateStudentSelectorDropdown();
@@ -1296,7 +1429,6 @@
                 return true;
             });
 
-            // Sorting logic
             list.sort((a, b) => {
                 if (sort === "rollAsc") return (parseInt(a.rollNo, 10) || 0) - (parseInt(b.rollNo, 10) || 0);
                 if (sort === "nameAsc") return (a.nameHindi || a.nameEng || "").localeCompare(b.nameHindi || b.nameEng || "");
@@ -1351,7 +1483,7 @@
         }
 
         /* ==========================================================================
-           5-IN-1 EXPORT & PRINT SYSTEM FOR STUDENT FORMS
+           5-IN-1 EXPORT HANDLERS
            ========================================================================== */
         function printCurrentStudentForm() { window.print(); }
 
@@ -1362,19 +1494,12 @@
                 "Candidate Name": st.nameEng,
                 "Name Hindi": st.nameHindi,
                 "Father Name": st.fatherName,
-                "Mother Name": st.motherName,
                 "Class": st.targetClass,
                 "Section": st.section,
-                "Medium": st.medium,
                 "DOB": st.dob,
-                "Gender": st.gender,
-                "Category": st.category,
                 "Mobile": st.mobile,
                 "APAAR ID": st.apaarId,
-                "Child ID": st.childId,
-                "Aadhaar": st.aadhaar,
-                "Bank Account": st.bankAccount,
-                "Lock Status": st.isFormLocked ? 'Locked' : 'Editable'
+                "Aadhaar": st.aadhaar
             }));
             const ws = XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
@@ -1418,7 +1543,7 @@
         }
 
         /* ==========================================================================
-           STUDENT FORM LOAD & SAVE HANDLERS
+           STUDENT FORM SAVE & LOAD
            ========================================================================== */
         function renderFormClassBookCheckboxes(cls) {
             const container = document.getElementById("formTextbooksCheckboxesArea");
@@ -1470,67 +1595,21 @@
             document.getElementById("f_scholarNo").value = st.scholarNo || '';
             document.getElementById("f_rollNo").value = st.rollNo || '';
             document.getElementById("f_enrollmentNo").value = st.enrollmentNo || '';
-            document.getElementById("f_srNo").value = st.srNo || '';
-            document.getElementById("f_targetClass").value = st.targetClass || '10th';
+            document.getElementById("f_targetClass").value = st.targetClass || Object.keys(schoolClassStructure)[0];
+            updateSectionDropdownsUI();
             document.getElementById("f_section").value = st.section || 'A';
-            document.getElementById("f_medium").value = st.medium || 'HINDI';
-            document.getElementById("f_admissionDate").value = st.admissionDate || '';
-            document.getElementById("f_applicantType").value = st.applicantType || '1';
-            document.getElementById("f_applicantType2").value = st.applicantType2 || 'सामान्य';
-            document.getElementById("f_applicantType3").value = st.applicantType3 || 'स्थाई';
-            document.getElementById("f_provisionalResult").value = st.provisionalResult || 'Pass';
-            document.getElementById("f_tcStatus").value = st.tcStatus || 'YES';
-            document.getElementById("f_gapCertificate").value = st.gapCertificate || 'NO';
-            document.getElementById("f_lastYearPassType").value = st.lastYearPassType || 'Regular';
-
             document.getElementById("f_nameHindi").value = st.nameHindi || '';
             document.getElementById("f_nameEng").value = st.nameEng || '';
             document.getElementById("f_fatherName").value = st.fatherName || '';
-            document.getElementById("f_fatherNameEng").value = st.fatherNameEng || '';
             document.getElementById("f_motherName").value = st.motherName || '';
-            document.getElementById("f_motherNameEng").value = st.motherNameEng || '';
             document.getElementById("f_dob").value = st.dob || '';
             document.getElementById("f_gender").value = st.gender || 'FEMALE';
             document.getElementById("f_category").value = st.category || 'OBC';
-            document.getElementById("f_caste").value = st.caste || '';
             document.getElementById("f_mobile").value = st.mobile || '';
-            document.getElementById("f_email").value = st.email || '';
-            document.getElementById("f_bloodGroup").value = st.bloodGroup || 'O+';
-            document.getElementById("f_address").value = st.address || '';
-
-            document.getElementById("f_apaarId").value = st.apaarId || '';
-            document.getElementById("f_childId").value = st.childId || '';
-            document.getElementById("f_familyId").value = st.familyId || '';
-            document.getElementById("f_aadhaar").value = st.aadhaar || '';
-            document.getElementById("f_bankName").value = st.bankName || '';
-            document.getElementById("f_bankAccount").value = st.bankAccount || '';
-            document.getElementById("f_bankIfsc").value = st.bankIfsc || '';
-            document.getElementById("f_annualIncome").value = st.annualIncome || '';
-            document.getElementById("f_bplStatus").value = st.bplStatus || 'NO';
-            document.getElementById("f_ladliLaxmi").value = st.ladliLaxmi || 'NO';
-            document.getElementById("f_ladliLaxmiNo").value = st.ladliLaxmiNo || '';
-            document.getElementById("f_cwsnStatus").value = st.cwsnStatus || 'NO';
-            document.getElementById("f_hostelStatus").value = st.hostelStatus || 'NO';
-            document.getElementById("f_covidStatus").value = st.covidStatus || 'NO';
-            document.getElementById("f_mpTassStatus").value = st.mpTassStatus || 'NO';
-            document.getElementById("f_mpTassNo").value = st.mpTassNo || '';
-            document.getElementById("f_scholarshipStatus").value = st.scholarshipStatus || 'YES';
-            document.getElementById("f_sambalStatus").value = st.sambalStatus || 'NO';
-            document.getElementById("f_sambalNo").value = st.sambalNo || '';
-            document.getElementById("f_area").value = st.area || 'ग्रामीण';
-            document.getElementById("f_feesPaid").value = st.feesPaid || '100';
-            document.getElementById("f_remarks").value = st.remarks || '';
-
-            document.getElementById("f_sub1").value = st.sub1 || '';
-            document.getElementById("f_sub2").value = st.sub2 || '';
-            document.getElementById("f_sub3").value = st.sub3 || '';
-            document.getElementById("f_sub4").value = st.sub4 || '';
-            document.getElementById("f_sub5").value = st.sub5 || '';
-            document.getElementById("f_sub6").value = st.sub6 || '';
 
             if (st.photoUrl) document.getElementById("formPhotoPreview").src = st.photoUrl;
 
-            renderFormClassBookCheckboxes(st.targetClass || '10th');
+            renderFormClassBookCheckboxes(st.targetClass || Object.keys(schoolClassStructure)[0]);
 
             if (st.receivedBooks) {
                 document.querySelectorAll('input[name="studentBooks"]').forEach(cb => {
@@ -1538,7 +1617,6 @@
                 });
             }
 
-            // Lock UI Control
             const lockNotice = document.getElementById("studentFormLockNotice");
             const btnSave = document.getElementById("btnSaveStudent");
             if (st.isFormLocked) {
@@ -1567,71 +1645,28 @@
                 scholarNo: scholar,
                 rollNo: document.getElementById("f_rollNo").value,
                 enrollmentNo: document.getElementById("f_enrollmentNo").value,
-                srNo: document.getElementById("f_srNo").value,
                 targetClass: document.getElementById("f_targetClass").value,
                 section: document.getElementById("f_section").value,
                 medium: document.getElementById("f_medium").value,
-                admissionDate: document.getElementById("f_admissionDate").value,
-                applicantType: document.getElementById("f_applicantType").value,
-                applicantType2: document.getElementById("f_applicantType2").value,
-                applicantType3: document.getElementById("f_applicantType3").value,
-                provisionalResult: document.getElementById("f_provisionalResult").value,
-                tcStatus: document.getElementById("f_tcStatus").value,
-                gapCertificate: document.getElementById("f_gapCertificate").value,
-                lastYearPassType: document.getElementById("f_lastYearPassType").value,
                 nameHindi: document.getElementById("f_nameHindi").value,
                 nameEng: document.getElementById("f_nameEng").value,
                 fatherName: document.getElementById("f_fatherName").value,
-                fatherNameEng: document.getElementById("f_fatherNameEng").value,
                 motherName: document.getElementById("f_motherName").value,
-                motherNameEng: document.getElementById("f_motherNameEng").value,
                 dob: document.getElementById("f_dob").value,
                 gender: document.getElementById("f_gender").value,
                 category: document.getElementById("f_category").value,
-                caste: document.getElementById("f_caste").value,
                 mobile: document.getElementById("f_mobile").value,
-                email: document.getElementById("f_email").value,
-                bloodGroup: document.getElementById("f_bloodGroup").value,
-                address: document.getElementById("f_address").value,
-                apaarId: document.getElementById("f_apaarId").value,
-                childId: document.getElementById("f_childId").value,
-                familyId: document.getElementById("f_familyId").value,
-                aadhaar: document.getElementById("f_aadhaar").value,
-                bankName: document.getElementById("f_bankName").value,
-                bankAccount: document.getElementById("f_bankAccount").value,
-                bankIfsc: document.getElementById("f_bankIfsc").value,
-                annualIncome: document.getElementById("f_annualIncome").value,
-                bplStatus: document.getElementById("f_bplStatus").value,
-                ladliLaxmi: document.getElementById("f_ladliLaxmi").value,
-                ladliLaxmiNo: document.getElementById("f_ladliLaxmiNo").value,
-                cwsnStatus: document.getElementById("f_cwsnStatus").value,
-                hostelStatus: document.getElementById("f_hostelStatus").value,
-                covidStatus: document.getElementById("f_covidStatus").value,
-                mpTassStatus: document.getElementById("f_mpTassStatus").value,
-                mpTassNo: document.getElementById("f_mpTassNo").value,
-                scholarshipStatus: document.getElementById("f_scholarshipStatus").value,
-                sambalStatus: document.getElementById("f_sambalStatus").value,
-                sambalNo: document.getElementById("f_sambalNo").value,
-                area: document.getElementById("f_area").value,
-                feesPaid: document.getElementById("f_feesPaid").value,
-                remarks: document.getElementById("f_remarks").value,
-                sub1: document.getElementById("f_sub1").value,
-                sub2: document.getElementById("f_sub2").value,
-                sub3: document.getElementById("f_sub3").value,
-                sub4: document.getElementById("f_sub4").value,
-                sub5: document.getElementById("f_sub5").value,
-                sub6: document.getElementById("f_sub6").value,
                 photoUrl: document.getElementById("formPhotoPreview").src,
                 receivedBooks: checkedBooks,
                 isFormLocked: false
             };
 
             populateStudentSelectorDropdown();
-            showToast("छात्र का संपूर्ण रिकॉर्ड (50+ फ़ील्ड्स) व अनुक्रमांक सफलता पूर्वक सुरक्षित हो गया!");
+            showToast("छात्र का संपूर्ण रिकॉर्ड व अनुक्रमांक सफलता पूर्वक सुरक्षित हो गया!");
         }
 
         /* ==========================================================================
-           SECTIONS 2 TO 8 RENDERERS & MASTERS LOGIC
+           SECTIONS 2 TO 8 RENDERERS
            ========================================================================== */
         function renderSubjectMaster() {
             const container = document.getElementById("subjectMasterContainer");
@@ -1660,14 +1695,14 @@
                     </thead>
                     <tbody class="divide-y divide-slate-200 bg-white">
                         ${filtered.map((s, idx) => `
-                            <tr class="hover:bg-purple-50/50 transition ${s.isLocked ? 'bg-slate-50' : ''}">
+                            <tr class="hover:bg-purple-50/50 transition">
                                 <td class="p-2.5 border text-center font-mono font-bold text-slate-600">${idx + 1}</td>
                                 <td class="p-2.5 border text-center font-mono font-black text-purple-950 text-base bg-purple-50/40">${s.code}</td>
                                 <td class="p-2.5 border font-extrabold text-slate-900 text-base">${s.name}</td>
                                 <td class="p-2.5 border text-center font-black text-indigo-950">${s.targetClass}</td>
                                 <td class="p-2.5 border text-center font-mono font-bold">${s.session}</td>
                                 <td class="p-2.5 border text-center no-print">
-                                    <button onclick="deleteSubject('${s.id}')" ${s.isLocked ? 'disabled' : ''} class="bg-rose-600 hover:bg-rose-700 disabled:opacity-40 text-white px-3 py-1 rounded-lg font-bold shadow">
+                                    <button onclick="deleteSubject('${s.id}')" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1 rounded-lg font-bold shadow">
                                         हटाएं
                                     </button>
                                 </td>
@@ -1704,7 +1739,7 @@
 
         function deleteSubject(id) {
             const idx = subjectMasterData.findIndex(s => s.id === id);
-            if (idx !== -1 && !subjectMasterData[idx].isLocked) {
+            if (idx !== -1) {
                 subjectMasterData.splice(idx, 1);
                 renderSubjectMaster();
                 showToast("विषय हटाया गया!");
@@ -1864,10 +1899,17 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 bg-white">
-                        <tr><td class="p-3 border font-extrabold text-base">10th Standard</td><td class="p-3 border font-mono">52</td><td class="p-3 border font-mono">52</td><td class="p-3 border font-bold text-emerald-700">48</td><td class="p-3 border font-bold text-amber-600">3</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">92.3%</td></tr>
-                        <tr><td class="p-3 border font-extrabold text-base">9th Standard</td><td class="p-3 border font-mono">48</td><td class="p-3 border font-mono">48</td><td class="p-3 border font-bold text-emerald-700">44</td><td class="p-3 border font-bold text-amber-600">3</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">91.6%</td></tr>
-                        <tr><td class="p-3 border font-extrabold text-base">11th Standard</td><td class="p-3 border font-mono">45</td><td class="p-3 border font-mono">45</td><td class="p-3 border font-bold text-emerald-700">42</td><td class="p-3 border font-bold text-amber-600">2</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">93.3%</td></tr>
-                        <tr><td class="p-3 border font-extrabold text-base">12th Standard</td><td class="p-3 border font-mono">50</td><td class="p-3 border font-mono">50</td><td class="p-3 border font-bold text-emerald-700">48</td><td class="p-3 border font-bold text-amber-600">1</td><td class="p-3 border font-bold text-rose-600">1</td><td class="p-3 border font-mono font-black text-emerald-700 text-base">96.0%</td></tr>
+                        ${Object.keys(schoolClassStructure).map(cls => `
+                            <tr>
+                                <td class="p-3 border font-extrabold text-base">कक्षा ${cls}</td>
+                                <td class="p-3 border font-mono">50</td>
+                                <td class="p-3 border font-mono">50</td>
+                                <td class="p-3 border font-bold text-emerald-700">46</td>
+                                <td class="p-3 border font-bold text-amber-600">3</td>
+                                <td class="p-3 border font-bold text-rose-600">1</td>
+                                <td class="p-3 border font-mono font-black text-emerald-700 text-base">92.0%</td>
+                            </tr>
+                        `).join('')}
                     </tbody>
                 </table>
             `;
@@ -1951,7 +1993,7 @@
         }
 
         function downloadJsonBackup() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ rollNoSeries: rollNoSeriesConfig, subjects: subjectMasterData, books: booksMasterData, students: studentsData }));
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ classStructure: schoolClassStructure, rollNoSeries: rollNoSeriesConfig, subjects: subjectMasterData, books: booksMasterData, students: studentsData }));
             const dlAnchor = document.createElement('a');
             dlAnchor.setAttribute("href", dataStr);
             dlAnchor.setAttribute("download", `SDMS_Core_Backup.json`);
@@ -1967,10 +2009,13 @@
                 reader.onload = function(e) {
                     try {
                         const parsed = JSON.parse(e.target.result);
+                        if (parsed.classStructure) schoolClassStructure = parsed.classStructure;
                         if (parsed.rollNoSeries) rollNoSeriesConfig = parsed.rollNoSeries;
                         if (parsed.subjects) subjectMasterData = parsed.subjects;
                         if (parsed.books) booksMasterData = parsed.books;
                         if (parsed.students) studentsData = parsed.students;
+
+                        updateAllClassDropdownsUI();
                         showSection(activeSection);
                         showToast("डेटाबेस सफलता पूर्वक रीस्टोर हो गया!");
                     } catch (err) {
