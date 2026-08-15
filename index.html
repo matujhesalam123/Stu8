@@ -124,6 +124,7 @@
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
+    <!-- GLOBAL HEADER WITH LIVE AUTO-BACKUP STATUS -->
     <header class="bg-indigo-950 text-white shadow-lg border-b border-indigo-800 sticky top-0 z-40 no-print">
         <div class="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('dashboard')">
@@ -134,10 +135,9 @@
                 <div>
                     <div class="flex items-center space-x-2">
                         <h1 class="text-base font-extrabold tracking-wide text-yellow-400">SDMS - मास्टर्स क्लाउड पोर्टल</h1>
-                        <!-- Live Sync Indicator Badge -->
                         <span id="headerCloudSyncBadge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span id="headerCloudSyncText">लाइव सर्वर ऑनलाइन</span>
+                            <span id="headerCloudSyncText">🟢 ऑटो-बैकअप सक्रिय</span>
                         </span>
                     </div>
                     <p class="text-[10px] text-indigo-200 font-semibold" id="headerSchoolLabel">पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज (रायसेन)</p>
@@ -147,7 +147,7 @@
             <div class="flex items-center space-x-2">
                 <button onclick="showSection('cloud-settings')" class="bg-emerald-700 hover:bg-emerald-800 border border-emerald-500 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg shadow transition flex items-center space-x-1">
                     <i data-lucide="cloud-lightning" class="w-3.5 h-3.5 text-yellow-300"></i>
-                    <span>क्लाउड लाइव बैकअप</span>
+                    <span>क्लाउड सर्वर केंद्र</span>
                 </button>
 
                 <button onclick="showSection('header-setup')" class="bg-indigo-800 hover:bg-indigo-900 border border-indigo-600 text-amber-300 font-bold text-xs px-2.5 py-1.5 rounded-lg shadow transition flex items-center space-x-1">
@@ -163,6 +163,7 @@
         </div>
     </header>
 
+    <!-- MAIN APP LAYOUT CONTAINER -->
     <div class="flex-1 max-w-7xl w-full mx-auto p-2 sm:p-4 md:p-5 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
 
         <!-- SIDEBAR NAVIGATION PANEL -->
@@ -318,7 +319,7 @@
                                 <i data-lucide="school" class="w-5 h-5 text-amber-600"></i>
                                 <span>हेडर व शाला मास्टर सेटिंग्स (School Header & Watermark Config)</span>
                             </h2>
-                            <p class="text-xs text-slate-500">यहाँ अपडेट किया गया शाला नाम, लोगो व वाटरमार्क सभी एडमिट कार्ड, अंकसूची, आईकार्ड व प्रिंट फ़ॉर्म्स में स्वतः अपडेट होगा।</p>
+                            <p class="text-xs text-slate-500">यहाँ अपडेट किया गया शाला नाम, सत्र, लोगो व वाटरमार्क सभी एडमिट कार्ड, अंकसूची, आईकार्ड व प्रिंट फ़ॉर्म्स में स्वतः अपडेट होगा।</p>
                         </div>
                         <button onclick="resetSchoolHeaderToDefault()" class="bg-slate-200 text-slate-800 text-xs px-3 py-1.5 rounded-lg font-bold shadow hover:bg-slate-300">डिफ़ॉल्ट सेटिंग्स रीसेट करें</button>
                     </div>
@@ -326,7 +327,7 @@
                     <form id="schoolHeaderForm" onsubmit="handleSchoolHeaderSave(event)" class="space-y-4 text-xs font-semibold">
                         
                         <div class="bg-amber-50/60 p-3 rounded-lg border border-amber-200 space-y-3">
-                            <h3 class="font-extrabold text-amber-950 text-xs uppercase tracking-wider">1. शाला का नाम एवं पता विवरण (School Identity):</h3>
+                            <h3 class="font-extrabold text-amber-950 text-xs uppercase tracking-wider">1. शाला का नाम, सत्र एवं पता विवरण (School Identity):</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-slate-700 block mb-0.5">शाला का नाम (हिन्दी में) *</label>
@@ -335,6 +336,14 @@
                                 <div>
                                     <label class="text-slate-700 block mb-0.5">School Name (in English Uppercase) *</label>
                                     <input type="text" id="h_schoolNameEng" required class="w-full border rounded px-2.5 py-1.5 font-bold uppercase text-indigo-950">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block mb-0.5">सक्रिय शैक्षणिक सत्र (Academic Session) *</label>
+                                    <select id="h_session" class="w-full border rounded px-2.5 py-1.5 font-black text-amber-950 bg-amber-50 border-amber-300">
+                                        <option value="SESSION - 2025-26">SESSION - 2025-26</option>
+                                        <option value="SESSION - 2026-27">SESSION - 2026-27</option>
+                                        <option value="SESSION - 2027-28">SESSION - 2027-28</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label class="text-slate-700 block mb-0.5">पता व विकासखंड (Address & Block)</label>
@@ -472,84 +481,552 @@
                 </div>
             </section>
 
-            <!-- SECTION 16 / MODULE 17: CLOUD, LIVE SERVER UPDATE & STORAGE CENTER -->
-            <section id="section-cloud-settings" class="content-section space-y-4 hidden">
+            <!-- SECTION 2: STUDENT ENTRY FORM (50+ COLUMNS + AUTO BOOK DISTRIBUTION) -->
+            <section id="section-student-entry" class="content-section space-y-4 hidden">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
                         <div>
-                            <h2 class="text-base font-bold text-indigo-950 flex items-center space-x-2">
-                                <i data-lucide="cloud-lightning" class="w-5 h-5 text-emerald-600"></i>
-                                <span>7. लाइव सर्वर, क्लाउड स्टोरेज व ऑटो-बैकअप केंद्र</span>
+                            <h2 class="text-base font-bold text-indigo-950 flex items-center space-x-1.5">
+                                <i data-lucide="user-plus" class="w-5 h-5 text-indigo-600"></i>
+                                <span>मास्टर्स ऑनलाइन छात्र प्रवेश व संपादन फ़ॉर्म (50+ Columns Form)</span>
                             </h2>
-                            <p class="text-xs text-slate-500">वास्तविक समय (Real-Time Live Server Sync), एक्सटर्नल क्लाउड बैकअप और स्थानीय JSON सिंक</p>
+                            <p class="text-xs text-slate-500">म.प्र. बोर्ड, समग्र छात्रवृत्ति व पीएमश्री तीनों फ़ॉर्म्स हेतु 50 से अधिक एकीकृत कॉलम एवं पाठ्यपुस्तक ऑटो-सिंक प्रणाली</p>
                         </div>
-                        <div id="cloudLiveStatusBadge" class="bg-emerald-100 text-emerald-950 border border-emerald-300 font-extrabold text-xs px-3 py-1 rounded-full flex items-center space-x-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span id="cloudStatusText">🔴 लाइव कनेक्टिंग...</span>
-                        </div>
+                        <button type="button" onclick="resetMasterStudentForm()" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg font-bold shadow">नया फ़ॉर्म खाली करें</button>
                     </div>
 
-                    <!-- Cloud Control Center Dashboard -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold">
-                        <div class="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200 space-y-2">
-                            <span class="text-slate-500 uppercase block text-[10px]">1. लाइव क्लाउड स्टेटस</span>
-                            <div class="text-sm font-black text-emerald-950" id="cloudLastSyncTime">अंतिम सिंक: अभी</div>
-                            <p class="text-[11px] text-slate-600 font-semibold leading-relaxed">
-                                सभी छात्र, अंक, शिक्षक व सेटिंग्स लाइव क्लाउड सर्वर पर 100% सुरक्षित और ऑटो-सिंक रहते हैं।
-                            </p>
-                            <button onclick="pushStateToCloud()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-1.5 rounded-lg shadow font-extrabold flex items-center justify-center space-x-1">
-                                <i data-lucide="upload-cloud" class="w-4 h-4"></i>
-                                <span>क्लाउड पर लाइव पुश करें (Push Now)</span>
-                            </button>
-                        </div>
-
-                        <div class="bg-sky-50/70 p-3.5 rounded-xl border border-sky-200 space-y-2">
-                            <span class="text-slate-500 uppercase block text-[10px]">2. लाइव सर्वर अपडेट चेक</span>
-                            <div class="text-sm font-black text-sky-950">लाइव ऑटो-अपडेट्स ऑन (Realtime)</div>
-                            <p class="text-[11px] text-slate-600 font-semibold leading-relaxed">
-                                किसी भी डिवाइस से डेटा बदलने पर यह पोर्टल स्वतः बिना रिफ्रेश किए नया डेटा लोड कर लेता है।
-                            </p>
-                            <button onclick="pullStateFromCloud()" class="w-full bg-sky-700 hover:bg-sky-800 text-white py-1.5 rounded-lg shadow font-extrabold flex items-center justify-center space-x-1">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                <span>सर्वर से डेटा री-लोड करें (Pull Now)</span>
-                            </button>
-                        </div>
-
-                        <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200 space-y-2">
-                            <span class="text-slate-500 uppercase block text-[10px]">3. लोकल फ़ाइल बैकअप</span>
-                            <div class="text-sm font-black text-amber-950">JSON एक्सपोर्ट व रीस्टोर</div>
-                            <p class="text-[11px] text-slate-600 font-semibold leading-relaxed">
-                                अपने कंप्यूटर/पेनड्राइव में डेटा की बैकअप फ़ाइल डाउनलोड या रीस्टोर करें।
-                            </p>
-                            <div class="flex space-x-1.5">
-                                <button onclick="downloadJsonBackup()" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-1.5 rounded-lg shadow font-extrabold text-[11px]">
-                                    डाउनलोड बैकअप
-                                </button>
-                                <label class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-1.5 rounded-lg shadow font-extrabold text-[11px] text-center cursor-pointer">
-                                    रीस्टोर फ़ाइल
-                                    <input type="file" onchange="restoreJsonBackup(this)" class="hidden" accept=".json">
-                                </label>
+                    <form id="masterStudentForm" onsubmit="handleMasterStudentSave(event)" class="space-y-4 text-xs font-semibold">
+                        
+                        <!-- Part 1: Basic & School Info -->
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-3">
+                            <h3 class="font-extrabold text-indigo-900 text-xs uppercase tracking-wider">1. छात्र फोटो व बुनियादी विद्यालय विवरण:</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
+                                <div class="col-span-1 text-center">
+                                    <img id="formPhotoPreview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" class="w-24 h-28 object-cover rounded-lg border-2 border-indigo-900 mx-auto shadow-sm">
+                                    <div class="mt-1 space-y-1">
+                                        <input type="file" id="f_photoFile" onchange="previewStudentPhoto(this)" class="text-[10px] text-slate-500 w-full">
+                                        <input type="text" id="f_photoUrl" placeholder="या ऑनलाइन फ़ोटो URL" oninput="document.getElementById('formPhotoPreview').src=this.value" class="w-full border rounded px-1.5 py-0.5 text-[10px]">
+                                    </div>
+                                </div>
+                                <div class="col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="text-slate-700 block">SCHOLAR NO. (स्कॉलर क्र.) *</label>
+                                        <input type="text" id="f_scholarNo" required class="w-full border rounded px-2 py-1 font-bold text-indigo-950">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">RollNumber (अनुक्रमांक)</label>
+                                        <input type="text" id="f_rollNo" class="w-full border rounded px-2 py-1 font-mono">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">enrollment (नामांकन क्रमांक)</label>
+                                        <input type="text" id="f_enrollmentNo" class="w-full border rounded px-2 py-1 font-mono">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेशित कक्षा *</label>
+                                        <select id="f_targetClass" onchange="renderFormBookCheckboxes()" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                            <option value="10th">10th Standard</option>
+                                            <option value="9th">9th Standard</option>
+                                            <option value="11th">11th Standard</option>
+                                            <option value="12th">12th Standard</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">सेक्शन (Section) *</label>
+                                        <select id="f_section" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                            <option value="A">Section A</option>
+                                            <option value="B">Section B</option>
+                                            <option value="C">Section C</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">शैक्षणिक सत्र (Academic Session) *</label>
+                                        <select id="f_session" onchange="renderFormBookCheckboxes()" class="w-full border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                            <option value="SESSION - 2025-26">SESSION - 2025-26</option>
+                                            <option value="SESSION - 2026-27">SESSION - 2026-27</option>
+                                            <option value="SESSION - 2027-28">SESSION - 2027-28</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">Sr.No. (एस.आर. क्र.)</label>
+                                        <input type="text" id="f_srNo" class="w-full border rounded px-2 py-1">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश दिनांक</label>
+                                        <input type="date" id="f_admissionDate" class="w-full border rounded px-2 py-1">
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">MEDIUM (अध्ययन माध्यम)</label>
+                                        <select id="f_medium" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                            <option value="HINDI">HINDI (हिन्दी)</option>
+                                            <option value="ENGLISH">ENGLISH (अंग्रेजी)</option>
+                                            <option value="URDU">URDU (उर्दू)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश प्रकार 1 (संस्थागत/नवीन)</label>
+                                        <select id="f_applicantType" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="1">1. नियमित / संस्थागत</option>
+                                            <option value="2">2. नवीन प्रवेशी</option>
+                                            <option value="3">3. पुनः प्रवेशी</option>
+                                            <option value="4">4. स्वाध्यायी</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश प्रकार 2 (पुनः/रुकजाना)</label>
+                                        <select id="f_applicantType2" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="सामान्य">सामान्य प्रवेश</option>
+                                            <option value="पुनः प्रवेशी">पुनः प्रवेशी</option>
+                                            <option value="रुक जाना नहीं">रुक जाना नहीं योजना</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">प्रवेश प्रकार 3 (अस्थाई)</label>
+                                        <select id="f_applicantType3" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="स्थाई">स्थाई प्रवेश</option>
+                                            <option value="अस्थाई">अस्थाई प्रवेश</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">अस्थाई रिजल्ट स्थिति</label>
+                                        <select id="f_provisionalResult" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="Pass">Pass (उत्तीर्ण)</option>
+                                            <option value="Fail">Fail (अनुत्तीर्ण)</option>
+                                            <option value="Supp">Supplementary (पूरक)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">T.C. (स्थानांतरण पत्र जमा?)</label>
+                                        <select id="f_tcStatus" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                            <option value="YES">YES (हाँ)</option>
+                                            <option value="NO">NO (नहीं)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">गैप प्रमाण पत्र जमा?</label>
+                                        <select id="f_gapCertificate" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="NO">NO (आवश्यकता नहीं)</option>
+                                            <option value="YES">YES (जमा है)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-slate-700 block">गत वर्ष छात्र प्रकार</label>
+                                        <select id="f_lastYearPassType" class="w-full border rounded px-2 py-1 bg-white">
+                                            <option value="Regular">Regular (नियमित)</option>
+                                            <option value="Private">Private (स्वाध्यायी)</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Part 2: Personal Details -->
+                        <div class="bg-indigo-50/50 p-3 rounded-lg border border-indigo-200 space-y-2">
+                            <h3 class="font-extrabold text-indigo-900 text-xs uppercase tracking-wider">2. व्यक्तिगत जानकारी (Personal Details):</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                                <div>
+                                    <label class="text-slate-700 block">Candidate (नाम हिन्दी में)</label>
+                                    <input type="text" id="f_nameHindi" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">Candidate (FULL NAME IN ENGLISH) *</label>
+                                    <input type="text" id="f_nameEng" required class="w-full border rounded px-2 py-1 font-bold uppercase">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">father name (पिता का नाम) *</label>
+                                    <input type="text" id="f_fatherName" required class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">mother name (माता का नाम) *</label>
+                                    <input type="text" id="f_motherName" required class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">DOB (जन्म तिथि) *</label>
+                                    <input type="date" id="f_dob" required class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">SEX (लिंग)</label>
+                                    <select id="f_gender" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="FEMALE">FEMALE (बालिका)</option>
+                                        <option value="MALE">MALE (बालक)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">CATEGORY (संवर्ग / वर्ग)</label>
+                                    <select id="f_category" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="OBC">OBC (अन्य पिछड़ा वर्ग)</option>
+                                        <option value="SC">SC (अनुसूचित जाति)</option>
+                                        <option value="ST">ST (अनुसूचित जनजाति)</option>
+                                        <option value="GEN">GENERAL (सामान्य)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">CAST (उपजाति)</label>
+                                    <input type="text" id="f_caste" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">धर्म / अल्पसंख्यक (Religion)</label>
+                                    <input type="text" id="f_religion" placeholder="हिन्दू / मुस्लिम / सिख..." class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MOBILE (मोबाईल नं. / WhatsApp)</label>
+                                    <input type="tel" id="f_mobile" class="w-full border rounded px-2 py-1 font-bold text-indigo-900">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">वैकल्पिक मोबाइल नं.</label>
+                                    <input type="tel" id="f_altMobile" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">EMAIL ID (ई-मेल आईडी)</label>
+                                    <input type="email" id="f_email" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">BLOOD GROUP (रक्त समूह)</label>
+                                    <select id="f_bloodGroup" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="O+">O+</option>
+                                        <option value="A+">A+</option>
+                                        <option value="B+">B+</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">ADDRESS (पत्र व्यवहार का पता)</label>
+                                    <input type="text" id="f_address" placeholder="ग्राम / वार्ड / मोहल्ला" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="text-slate-700 block">पूर्व अध्ययनरत विद्यालय का नाम</label>
+                                    <input type="text" id="f_previousSchool" placeholder="पूर्व स्कूल का नाम एवं ब्लॉक" class="w-full border rounded px-2 py-1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Part 3: Government ID Codes & Bank Details -->
+                        <div class="bg-amber-50/50 p-3 rounded-lg border border-amber-200 space-y-2">
+                            <h3 class="font-extrabold text-amber-950 text-xs uppercase tracking-wider">3. शासकीय आईडी, अपार आईडी, योजनाएं व बैंक खाते की जानकारी:</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                                <div>
+                                    <label class="text-slate-700 block">APAAR ID (अपार आईडी) *</label>
+                                    <input type="text" id="f_apaarId" class="w-full border rounded px-2 py-1 font-mono font-bold text-indigo-900">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">CHILD ID (चाइल्ड समग्र ID)</label>
+                                    <input type="text" id="f_childId" class="w-full border rounded px-2 py-1 font-mono font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">समग्र ID (परिवार SSSM ID)</label>
+                                    <input type="text" id="f_familyId" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">AADHAAR (आधार नंबर)</label>
+                                    <input type="text" id="f_aadhaar" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">बैंक का नाम व शाखा</label>
+                                    <input type="text" id="f_bankName" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">A/C NO (बैंक खाता क्रमांक)</label>
+                                    <input type="text" id="f_bankAccount" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">IFSC (बैंक आईएफएससी कोड)</label>
+                                    <input type="text" id="f_bankIfsc" class="w-full border rounded px-2 py-1 font-mono uppercase">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">INCOME (वार्षिक आय ₹ में)</label>
+                                    <input type="number" id="f_annualIncome" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">BPL (बी.पी.एल. कार्डधारी?)</label>
+                                    <select id="f_bplStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (हाँ)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">L LAXMI (लाड़ली लक्ष्मी पात्रता?)</label>
+                                    <select id="f_ladliLaxmi" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (हाँ)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">L लक्ष्मी क्रमांक</label>
+                                    <input type="text" id="f_ladliLaxmiNo" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">विकलांग (CWSN / दिव्यांग?)</label>
+                                    <select id="f_cwsnStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (सामान्य)</option>
+                                        <option value="YES">YES (दिव्यांग)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">छात्राबासी (Hostel Resident?)</label>
+                                    <select id="f_hostelStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (डे स्कॉलर)</option>
+                                        <option value="YES">YES (छात्रावासी)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">COVID 19 (अनाथ/प्रभावित?)</label>
+                                    <select id="f_covidStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (प्रभावित)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MP TASS (पंजीयन?)</label>
+                                    <select id="f_mpTassStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (पंजीकृत)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">MP TASS NO.</label>
+                                    <input type="text" id="f_mpTassNo" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">छात्रवृत्ति (Scholarship Eligible?)</label>
+                                    <select id="f_scholarshipStatus" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="YES">YES (हाँ)</option>
+                                        <option value="NO">NO (नहीं)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">SAMBAL (संबल कार्ड है?)</label>
+                                    <select id="f_sambalStatus" class="w-full border rounded px-2 py-1 bg-white">
+                                        <option value="NO">NO (नहीं)</option>
+                                        <option value="YES">YES (हाँ)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">संबल क्रमांक</label>
+                                    <input type="text" id="f_sambalNo" class="w-full border rounded px-2 py-1 font-mono">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">एरिया (ग्रामीण / शहरी)</label>
+                                    <select id="f_area" class="w-full border rounded px-2 py-1 bg-white font-bold">
+                                        <option value="ग्रामीण">ग्रामीण (Rural)</option>
+                                        <option value="शहरी">शहरी (Urban)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">फीस (प्रवेश शुल्क राशि ₹)</label>
+                                    <input type="number" id="f_feesPaid" value="100" class="w-full border rounded px-2 py-1">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">रिमार्क / REMARK</label>
+                                    <input type="text" id="f_remarks" class="w-full border rounded px-2 py-1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Part 4: Customizable Subjects -->
+                        <div class="bg-purple-50/50 p-3 rounded-lg border border-purple-200 space-y-2">
+                            <h3 class="font-extrabold text-purple-950 text-xs uppercase tracking-wider">4. विषय व विषय कोड चयन (Subject & Code Setup):</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <div>
+                                    <label class="text-slate-700 block">1sub (प्रथम विषय + कोड)</label>
+                                    <input type="text" id="f_sub1" value="401 - हिन्दी" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">2sub (द्वितीय विषय + कोड)</label>
+                                    <input type="text" id="f_sub2" value="411 - अंग्रेजी" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">3sub (तृतीय विषय + कोड)</label>
+                                    <input type="text" id="f_sub3" value="100 - गणित / संस्कृत" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">4sub (चतुर्थ विषय + कोड)</label>
+                                    <input type="text" id="f_sub4" value="200 - विज्ञान / भौतिकी" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">5sub (पंचम विषय + कोड)</label>
+                                    <input type="text" id="f_sub5" value="300 - सामाजिक विज्ञान / रसायन" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-slate-700 block">6sub (षष्ठ विषय / वोकेशनल + कोड)</label>
+                                    <input type="text" id="f_sub6" value="501 - संस्कृत / ब्यूटी & वेलनेस" class="w-full border rounded px-2 py-1 font-bold">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Part 5: AUTO BOOK DISTRIBUTION CHECKBOXES FROM BOOK MASTER -->
+                        <div class="bg-emerald-50/70 p-3 rounded-lg border border-emerald-300 space-y-2">
+                            <div class="flex flex-wrap justify-between items-center border-b border-emerald-200 pb-1.5 gap-2">
+                                <h3 class="font-extrabold text-emerald-950 text-xs uppercase tracking-wider flex items-center space-x-1">
+                                    <i data-lucide="library" class="w-4 h-4 text-emerald-700"></i>
+                                    <span>5. पाठ्यपुस्तक प्राप्त स्थिति (Auto-Loaded Books for Selected Class & Session):</span>
+                                </h3>
+                                <div class="flex items-center space-x-1.5">
+                                    <button type="button" onclick="toggleSelectAllFormBooks(true)" class="bg-emerald-700 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow hover:bg-emerald-800">सब चुनें (Select All)</button>
+                                    <button type="button" onclick="toggleSelectAllFormBooks(false)" class="bg-slate-200 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold hover:bg-slate-300">क्लियर करें</button>
+                                </div>
+                            </div>
+
+                            <div id="formTextbooksCheckboxesArea" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 pt-1 text-slate-800">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-2 pt-2 border-t">
+                            <button type="button" onclick="showSection('dashboard')" class="bg-slate-200 text-slate-700 px-4 py-1.5 rounded-lg font-bold">रद्द करें</button>
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-black shadow flex items-center space-x-1">
+                                <i data-lucide="save" class="w-4 h-4"></i>
+                                <span>छात्र रिकॉर्ड सुरक्षित करें (Save Student Record)</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- SECTION 15 / MODULE 16: BOOK & LIBRARY MASTER WITH FULL EDIT, LOCK, FILTER & SORT -->
+            <section id="section-book-master" class="content-section space-y-4 hidden">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-4">
+                    
+                    <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
+                        <div>
+                            <h2 class="text-sm font-extrabold text-indigo-950 flex items-center space-x-1.5">
+                                <i data-lucide="library" class="w-5 h-5 text-amber-700"></i>
+                                <span>6. पुस्तकालय व पाठ्यपुस्तक मास्टर (Book Distribution & Library Master)</span>
+                            </h2>
+                            <p class="text-[11px] text-slate-500 font-bold">पाठ्यपुस्तक जोड़ें, संपादित करें, डिलीट व लॉक/अनलॉक सुरक्षा सुविधा। यहाँ दर्ज पुस्तकें ऑनलाइन फॉर्म में स्वतः लाइव दिखेंगी।</p>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <button onclick="openBookModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs px-3.5 py-1.5 rounded-lg shadow transition flex items-center space-x-1">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                <span>+ नई पाठ्यपुस्तक जोड़ें</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Cloud Configuration Details -->
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
-                        <h3 class="font-extrabold text-indigo-950 uppercase tracking-wider text-[11px]">सुरक्षित क्लाउड डेटाबेस पाथ विवरण:</h3>
-                        <div class="font-mono text-[11px] bg-white p-2.5 rounded border border-slate-300 text-slate-800 font-bold space-y-1">
-                            <div><strong>App ID:</strong> <span id="displayAppId" class="text-indigo-900">sdms-Begamganj-master</span></div>
-                            <div><strong>Target Path:</strong> <span id="displayCloudPath" class="text-emerald-700">/artifacts/{appId}/public/data/sdmsMasterState</span></div>
-                            <div><strong>ऑटो-सिंक स्थिति:</strong> <span class="text-emerald-600 font-black">सक्रिय (Enabled - Firestore Realtime Listener)</span></div>
+                    <!-- ADVANCED BOOK SEARCH, FILTER & SORT TOOLBAR -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 text-xs font-bold bg-amber-50/60 p-3 rounded-xl border border-amber-200">
+                        <div>
+                            <label class="block text-slate-700 text-[10px] uppercase mb-0.5">1. एडवांस्ड लाइव खोजें:</label>
+                            <input type="text" id="bookSearchInput" oninput="renderBookMaster()" placeholder="🔍 पुस्तक नाम, विषय, सत्र..." class="w-full border border-amber-300 rounded px-2 py-1 bg-white outline-none font-semibold">
                         </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] uppercase mb-0.5">2. कक्षा फ़िल्टर:</label>
+                            <select id="bookClassFilter" onchange="renderBookMaster()" class="w-full border border-amber-300 rounded px-2 py-1 font-bold bg-white text-indigo-950">
+                                <option value="ALL">🏢 समस्त कक्षाएं (All Classes)</option>
+                                <option value="10th">कक्षा 10वीं (10th)</option>
+                                <option value="9th">कक्षा 9वीं (9th)</option>
+                                <option value="11th">कक्षा 11वीं (11th)</option>
+                                <option value="12th">कक्षा 12वीं (12th)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] uppercase mb-0.5">3. सत्र फ़िल्टर:</label>
+                            <select id="bookSessionFilter" onchange="renderBookMaster()" class="w-full border border-amber-300 rounded px-2 py-1 font-bold bg-white text-indigo-950">
+                                <option value="ALL">🗓️ समस्त सत्र (All Sessions)</option>
+                                <option value="SESSION - 2025-26">SESSION - 2025-26</option>
+                                <option value="SESSION - 2026-27">SESSION - 2026-27</option>
+                                <option value="SESSION - 2027-28">SESSION - 2027-28</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] uppercase mb-0.5">4. लॉक स्थिति फ़िल्टर:</label>
+                            <select id="bookLockFilter" onchange="renderBookMaster()" class="w-full border border-amber-300 rounded px-2 py-1 font-bold bg-white text-indigo-950">
+                                <option value="ALL">🔒 अनलॉक व लॉक सभी</option>
+                                <option value="UNLOCKED">🔓 केवल अनलॉक (Editable)</option>
+                                <option value="LOCKED">🔒 केवल सुरक्षित (Locked)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-slate-700 text-[10px] uppercase mb-0.5">5. सॉर्टिंग क्रम (Sort):</label>
+                            <select id="bookSortFilter" onchange="renderBookMaster()" class="w-full border border-amber-300 rounded px-2 py-1 font-bold bg-white text-indigo-950">
+                                <option value="titleAsc">पुस्तक नाम (A-Z)</option>
+                                <option value="classAsc">कक्षा (Class 9-12)</option>
+                                <option value="sessionAsc">सत्र क्रम (Session)</option>
+                                <option value="subjectAsc">विषय (Subject)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- BOOK MASTER SPREADSHEET TABLE -->
+                    <div id="bookMasterTableContainer" class="overflow-x-auto border rounded-xl max-h-[550px]">
                     </div>
                 </div>
             </section>
 
-            <!-- INDIVIDUAL OFFICIAL PRINTABLE FORMS & OTHER MODULE SECTIONS REMAIN INTACT -->
-            <section id="section-form-mp-board" class="content-section space-y-4 hidden"><div id="formMpBoardContainer"></div></section>
-            <section id="section-form-sssm" class="content-section space-y-4 hidden"><div id="formSssmContainer"></div></section>
-            <section id="section-form-pm-shri" class="content-section space-y-4 hidden"><div id="formPmShriContainer"></div></section>
-            <section id="section-student-entry" class="content-section space-y-4 hidden"><div id="studentEntryContainer"></div></section>
+            <!-- BOOK ADD/EDIT MODAL OVERLAY -->
+            <div id="bookModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
+                <div class="bg-white rounded-2xl shadow-2xl border border-slate-300 max-w-lg w-full p-5 space-y-4">
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <h3 class="font-extrabold text-indigo-950 text-sm flex items-center space-x-1.5" id="bookModalTitle">
+                            <i data-lucide="book-open" class="w-4 h-4 text-amber-600"></i>
+                            <span>नई पाठ्यपुस्तक प्रविष्टि</span>
+                        </h3>
+                        <button onclick="closeBookModal()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+                    </div>
+
+                    <form id="bookRecordForm" onsubmit="handleBookFormSave(event)" class="space-y-3 text-xs font-semibold">
+                        <input type="hidden" id="bm_id">
+                        
+                        <div>
+                            <label class="text-slate-700 block mb-0.5">पाठ्यपुस्तक का नाम (Book Title) *</label>
+                            <input type="text" id="bm_title" required placeholder="उदा. NCERT हिन्दी (क्षितिज भाग-1)" class="w-full border rounded px-2.5 py-1.5 font-bold text-slate-900">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">विषय नाम / कोड *</label>
+                                <input type="text" id="bm_subject" required placeholder="401 - हिन्दी" class="w-full border rounded px-2 py-1 font-bold">
+                            </div>
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">कक्षा (Target Class) *</label>
+                                <select id="bm_targetClass" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                    <option value="10th">10th Standard</option>
+                                    <option value="9th">9th Standard</option>
+                                    <option value="11th">11th Standard</option>
+                                    <option value="12th">12th Standard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">शैक्षणिक सत्र (Session) *</label>
+                                <select id="bm_session" class="w-full border rounded px-2 py-1 font-bold bg-amber-50 text-amber-950 border-amber-300">
+                                    <option value="SESSION - 2025-26">SESSION - 2025-26</option>
+                                    <option value="SESSION - 2026-27">SESSION - 2026-27</option>
+                                    <option value="SESSION - 2027-28">SESSION - 2027-28</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-700 block mb-0.5">अध्ययन माध्यम (Medium)</label>
+                                <select id="bm_medium" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                    <option value="HINDI">HINDI (हिन्दी)</option>
+                                    <option value="ENGLISH">ENGLISH (अंग्रेजी)</option>
+                                    <option value="URDU">URDU (उर्दू)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-slate-700 block mb-0.5">सुरक्षा लॉक स्थिति (Lock System)</label>
+                            <select id="bm_isLocked" class="w-full border rounded px-2 py-1 font-bold bg-white">
+                                <option value="NO">🔓 अनलॉक (संपादन योग्य / Editable)</option>
+                                <option value="YES">🔒 लॉक (सुरक्षित / Protected)</option>
+                            </select>
+                        </div>
+
+                        <div class="flex justify-end space-x-2 pt-3 border-t">
+                            <button type="button" onclick="closeBookModal()" class="bg-slate-200 text-slate-700 px-4 py-1.5 rounded font-bold">रद्द करें</button>
+                            <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-1.5 rounded font-extrabold shadow">सुरक्षित करें (Save)</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- OTHER MODULE CONTAINERS -->
             <section id="section-master-grid" class="content-section space-y-4 hidden"><div id="masterGridContainer"></div></section>
             <section id="section-combined-forms" class="content-section space-y-4 hidden"><div id="combinedFormsContainer"></div></section>
             <section id="section-profile-card" class="content-section space-y-4 hidden"><div id="profileCardContainer"></div></section>
@@ -562,7 +1039,10 @@
             <section id="section-exam-marks" class="content-section space-y-4 hidden"><div id="examMarksContainer"></div></section>
             <section id="section-consolidated-report" class="content-section space-y-4 hidden"><div id="consolidatedReportContainer"></div></section>
             <section id="section-class-exam-report" class="content-section space-y-4 hidden"><div id="classExamReportContainer"></div></section>
-            <section id="section-book-master" class="content-section space-y-4 hidden"><div id="bookMasterContainer"></div></section>
+            <section id="section-cloud-settings" class="content-section space-y-4 hidden"><div id="cloudSettingsContainer"></div></section>
+            <section id="section-form-mp-board" class="content-section space-y-4 hidden"><div id="formMpBoardContainer"></div></section>
+            <section id="section-form-sssm" class="content-section space-y-4 hidden"><div id="formSssmContainer"></div></section>
+            <section id="section-form-pm-shri" class="content-section space-y-4 hidden"><div id="formPmShriContainer"></div></section>
 
         </main>
     </div>
@@ -570,6 +1050,7 @@
     <!-- CUSTOM TOAST CONTAINER -->
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2 no-print"></div>
 
+    <!-- FIREBASE REALTIME CLOUD BACKUP SCRIPT MODULE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -585,36 +1066,41 @@
             appId: "1:123456789:web:abcdef"
         };
 
-        let app, db, auth;
-        let isCloudConnected = false;
-        let unsubscribeLiveListener = null;
+        let app, db, auth, currentUser = null;
+        let isPushingToCloud = false;
+        let autoPushTimer = null;
 
-        try {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
+        async function initFirebaseCloud() {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
 
-            // Priority Authentication
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    const userCred = await signInWithCustomToken(auth, __initial_auth_token);
+                    currentUser = userCred.user;
+                } else {
+                    const userCred = await signInAnonymously(auth);
+                    currentUser = userCred.user;
+                }
+
+                if (currentUser) {
+                    window.isCloudConnected = true;
+                    updateCloudSyncUI("🟢 लाइव सिंक ऑनलाइन", true);
+                    initRealtimeCloudListener();
+                }
+            } catch (e) {
+                console.warn("Cloud fallback mode:", e);
+                updateCloudSyncUI("🟡 ऑफ़लाइन मोड (Local Only)", false);
             }
-
-            isCloudConnected = true;
-            window.isCloudConnected = true;
-            updateCloudSyncUI("🟢 क्लाउड कनेक्टेड", true);
-            initRealtimeCloudListener();
-        } catch (e) {
-            console.warn("Cloud connection initialized in offline mode:", e);
-            updateCloudSyncUI("🟡 ऑफ़लाइन मोड (Local Only)", false);
         }
 
         function initRealtimeCloudListener() {
-            if (!auth.currentUser || !db) return;
+            if (!currentUser || !db) return;
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'sdmsMasterState', 'currentState');
 
-            unsubscribeLiveListener = onSnapshot(docRef, (snapshot) => {
+            onSnapshot(docRef, (snapshot) => {
+                if (isPushingToCloud) return;
                 if (snapshot.exists()) {
                     const data = snapshot.data();
                     if (data && data.appState) {
@@ -623,50 +1109,54 @@
                     }
                 }
             }, (error) => {
-                console.warn("Live cloud listener notice:", error);
                 updateCloudSyncUI("🟡 सिंक ऑफ़लाइन", false);
             });
         }
 
-        window.pushStateToCloud = async function() {
-            if (!auth.currentUser || !db) {
-                window.showToast("क्लाउड सर्वर अनुपलब्ध है, स्थानीय रूप से डेटा सुरक्षित हुआ।", "error");
+        window.pushStateToCloud = async function(isSilent = false) {
+            if (!currentUser || !db) {
+                if (!isSilent) window.showToast("क्लाउड सर्वर अनुपलब्ध, स्थानीय स्टोरेज सुरक्षित।", "error");
                 return;
             }
             try {
+                isPushingToCloud = true;
+                updateCloudSyncUI("⏳ क्लाउड में सेव हो रहा है...", true);
+                
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'sdmsMasterState', 'currentState');
                 const fullState = window.getFullAppStateObject();
+                
                 await setDoc(docRef, {
                     appState: fullState,
                     lastUpdated: new Date().toISOString(),
-                    updatedBy: auth.currentUser.uid
+                    updatedBy: currentUser.uid
                 }, { merge: true });
-                window.showToast("क्लाउड सर्वर पर डाटा सफलतापूर्वक लाइव पुश हुआ!");
-                updateCloudSyncUI("🟢 क्लाउड अपडेटेड", true);
+
+                updateCloudSyncUI("🟢 लाइव सिंक ऑनलाइन", true);
+                if (!isSilent) window.showToast("क्लाउड सर्वर पर डाटा सफलतापूर्वक लाइव सेव हुआ!");
             } catch (err) {
-                console.error("Cloud push error:", err);
-                window.showToast("क्लाउड पुश विफल, पुनः प्रयास करें।", "error");
+                updateCloudSyncUI("🔴 सिंक विफल", false);
+                if (!isSilent) window.showToast("क्लाउड पुश विफल!", "error");
+            } finally {
+                setTimeout(() => { isPushingToCloud = false; }, 800);
             }
         };
 
-        window.pullStateFromCloud = function() {
-            if (initRealtimeCloudListener) {
-                initRealtimeCloudListener();
-                window.showToast("सर्वर से लाइव डाटा री-लोड हुआ!");
-            }
+        window.autoPushToCloud = function() {
+            if (autoPushTimer) clearTimeout(autoPushTimer);
+            autoPushTimer = setTimeout(() => {
+                window.pushStateToCloud(true);
+            }, 800);
         };
 
         function updateCloudSyncUI(text, isOnline) {
             const badgeText = document.getElementById("headerCloudSyncText");
-            const cloudBadge = document.getElementById("cloudStatusText");
-            const timeDisplay = document.getElementById("cloudLastSyncTime");
-
             if (badgeText) badgeText.innerText = text;
-            if (cloudBadge) cloudBadge.innerText = text;
-            if (timeDisplay) timeDisplay.innerText = `अंतिम सिंक: ${new Date().toLocaleTimeString('hi-IN')}`;
         }
+
+        window.addEventListener('DOMContentLoaded', initFirebaseCloud);
     </script>
 
+    <!-- MAIN APP JAVASCRIPT LOGIC -->
     <script>
         let activeSection = "dashboard";
         let currentStudentId = "101";
@@ -674,6 +1164,7 @@
         let schoolHeaderData = {
             schoolNameHindi: "पीएमश्री शासकीय कन्या उच्चतर माध्यमिक विद्यालय बेगमगंज",
             schoolNameEng: "PMSHRI-GHSS GIRLS BEGAMGANJ(6 TO 12)",
+            session: "SESSION - 2025-26",
             address: "बेगमगंज (रायसेन)",
             district: "रायसेन (M.P.)",
             udiseCode: "23340222855",
@@ -685,14 +1176,35 @@
             showWatermark: "YES"
         };
 
+        let booksMasterData = [
+            { id: "B101", title: "NCERT हिन्दी (क्षितिज भाग-1)", subject: "401 - हिन्दी", targetClass: "9th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B102", title: "NCERT अंग्रेजी (Beehive)", subject: "411 - अंग्रेजी", targetClass: "9th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B103", title: "NCERT गणित (Mathematics)", subject: "100 - गणित", targetClass: "9th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B104", title: "NCERT विज्ञान (Science)", subject: "200 - विज्ञान", targetClass: "9th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B105", title: "NCERT हिन्दी (क्षितिज भाग-2)", subject: "401 - हिन्दी", targetClass: "10th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: true },
+            { id: "B106", title: "NCERT अंग्रेजी (First Flight)", subject: "411 - अंग्रेजी", targetClass: "10th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B107", title: "NCERT गणित (10th Standard)", subject: "100 - गणित", targetClass: "10th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B108", title: "NCERT विज्ञान (10th Standard)", subject: "200 - विज्ञान", targetClass: "10th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B109", title: "NCERT सामाजिक विज्ञान (10th)", subject: "300 - सा.विज्ञान", targetClass: "10th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B110", title: "NCERT राजनीति विज्ञान", subject: "130 - Pol. Science", targetClass: "11th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false },
+            { id: "B111", title: "NCERT अर्थशास्त्र (Economics)", subject: "140 - Economics", targetClass: "11th", session: "SESSION - 2025-26", medium: "HINDI", isLocked: false }
+        ];
+
         let studentsData = {
             "101": {
-                id: "101", scholarNo: "16626", rollNo: "9266510060201", enrollmentNo: "A25/651006/197",
-                targetClass: "9th", section: "A", nameHindi: "तपस्या तिवारी", nameEng: "TAPASYA TIWARI",
-                fatherName: "श्री राजेश तिवारी", motherName: "श्रीमती रचना तिवारी", dob: "2012-08-28",
-                gender: "FEMALE", category: "GEN", caste: "ब्राह्मण", mobile: "9826012345",
+                id: "101", scholarNo: "16626", rollNo: "9266510060201", enrollmentNo: "A25/651006/197", srNo: "SR-501",
+                targetClass: "9th", section: "A", session: "SESSION - 2025-26", admissionDate: "2025-07-01", medium: "HINDI",
+                applicantType: "1", applicantType2: "सामान्य", applicantType3: "स्थाई", provisionalResult: "Pass", tcStatus: "YES", gapCertificate: "NO", lastYearPassType: "Regular",
+                nameHindi: "तपस्या तिवारी", nameEng: "TAPASYA TIWARI", fatherName: "श्री राजेश तिवारी", motherName: "श्रीमती रचना तिवारी",
+                dob: "2012-08-28", gender: "FEMALE", category: "GEN", caste: "ब्राह्मण", religion: "हिन्दू", mobile: "9826012345", altMobile: "9425000000", email: "tapasya@gmail.com", bloodGroup: "O+",
+                address: "बेगमगंज वार्ड 4 (रायसेन)", previousSchool: "शासकीय माध्यमिक शाला बेगमगंज",
                 apaarId: "APAAR-9012-3456", childId: "155076454", familyId: "987654321", aadhaar: "1234-5678-9012",
-                photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
+                bankName: "भारतीय स्टेट बैंक बेगमगंज", bankAccount: "30123456789", bankIfsc: "SBIN0001234", annualIncome: "60000",
+                bplStatus: "NO", ladliLaxmi: "NO", ladliLaxmiNo: "", cwsnStatus: "NO", hostelStatus: "NO", covidStatus: "NO",
+                mpTassStatus: "NO", mpTassNo: "", scholarshipStatus: "NO", sambalStatus: "NO", sambalNo: "", area: "ग्रामीण", feesPaid: "100", remarks: "उत्कृष्ट प्रदर्शन",
+                photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+                sub1: "401 - हिन्दी", sub2: "411 - अंग्रेजी", sub3: "512 - संस्कृत", sub4: "100 - गणित", sub5: "200 - विज्ञान", sub6: "300 - सा.विज्ञान",
+                receivedBooks: ["NCERT हिन्दी (क्षितिज भाग-1)", "NCERT गणित (Mathematics)"]
             }
         };
 
@@ -703,10 +1215,6 @@
         let subjectMasterData = {
             "10th": [{ code: "401", name: "हिन्दी", category: "प्रथम भाषा" }],
             "9th": [{ code: "401", name: "हिन्दी", category: "प्रथम भाषा" }]
-        };
-
-        let booksMasterData = {
-            "10th": [{ title: "NCERT हिन्दी", sub: "401", medium: "HINDI" }]
         };
 
         let marksConfigData = {};
@@ -728,8 +1236,6 @@
             container.appendChild(toast);
             setTimeout(() => { toast.remove(); }, 3000);
         }
-
-        window.showToast = showToast;
 
         function populateSidebarSelectors() {
             const studentSelect = document.getElementById("sidebarStudentSelect");
@@ -764,10 +1270,376 @@
                 titleElem.innerText = `अनुभाग: ${activeBtn.innerText.trim()}`;
             }
 
+            if (secId === 'book-master') renderBookMaster();
+            else if (secId === 'student-entry') renderFormBookCheckboxes();
+
             if (window.lucide) lucide.createIcons();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        /* --- BOOK & LIBRARY MASTER MODULE FUNCTIONS --- */
+        function renderBookMaster() {
+            const container = document.getElementById("bookMasterTableContainer");
+            if (!container) return;
+
+            const q = (document.getElementById("bookSearchInput") ? document.getElementById("bookSearchInput").value : "").toLowerCase().trim();
+            const clsFilter = document.getElementById("bookClassFilter") ? document.getElementById("bookClassFilter").value : "ALL";
+            const sessionFilter = document.getElementById("bookSessionFilter") ? document.getElementById("bookSessionFilter").value : "ALL";
+            const lockFilter = document.getElementById("bookLockFilter") ? document.getElementById("bookLockFilter").value : "ALL";
+            const sortFilter = document.getElementById("bookSortFilter") ? document.getElementById("bookSortFilter").value : "titleAsc";
+
+            let books = [...booksMasterData].filter(b => {
+                if (clsFilter !== "ALL" && b.targetClass !== clsFilter) return false;
+                if (sessionFilter !== "ALL" && b.session !== sessionFilter) return false;
+                if (lockFilter === "LOCKED" && !b.isLocked) return false;
+                if (lockFilter === "UNLOCKED" && b.isLocked) return false;
+
+                if (q) {
+                    const haystack = `${b.title} ${b.subject} ${b.session} ${b.targetClass}`.toLowerCase();
+                    if (!haystack.includes(q)) return false;
+                }
+                return true;
+            });
+
+            books.sort((a, b) => {
+                if (sortFilter === "classAsc") return a.targetClass.localeCompare(b.targetClass);
+                if (sortFilter === "sessionAsc") return a.session.localeCompare(b.session);
+                if (sortFilter === "subjectAsc") return a.subject.localeCompare(b.subject);
+                return a.title.localeCompare(b.title);
+            });
+
+            if (books.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center bg-white font-bold text-slate-500">चयनित फ़िल्टर में कोई पाठ्यपुस्तक उपलब्ध नहीं है।</div>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <table class="w-full text-xs border text-left border-collapse font-semibold">
+                    <thead class="bg-indigo-950 text-white sticky top-0 font-bold uppercase z-20">
+                        <tr>
+                            <th class="p-2.5 border border-indigo-800 text-center">क्र.</th>
+                            <th class="p-2.5 border border-indigo-800">पाठ्यपुस्तक का नाम (Title)</th>
+                            <th class="p-2.5 border border-indigo-800">विषय / कोड</th>
+                            <th class="p-2.5 border border-indigo-800 text-center">कक्षा</th>
+                            <th class="p-2.5 border border-indigo-800 text-center">शैक्षणिक सत्र</th>
+                            <th class="p-2.5 border border-indigo-800 text-center">माध्यम</th>
+                            <th class="p-2.5 border border-indigo-800 text-center">सुरक्षा लॉक</th>
+                            <th class="p-2.5 border border-indigo-800 text-center">एक्शन (Action)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 bg-white">
+                        ${books.map((b, idx) => `
+                            <tr class="hover:bg-amber-50/50 transition ${b.isLocked ? 'bg-slate-50' : ''}">
+                                <td class="p-2 border border-slate-300 text-center font-mono font-bold text-slate-500">${idx + 1}</td>
+                                <td class="p-2 border border-slate-300 font-extrabold text-amber-950 text-xs">${b.title}</td>
+                                <td class="p-2 border border-slate-300 font-bold text-indigo-900">${b.subject}</td>
+                                <td class="p-2 border border-slate-300 text-center font-extrabold text-slate-900">${b.targetClass}</td>
+                                <td class="p-2 border border-slate-300 text-center font-mono font-bold text-amber-900 bg-amber-50/60">${b.session}</td>
+                                <td class="p-2 border border-slate-300 text-center font-bold text-slate-700">${b.medium || 'HINDI'}</td>
+                                <td class="p-2 border border-slate-300 text-center">
+                                    <button onclick="toggleBookLock('${b.id}')" class="px-2 py-0.5 rounded text-[10px] font-black shadow flex items-center justify-center space-x-1 mx-auto ${b.isLocked ? 'bg-amber-600 text-white' : 'bg-emerald-600 text-white'}">
+                                        <i data-lucide="${b.isLocked ? 'lock' : 'unlock'}" class="w-3 h-3"></i>
+                                        <span>${b.isLocked ? '🔒 Locked' : '🔓 Editable'}</span>
+                                    </button>
+                                </td>
+                                <td class="p-2 border border-slate-300 text-center space-x-1 whitespace-nowrap">
+                                    <button onclick="openBookModal('${b.id}')" ${b.isLocked ? 'disabled' : ''} class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow ${b.isLocked ? 'opacity-50 cursor-not-allowed' : ''}">संपादित करें</button>
+                                    <button onclick="deleteBookRecord('${b.id}')" ${b.isLocked ? 'disabled' : ''} class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-0.5 rounded text-[10px] font-bold shadow ${b.isLocked ? 'opacity-50 cursor-not-allowed' : ''}">हटाएं</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function openBookModal(bookId = null) {
+            const modal = document.getElementById("bookModal");
+            const modalTitle = document.getElementById("bookModalTitle");
+            if (!modal) return;
+
+            if (bookId) {
+                const book = booksMasterData.find(b => b.id === bookId);
+                if (book) {
+                    if (book.isLocked) {
+                        showToast("यह पुस्तक लॉक है, पहले अनलॉक करें!", "error");
+                        return;
+                    }
+                    modalTitle.innerHTML = `<i data-lucide="edit" class="w-4 h-4 text-indigo-600"></i> <span>पाठ्यपुस्तक विवरण संपादित करें</span>`;
+                    document.getElementById("bm_id").value = book.id;
+                    document.getElementById("bm_title").value = book.title;
+                    document.getElementById("bm_subject").value = book.subject;
+                    document.getElementById("bm_targetClass").value = book.targetClass;
+                    document.getElementById("bm_session").value = book.session;
+                    document.getElementById("bm_medium").value = book.medium || "HINDI";
+                    document.getElementById("bm_isLocked").value = book.isLocked ? "YES" : "NO";
+                }
+            } else {
+                modalTitle.innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-amber-600"></i> <span>नई पाठ्यपुस्तक प्रविष्टि</span>`;
+                document.getElementById("bookRecordForm").reset();
+                document.getElementById("bm_id").value = "";
+            }
+
+            modal.classList.remove("hidden");
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function closeBookModal() {
+            document.getElementById("bookModal").classList.add("hidden");
+        }
+
+        function handleBookFormSave(e) {
+            e.preventDefault();
+            const id = document.getElementById("bm_id").value;
+            const title = document.getElementById("bm_title").value;
+            const subject = document.getElementById("bm_subject").value;
+            const targetClass = document.getElementById("bm_targetClass").value;
+            const session = document.getElementById("bm_session").value;
+            const medium = document.getElementById("bm_medium").value;
+            const isLocked = document.getElementById("bm_isLocked").value === "YES";
+
+            if (id) {
+                const idx = booksMasterData.findIndex(b => b.id === id);
+                if (idx !== -1) {
+                    booksMasterData[idx] = { id, title, subject, targetClass, session, medium, isLocked };
+                }
+            } else {
+                const newId = "B_" + Date.now();
+                booksMasterData.push({ id: newId, title, subject, targetClass, session, medium, isLocked });
+            }
+
+            closeBookModal();
+            renderBookMaster();
+            saveLocalState();
+            showToast("पाठ्यपुस्तक मास्टर डेटा सफलतापूर्वक सुरक्षित हुआ!");
+        }
+
+        function toggleBookLock(bookId) {
+            const book = booksMasterData.find(b => b.id === bookId);
+            if (book) {
+                book.isLocked = !book.isLocked;
+                renderBookMaster();
+                saveLocalState();
+                showToast(book.isLocked ? "पाठ्यपुस्तक लॉक कर दी गई!" : "पाठ्यपुस्तक अनलॉक कर दी गई!");
+            }
+        }
+
+        function deleteBookRecord(bookId) {
+            const book = booksMasterData.find(b => b.id === bookId);
+            if (book && book.isLocked) {
+                showToast("यह पुस्तक लॉक है, पहले इसे अनलॉक करें!", "error");
+                return;
+            }
+            booksMasterData = booksMasterData.filter(b => b.id !== bookId);
+            renderBookMaster();
+            saveLocalState();
+            showToast("पाठ्यपुस्तक हटाई गई!", "error");
+        }
+
+        /* --- ONLINE STUDENT FORM AUTO BOOK CHECKBOXES LOGIC --- */
+        function renderFormBookCheckboxes() {
+            const container = document.getElementById("formTextbooksCheckboxesArea");
+            if (!container) return;
+
+            const targetClass = document.getElementById("f_targetClass") ? document.getElementById("f_targetClass").value : "10th";
+            const targetSession = document.getElementById("f_session") ? document.getElementById("f_session").value : "SESSION - 2025-26";
+
+            const classBooks = booksMasterData.filter(b => b.targetClass === targetClass && (b.session === targetSession || b.session === "ALL"));
+
+            if (classBooks.length === 0) {
+                container.innerHTML = `<div class="col-span-3 p-2 bg-white rounded border border-emerald-200 text-slate-500 font-bold text-[11px]">मास्टर में इस कक्षा व सत्र हेतु कोई पाठ्यपुस्तक दर्ज नहीं है।</div>`;
+                return;
+            }
+
+            const currentStudent = studentsData[currentStudentId] || {};
+            const receivedList = currentStudent.receivedBooks || [];
+
+            container.innerHTML = classBooks.map(b => {
+                const isChecked = receivedList.includes(b.title) || receivedList.length === 0;
+                return `
+                    <label class="flex items-center space-x-2 p-1.5 bg-white rounded-lg border border-emerald-300 hover:border-emerald-500 cursor-pointer shadow-sm text-xs font-bold">
+                        <input type="checkbox" name="formBooksCheckboxes" value="${b.title}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-emerald-600 rounded">
+                        <div>
+                            <span class="text-slate-900 block font-extrabold">${b.title}</span>
+                            <span class="text-[9px] text-emerald-800 font-semibold block">${b.subject} | ${b.session}</span>
+                        </div>
+                    </label>
+                `;
+            }).join('');
+        }
+
+        function toggleSelectAllFormBooks(selectState) {
+            const checkboxes = document.querySelectorAll('input[name="formBooksCheckboxes"]');
+            checkboxes.forEach(cb => cb.checked = selectState);
+        }
+
+        /* --- MASTER STUDENT SAVE & LOAD LOGIC --- */
+        function handleMasterStudentSave(e) {
+            e.preventDefault();
+            const scholar = document.getElementById("f_scholarNo").value;
+            
+            const selectedBooks = [];
+            const checkedBoxes = document.querySelectorAll('input[name="formBooksCheckboxes"]:checked');
+            checkedBoxes.forEach(cb => selectedBooks.push(cb.value));
+
+            studentsData[scholar] = {
+                id: scholar,
+                scholarNo: scholar,
+                rollNo: document.getElementById("f_rollNo").value,
+                enrollmentNo: document.getElementById("f_enrollmentNo").value,
+                srNo: document.getElementById("f_srNo").value,
+                targetClass: document.getElementById("f_targetClass").value,
+                section: document.getElementById("f_section").value,
+                session: document.getElementById("f_session").value,
+                admissionDate: document.getElementById("f_admissionDate").value,
+                medium: document.getElementById("f_medium").value,
+                applicantType: document.getElementById("f_applicantType").value,
+                applicantType2: document.getElementById("f_applicantType2").value,
+                applicantType3: document.getElementById("f_applicantType3").value,
+                provisionalResult: document.getElementById("f_provisionalResult").value,
+                tcStatus: document.getElementById("f_tcStatus").value,
+                gapCertificate: document.getElementById("f_gapCertificate").value,
+                lastYearPassType: document.getElementById("f_lastYearPassType").value,
+                nameHindi: document.getElementById("f_nameHindi").value,
+                nameEng: document.getElementById("f_nameEng").value,
+                fatherName: document.getElementById("f_fatherName").value,
+                motherName: document.getElementById("f_motherName").value,
+                dob: document.getElementById("f_dob").value,
+                gender: document.getElementById("f_gender").value,
+                category: document.getElementById("f_category").value,
+                caste: document.getElementById("f_caste").value,
+                religion: document.getElementById("f_religion").value,
+                mobile: document.getElementById("f_mobile").value,
+                altMobile: document.getElementById("f_altMobile").value,
+                email: document.getElementById("f_email").value,
+                bloodGroup: document.getElementById("f_bloodGroup").value,
+                address: document.getElementById("f_address").value,
+                previousSchool: document.getElementById("f_previousSchool").value,
+                apaarId: document.getElementById("f_apaarId").value,
+                childId: document.getElementById("f_childId").value,
+                familyId: document.getElementById("f_familyId").value,
+                aadhaar: document.getElementById("f_aadhaar").value,
+                bankName: document.getElementById("f_bankName").value,
+                bankAccount: document.getElementById("f_bankAccount").value,
+                bankIfsc: document.getElementById("f_bankIfsc").value,
+                annualIncome: document.getElementById("f_annualIncome").value,
+                bplStatus: document.getElementById("f_bplStatus").value,
+                ladliLaxmi: document.getElementById("f_ladliLaxmi").value,
+                ladliLaxmiNo: document.getElementById("f_ladliLaxmiNo").value,
+                cwsnStatus: document.getElementById("f_cwsnStatus").value,
+                hostelStatus: document.getElementById("f_hostelStatus").value,
+                covidStatus: document.getElementById("f_covidStatus").value,
+                mpTassStatus: document.getElementById("f_mpTassStatus").value,
+                mpTassNo: document.getElementById("f_mpTassNo").value,
+                scholarshipStatus: document.getElementById("f_scholarshipStatus").value,
+                sambalStatus: document.getElementById("f_sambalStatus").value,
+                sambalNo: document.getElementById("f_sambalNo").value,
+                area: document.getElementById("f_area").value,
+                feesPaid: document.getElementById("f_feesPaid").value,
+                remarks: document.getElementById("f_remarks").value,
+                sub1: document.getElementById("f_sub1").value,
+                sub2: document.getElementById("f_sub2").value,
+                sub3: document.getElementById("f_sub3").value,
+                sub4: document.getElementById("f_sub4").value,
+                sub5: document.getElementById("f_sub5").value,
+                sub6: document.getElementById("f_sub6").value,
+                photoUrl: document.getElementById("formPhotoPreview").src,
+                receivedBooks: selectedBooks
+            };
+
+            populateSidebarSelectors();
+            saveLocalState();
+            showToast("50+ कॉलम छात्र रिकॉर्ड सफलतापूर्वक सुरक्षित हुआ!");
+            showSection("dashboard");
+        }
+
+        function loadStudentData(stId) {
+            currentStudentId = stId;
+            const st = studentsData[stId];
+            if (!st) return;
+            document.getElementById("f_scholarNo").value = st.scholarNo || '';
+            document.getElementById("f_rollNo").value = st.rollNo || '';
+            document.getElementById("f_enrollmentNo").value = st.enrollmentNo || '';
+            document.getElementById("f_targetClass").value = st.targetClass || '10th';
+            document.getElementById("f_section").value = st.section || 'A';
+            document.getElementById("f_session").value = st.session || 'SESSION - 2025-26';
+            document.getElementById("f_srNo").value = st.srNo || '';
+            document.getElementById("f_applicantType").value = st.applicantType || '1';
+            document.getElementById("f_applicantType2").value = st.applicantType2 || 'सामान्य';
+            document.getElementById("f_applicantType3").value = st.applicantType3 || 'स्थाई';
+            document.getElementById("f_provisionalResult").value = st.provisionalResult || 'Pass';
+            document.getElementById("f_tcStatus").value = st.tcStatus || 'YES';
+            document.getElementById("f_gapCertificate").value = st.gapCertificate || 'NO';
+            document.getElementById("f_lastYearPassType").value = st.lastYearPassType || 'Regular';
+            document.getElementById("f_medium").value = st.medium || 'HINDI';
+            document.getElementById("f_admissionDate").value = st.admissionDate || '';
+            document.getElementById("f_nameHindi").value = st.nameHindi || '';
+            document.getElementById("f_nameEng").value = st.nameEng || '';
+            document.getElementById("f_fatherName").value = st.fatherName || '';
+            document.getElementById("f_motherName").value = st.motherName || '';
+            document.getElementById("f_dob").value = st.dob || '';
+            document.getElementById("f_gender").value = st.gender || 'FEMALE';
+            document.getElementById("f_category").value = st.category || 'OBC';
+            document.getElementById("f_caste").value = st.caste || '';
+            document.getElementById("f_religion").value = st.religion || '';
+            document.getElementById("f_mobile").value = st.mobile || '';
+            document.getElementById("f_altMobile").value = st.altMobile || '';
+            document.getElementById("f_email").value = st.email || '';
+            document.getElementById("f_bloodGroup").value = st.bloodGroup || 'O+';
+            document.getElementById("f_address").value = st.address || '';
+            document.getElementById("f_previousSchool").value = st.previousSchool || '';
+            document.getElementById("f_apaarId").value = st.apaarId || '';
+            document.getElementById("f_childId").value = st.childId || '';
+            document.getElementById("f_familyId").value = st.familyId || '';
+            document.getElementById("f_aadhaar").value = st.aadhaar || '';
+            document.getElementById("f_bankName").value = st.bankName || '';
+            document.getElementById("f_bankAccount").value = st.bankAccount || '';
+            document.getElementById("f_bankIfsc").value = st.bankIfsc || '';
+            document.getElementById("f_annualIncome").value = st.annualIncome || '';
+            document.getElementById("f_bplStatus").value = st.bplStatus || 'NO';
+            document.getElementById("f_ladliLaxmi").value = st.ladliLaxmi || 'NO';
+            document.getElementById("f_ladliLaxmiNo").value = st.ladliLaxmiNo || '';
+            document.getElementById("f_cwsnStatus").value = st.cwsnStatus || 'NO';
+            document.getElementById("f_hostelStatus").value = st.hostelStatus || 'NO';
+            document.getElementById("f_covidStatus").value = st.covidStatus || 'NO';
+            document.getElementById("f_mpTassStatus").value = st.mpTassStatus || 'NO';
+            document.getElementById("f_mpTassNo").value = st.mpTassNo || '';
+            document.getElementById("f_scholarshipStatus").value = st.scholarshipStatus || 'YES';
+            document.getElementById("f_sambalStatus").value = st.sambalStatus || 'NO';
+            document.getElementById("f_sambalNo").value = st.sambalNo || '';
+            document.getElementById("f_area").value = st.area || 'ग्रामीण';
+            document.getElementById("f_feesPaid").value = st.feesPaid || '100';
+            document.getElementById("f_remarks").value = st.remarks || '';
+            document.getElementById("f_sub1").value = st.sub1 || '';
+            document.getElementById("f_sub2").value = st.sub2 || '';
+            document.getElementById("f_sub3").value = st.sub3 || '';
+            document.getElementById("f_sub4").value = st.sub4 || '';
+            document.getElementById("f_sub5").value = st.sub5 || '';
+            document.getElementById("f_sub6").value = st.sub6 || '';
+            document.getElementById("formPhotoPreview").src = st.photoUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150';
+            
+            renderFormBookCheckboxes();
+        }
+
+        function previewStudentPhoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("formPhotoPreview").src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function resetMasterStudentForm() {
+            document.getElementById("masterStudentForm").reset();
+            renderFormBookCheckboxes();
+            showToast("नया फ़ॉर्म खाली कर दिया गया!");
+        }
+
+        /* --- STATE PERSISTENCE LOGIC --- */
         window.getFullAppStateObject = function() {
             return {
                 schoolHeader: schoolHeaderData,
@@ -791,12 +1663,17 @@
             if (cloudState.examMarks) examMarksStore = cloudState.examMarks;
 
             populateSidebarSelectors();
-            saveLocalState();
+            try {
+                localStorage.setItem("sdms_master_app_state", JSON.stringify(window.getFullAppStateObject()));
+            } catch(e) {}
         };
 
         function saveLocalState() {
             try {
                 localStorage.setItem("sdms_master_app_state", JSON.stringify(window.getFullAppStateObject()));
+                if (typeof window.autoPushToCloud === 'function') {
+                    window.autoPushToCloud();
+                }
             } catch(e) {}
         }
 
@@ -827,8 +1704,8 @@
                     try {
                         const parsed = JSON.parse(e.target.result);
                         window.applyCloudStateData(parsed);
-                        if (window.pushStateToCloud) window.pushStateToCloud();
-                        showToast("डेटाबेस सफलतापूर्वक रीस्टोर हो गया!");
+                        saveLocalState();
+                        showToast("डेटाबेस सफलतापूर्वक रीस्टोर व ऑटो-सिंक हो गया!");
                     } catch (err) {
                         showToast("अमान्य JSON बैकअप फ़ाइल!", "error");
                     }
@@ -838,7 +1715,7 @@
         }
 
         function globalPrintCurrentSection() { window.print(); }
-        function globalExportPDF() { showToast("PDF एक्सपोर्ट तैयार हो रहा है..."); }
+        function globalExportPDF() { showToast("PDF रिपोर्ट जनरेट हो रही है..."); }
         function globalExportExcel() { showToast("Excel फ़ाइल डाउनलोड हो गई!"); }
         function globalExportDoc() { showToast("Doc फ़ाइल डाउनलोड हो गई!"); }
         function globalExportImage() { showToast("इमेज डाउनलोड हो गई!"); }
@@ -846,3 +1723,16 @@
     </script>
 </body>
 </html>
+```eofs
+
+आपकी `index.html` फ़ाइल को अपडेट कर दिया गया है। 
+
+### नए फीचर्स का सारांश:
+1. **पुस्तकालय व पाठ्यपुस्तक मास्टर (Book Distribution Master)**:
+   - नई पुस्तकें जोड़ने (Modal overlay interface), एडिट करने, डिलीट करने और लॉक/अनलॉक करने की पूर्ण व्यवस्था।
+   - पुस्तक नाम, विषय, कक्षा, सत्र (Session), अध्ययन माध्यम व सुरक्षा स्टेटस के स्पष्ट कॉलम।
+   - एडवांस्ड लाइव सर्च, कक्षा फ़िल्टर, सत्र फ़िल्टर, लॉक/अनलॉक फ़िल्टर और 4 प्रकार की सॉर्टिंग।
+
+2. **मास्टर्स ऑनलाइन छात्र फ़ॉर्म (50+ Columns Form & Auto Book Sync)**:
+   - 50 से अधिक सुव्यवस्थित कॉलम (अभिभावक, धर्म, वैकल्पिक मोबाइल, पूर्व शाला, बैंक, योजनाएं, अपार आईडी, फीस आदि)।
+   - फॉर्म भरते समय चुनी गई **कक्षा** और **सत्र** के अनुसार मास्टर में दर्ज सभी पुस्तकें चेकबॉक्स रूप में ऑटो-सिंक होकर लोड होंगी।
